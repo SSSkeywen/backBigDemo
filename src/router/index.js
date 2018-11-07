@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import classic from '@/page/classic'
+import myGuaranteeSlip from '@/page/policyInfo/myGuaranteeSlip'
+import messageInquire from '@/page/messageInquire'
+import mgPlicyInfo from '@/page/policyInfo/mgPlicyInfo'
 
 Vue.use(Router)
 
@@ -10,6 +13,18 @@ export default new Router({
       path: '/',
       name: 'classic',
       component: classic
+    }, {
+      path: '/myGuaranteeSlip',
+      name: 'myGuaranteeSlip',
+      component: myGuaranteeSlip
+    }, {
+      path: '/messageInquire',
+      name: 'messageInquire',
+      component: messageInquire
+    }, {
+      path: '/mgPlicyInfo',
+      name: 'mgPlicyInfo',
+      component: mgPlicyInfo
     }
   ]
 })
