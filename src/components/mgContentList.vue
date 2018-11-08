@@ -15,21 +15,36 @@
                 <p>被保人：{{contentListData.insuredName}}</p>
             </li>
             <li>
-                <p>生效日期：{{contentListData.validateDate}}</p>
-                <p :class="contentListData.statusName=='有效'?'green':''">状态：{{contentListData.statusName}}</p>
+                <p>生效日期：{{contentListData.validateDate | dateFilter}}</p>
+                <p :class="contentListData.statusStyle">状态：{{contentListData.statusName}}</p>
             </li>
         </ul>
     </div>
 </template>
 
 <script>
+import {dateStyle} from '@/filter/dateStyle.js'
     export default {
         data() {
             return {
                 imgSrc: require('@/assets/mgImg/icon_xin.png')
             }
         },
-        props:['contentListData']
+        filters: {
+            dateFilter(date){
+                return dateStyle(date)
+            }
+        },
+        props:['contentListData'],
+        // computed: {
+        //     statusStyle(statusName) {
+        //         let styleData = ''
+        //         if(statusName == '有效'){
+        //             styleData = 'green'
+        //         }
+        //         return this.data 
+        //     }
+        // },
     }
 </script>
 
@@ -63,5 +78,8 @@
 }
 .green{
     color: #00ae4d;
+}
+.red{
+   color: #898b8b; 
 }
 </style>

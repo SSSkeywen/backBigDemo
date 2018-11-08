@@ -2,8 +2,8 @@
     <div class="mg-box">
         <headerT :headerContent="headerContent"></headerT>
         <div class="mg-select">
-            <select name="" id="">
-                <option v-for="(item,index) in selectList" :key="index" :value="item.value" v-html="item.content"></option>
+            <select name="" id="" v-model="selectData" @change="selectPolicy()">
+                <option v-for="(item,index) in selectList"  :key="index" :value="item.value" v-html="item.content"></option>
             </select>
         </div>
         <section class="mg-content-list">
@@ -27,11 +27,12 @@ import { mapActions } from "vuex";
         },
         data() {
             return {
+                selectData:'0',
                 headerContent: '我的保单',
                 selectList:[
                     {
                         value:'0',
-                        content:'全部'
+                        content:'&nbsp;全部'
                     },{
                         value:'1',
                         content:'我是投保人'
@@ -52,28 +53,46 @@ import { mapActions } from "vuex";
                         productName:'太平爱宝贝综合意外伤害保险',
                         applicantName:'范聪杰',
                         insuredName:'范聪杰',
-                        validateDate:'2018-06-28',
+                        validateDate:null,
                         statusName:'有效',
                     }
                 ]
             }
         },
-        mounted(){
+        created(){
             this.getLates({
-                sCallback: (res) => {
-
+                successCallback: (res) => {
+                    
+                    for(let item of res.result){
+                        if(item.statusName == '有效'){
+                            item.statusStyle = 'green'
+                        } 
+                        if(item.statusName == '终止'){
+                            item.statusStyle = 'red'
+                        } 
+                    }
+                    this.contentListData = res.result
                 },
                 fCallback:(res) => {
-                    console.log(222)
                 }
             })
         },
+        
         methods: {
             ...mapActions({
                 getLates: "getLates"
             }),
             policyMessage(policyCode) {
                 this.$router.push({ path: '/mgPlicyInfo' });
+            },
+
+            //select选择框方法
+            selectPolicy(ele){
+                console.log(this.selectData)
+                if(this.selectData == 0){
+                    this.contentListData = []
+                }
+                //console.log(ele.target.value)
             }
         },
     }

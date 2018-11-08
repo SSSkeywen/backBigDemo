@@ -25,15 +25,15 @@ const actions = {
     // },
     [getLates]({ commit }, { successCallback = () => { }, failCallback = () => { } }) {
         axios({
-            method: 'post',
-            url: state.ulrData + 'toPolicyListVue.html',
+            method: 'get',
+            url: state.ulrData + 'policy/toPolicyListVue.html',
             data: '',
             "Content-Type": "multipart/form-data"
         }).then((res) => {
             console.log(res)
             let result = res.data
             if (result.responseCode == '0') {
-                successCallback()
+                successCallback(result)
             } else {
             }
 
