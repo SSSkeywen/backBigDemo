@@ -20,6 +20,7 @@
 import headerT from '../../components/header.vue'
 import contentList from '../../components/mgContentList.vue'
 import { mapActions } from "vuex";
+import { Toast } from "vant";
     export default {
         components:{
             headerT,
@@ -49,19 +50,28 @@ import { mapActions } from "vuex";
                 ],
                 contentListData:[
                     {
-                        policyCode:'003152059157008',
-                        productName:'太平爱宝贝综合意外伤害保险',
-                        applicantName:'范聪杰',
-                        insuredName:'范聪杰',
+                        policyCode:'',
+                        productName:'',
+                        applicantName:'',
+                        insuredName:'',
                         validateDate:null,
-                        statusName:'有效',
+                        statusName:'',
                     }
-                ]
+                ],
+                //定义包含全部值的变量
+                contentListBox:{}
             }
         },
         created(){
+            const toast1 = Toast.loading({
+                mask: true,
+                message: "加载中...",
+                duration: 0
+            });
+
             this.getLates({
                 successCallback: (res) => {
+                    console.log(res)
                     
                     for(let item of res.result){
                         if(item.statusName == '有效'){
@@ -71,9 +81,13 @@ import { mapActions } from "vuex";
                             item.statusStyle = 'red'
                         } 
                     }
+                    this.contentListBox = res
                     this.contentListData = res.result
+
+                    toast1.clear();
                 },
                 fCallback:(res) => {
+                    toast1.clear();
                 }
             })
         },
@@ -83,7 +97,7 @@ import { mapActions } from "vuex";
                 getLates: "getLates"
             }),
             policyMessage(policyCode) {
-                this.$router.push({ path: '/mgPlicyInfo' });
+                this.$router.push({ path: '/mgPlicyInfo',query: {policyCode: policyCode} });
             },
 
             //select选择框方法
@@ -91,8 +105,45 @@ import { mapActions } from "vuex";
                 console.log(this.selectData)
                 if(this.selectData == 0){
                     this.contentListData = []
+                    this.contentListData = this.contentListBox.result
                 }
-                //console.log(ele.target.value)
+                //我是投保人
+                if(this.selectData == 1){
+                    this.contentListData = []
+                    for(let item of this.contentListBox.result){
+                        if(item.applicantName == this.contentListBox.hiddenParameters.name){
+                            this.contentListData.push(item)
+                        }
+                    }
+                }
+                //我是被保人
+                if(this.selectData == 2){
+                    this.contentListData = []
+                    for(let item of this.contentListBox.result){
+                        if(item.insuredName == this.contentListBox.hiddenParameters.name){
+                            this.contentListData.push(item)
+                        }
+                    }
+                }
+                //有效保单
+                if(this.selectData == 3){
+                    this.contentListData = []
+                    for(let item of this.contentListBox.result){
+                        if(item.statusName == '有效'){
+                            this.contentListData.push(item)
+                        }
+                    }
+                }
+
+                //失效保单
+                if(this.selectData == 4){
+                    this.contentListData = []
+                    for(let item of this.contentListBox.result){
+                        if(item.statusName != '有效'){
+                            this.contentListData.push(item)
+                        }
+                    }
+                }
             }
         },
     }
