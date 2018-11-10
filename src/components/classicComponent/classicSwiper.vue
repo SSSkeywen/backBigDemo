@@ -1,0 +1,40 @@
+<template>
+    <div class="swiper-box">
+        <div class="swiper-content">
+            <van-swipe :autoplay="5000" >
+                <van-swipe-item v-for="(image, index) in swiperImgSrcLists" :key="index" @click="jumpPage(index)">
+                    <img :src="image.img_path" width="100%" height="100%"/>
+                </van-swipe-item>
+            </van-swipe>
+        </div>
+        
+    </div>
+</template>
+
+<script>
+    export default {
+        props:['swiperImgSrcLists'],
+        methods: {
+            jumpPage(index) {
+                console.log(index)
+            }
+        },
+    }
+</script>
+
+<style lang="scss" scoped>
+.swiper-box{
+    margin-top: 0.3rem;
+    padding: 0 0.28rem;
+    .swiper-content{
+        width:6.94rem;
+        height:1.34rem;
+        overflow: hidden;
+        border-radius: 1.34rem;
+        .van-swipe{
+            height: 100%!important;
+        }
+        
+    }
+}
+</style>

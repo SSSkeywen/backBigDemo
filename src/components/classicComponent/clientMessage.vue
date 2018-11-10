@@ -14,13 +14,13 @@
                 </div>
             </div>
             <div class="cm-client-photo">
-                <img :src="scanImgSrc" alt="">
+                <img :src="clientMsg.AuthorizationMap.headimgurl" alt="">
             </div>
             <div class="cm-client-name">
-                <p class="cm-client-font">傅园慧</p>
+                <p class="cm-client-font">{{clientMsg.customer.name}}</p>
                 <div class="cm-client-img">
                     <img :src="vipBgImgSrc" width="100%">
-                    <p>黄金级</p>
+                    <!-- <p>黄金级</p> -->
                 </div>
             </div>
             <div class="cm-water">
@@ -43,6 +43,10 @@
                 vipBgImgSrc: require('@/assets/classicImg/vipbg@gold.png'),
             }
         },
+        props:['clientMsg'],
+        mounted(){
+            console.log(this.clientMsg)
+        }
     }
 </script>
 

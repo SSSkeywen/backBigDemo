@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <router-view/>
+    <keep-alive>
+        <router-view/>
+    </keep-alive>
+    
   </div>
 </template>
 
@@ -165,5 +168,20 @@ img{
 }
 .style-click:active::after{
     opacity: 0.2;
+}
+
+/* swiper样式修改 */
+.van-swipe__indicators{
+        bottom: 4px!important;
+    }
+.van-swipe__indicator {
+    border-radius: 0;
+    background-color: #fff;
+    width: 0.1rem;
+    height: 0.06rem;
+}
+.van-swipe__indicator--active{
+    background-color: #006CB7;
+    width: 0.18rem;
 }
 </style>

@@ -1,54 +1,180 @@
 <template>
-    <div>
+    <div class="box">
         <header>
-            <clientMessage></clientMessage>
+            <clientMessage :clientMsg="clientMsg"></clientMessage>
         </header>
-        <classicNav :navListsOne="navListsOne"></classicNav>
-        <ul>
+        <classicNav :navLists="navLists"></classicNav>
+        <classicSwiper :swiperImgSrcLists="clientMsg.AdvertisingResult"></classicSwiper>
+        <classicPageList class="message-list" :pageListData="pageListData"></classicPageList>
+        <classicPageList class="message-list" :pageListData="pageListDataTwo"></classicPageList>
+        <!-- <ul>
             <li>
                 <p @click="myGuaranteeSlip">信息查询</p>
             </li>
-        </ul>
+        </ul> -->
     </div>
 </template>
 
 <script>
 import clientMessage from '../components/classicComponent/clientMessage'
 import classicNav from '../components/classicComponent/classicNav'
+import classicSwiper from '../components/classicComponent/classicSwiper'
+import classicPageList from '../components/classicComponent/classicPageList'
+import { mapActions } from "vuex";
+import { Toast } from "vant";
     export default {
-        data() {
-            return {
                 data() {
                     return {
-                        navListsOne:'111',
+                        clientMsg:{},
                         navLists: [
                             {
                                 navIcon:require('@/assets/classicImg/icon01.png'),
                                 navTitle: '我的保单',
                                 navPath:'',
+                            },
+                            {
+                                navIcon:require('@/assets/classicImg/icon02.png'),
+                                navTitle: '热卖万能',
+                                navPath:'',
+                            },
+                            {
+                                navIcon:require('@/assets/classicImg/icon03@huizhi.png'),
+                                navTitle: '回执回访',
+                                navPath:'',
+                            },
+                            {
+                                navIcon:require('@/assets/classicImg/icon04@xuqi.png'),
+                                navTitle: '续期交费',
+                                navPath:'',
+                            },
+                            {
+                                navIcon:require('@/assets/classicImg/icon05@lipei.png'),
+                                navTitle: '理赔报案',
+                                navPath:'',
+                            },
+                            {
+                                navIcon:require('@/assets/classicImg/icon06@shishi.png'),
+                                navTitle: '实时贷',
+                                navPath:'',
+                            },
+                            {
+                                navIcon:require('@/assets/classicImg/icon07@guimian.png'),
+                                navTitle: '柜面预约',
+                                navPath:'',
+                            },
+                            {
+                                navIcon:require('@/assets/classicImg/icon08@dianzi.png'),
+                                navTitle: '电子保单',
+                                navPath:'',
                             }
-                        ]
+                        ],
+                        swiperImgSrcLists:[
+                            {
+                                swiperImgSrc:require('@/assets/classicImg/swiperImg.png')
+                            },
+                            {
+                                swiperImgSrc:require('@/assets/classicImg/swiperImg.png')
+                            },{
+                                swiperImgSrc:require('@/assets/classicImg/swiperImg.png')
+                            }
+                        ],
+                        pageListData:{
+                            pageTitle:'信息查询',
+                            allPagePath:'/messageInquire',
+                            pageLists:[
+                                {
+                                    pageBg:require('@/assets/classicImg/bg01@yuding.png'),
+                                    pageName:'预订单查询',
+                                    pageIcon:require('@/assets/classicImg/listIcon01@yuding.png'),
+                                    pagePath:'',
+                                },{
+                                    pageBg:require('@/assets/classicImg/bg02@tubao.png'),
+                                    pageName:'投保进程',
+                                    pageIcon:require('@/assets/classicImg/listIcon02@tubao.png'),
+                                    pagePath:'',
+                                },{
+                                    pageBg:require('@/assets/classicImg/bg03@daikuan.png'),
+                                    pageName:'贷款账户',
+                                    pageIcon:require('@/assets/classicImg/listIcon03@daikuan.png'),
+                                    pagePath:'',
+                                },{
+                                    pageBg:require('@/assets/classicImg/bg04@lipei.png'),
+                                    pageName:'理赔流程',
+                                    pageIcon:require('@/assets/classicImg/listIcon04@lipei.png'),
+                                    pagePath:'',
+                                }
+                            ]
+                        },
+                        pageListDataTwo:{
+                            pageTitle:'业务办理',
+                            allPagePath:'',
+                            pageLists:[
+                                {
+                                    pageBg:require('@/assets/classicImg/bg05@zuzhu.png'),
+                                    pageName:'自助解绑',
+                                    pageIcon:require('@/assets/classicImg/listIcon05@zizhu.png'),
+                                    pagePath:'',
+                                },{
+                                    pageBg:require('@/assets/classicImg/bg06@kaitong.png'),
+                                    pageName:'开通保险<br>服务密码',
+                                    pageIcon:require('@/assets/classicImg/listIcon06@kaitong.png'),
+                                    pagePath:'',
+                                },{
+                                    pageBg:require('@/assets/classicImg/bg07@yuyue.png'),
+                                    pageName:'预约终止',
+                                    pageIcon:require('@/assets/classicImg/listIcon07@yuyue.png'),
+                                    pagePath:'',
+                                },{
+                                    pageBg:require('@/assets/classicImg/bg08@hongli.png'),
+                                    pageName:'红利领取',
+                                    pageIcon:require('@/assets/classicImg/listIcon08@hongli.png'),
+                                    pagePath:'',
+                                }
+                            ]
+                        }
                     }
-                },
-            }
         },
         components:{
             clientMessage,
-            classicNav
+            classicNav,
+            classicSwiper,
+            classicPageList
+        },
+        created(){
+            // const toast1 = Toast.loading({
+            //     mask: true,
+            //     message: "加载中...",
+            //     duration: 0
+            // });
+            console.log(111)
+            this.getClientMessage({
+                successCallback: (res) => {
+                    console.log(res)
+                    this.clientMsg = res.result
+                    // toast1.clear();
+                },
+                fCallback:(res) => {
+                    // toast1.clear();
+                }
+            })
         },
         methods: {
+            ...mapActions({
+                getClientMessage: "getClientMessage"
+            }),
+
             myGuaranteeSlip() {
-                this.$router.push({ path: "/messageInquire" });
+                // this.$router.push({ path: "/messageInquire" });
             }
         },
     }
 </script>
 
 <style scoped lang="scss">
-    div{
-        font-size: 16px;
-        img{
-            display: block;
-        }
-    }
+.box{
+    padding-bottom: 0.5rem;
+}
+.message-list{
+    margin-top: 0.5rem;
+}
 </style>

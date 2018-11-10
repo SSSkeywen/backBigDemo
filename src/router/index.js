@@ -5,6 +5,9 @@ import myGuaranteeSlip from '@/page/policyInfo/myGuaranteeSlip'
 import messageInquire from '@/page/messageInquire'
 import mgPlicyInfo from '@/page/policyInfo/mgPlicyInfo'
 
+//理赔
+import toLiucheng from '@/page/claims/toLiucheng'
+
 Vue.use(Router)
 
 export default new Router({
@@ -25,6 +28,12 @@ export default new Router({
       path: '/mgPlicyInfo',
       name: 'mgPlicyInfo',
       component: mgPlicyInfo
+    }, 
+    //理赔
+    {
+      path: '/toLiucheng',
+      name: 'toLiucheng',
+      component: toLiucheng
     }
   ]
 })

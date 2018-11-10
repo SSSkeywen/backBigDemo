@@ -13,6 +13,9 @@ Vue.use(Vuex)
 import Vant from 'vant'
 import 'vant/lib/vant-css/index.css'
 Vue.use(Vant)
+import { Lazyload } from 'vant';
+// options 为可选参数，无则不传
+Vue.use(Lazyload);
 
 //rem转换
 import './js/1rem100px.js'
