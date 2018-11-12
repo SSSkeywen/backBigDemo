@@ -95,31 +95,31 @@ export default {
             {
               selectIcon: require("@/assets/images/cioncx_32.png"),
               selectName: "理赔流程",
-              selectPath: "",
+              selectPath: "/toLiucheng",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/images/cioncx_30.png"),
               selectName: "索赔材料",
-              selectPath: "",
+              selectPath: "/toZliao",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/images/cioncx_38.png"),
               selectName: "理赔问答",
-              selectPath: "",
+              selectPath: "/toWenda",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/images/cioncx_36.png"),
               selectName: "案件进度",
-              selectPath: "",
+              selectPath: "/toCasemx",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/images/cioncx_41.png"),
               selectName: "医院信息",
-              selectPath: "",
+              selectPath: "/toyiyuancx",
               selectLineStyle: ""
             }
           ]

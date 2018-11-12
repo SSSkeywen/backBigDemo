@@ -7,6 +7,10 @@ import mgPlicyInfo from '@/page/policyInfo/mgPlicyInfo'
 
 //理赔
 import toLiucheng from '@/page/claims/toLiucheng'
+import toZliao from '@/page/claims/toZliao'
+import toWenda from '@/page/claims/toWenda'
+import toCasemx from '@/page/claims/toCasemx'
+import toyiyuancx from '@/page/claims/toyiyuancx'
 
 Vue.use(Router)
 
@@ -34,6 +38,22 @@ export default new Router({
       path: '/toLiucheng',
       name: 'toLiucheng',
       component: toLiucheng
+    }, {
+      path: '/toZliao',
+      name: 'toZliao',
+      component: toZliao
+    }, {
+      path: '/toWenda',
+      name: 'toWenda',
+      component: toWenda
+    }, {
+      path: '/toCasemx',
+      name: 'toCasemx',
+      component: toCasemx
+    }, {
+      path: '/toyiyuancx',
+      name: 'toyiyuancx',
+      component: toyiyuancx
     }
   ]
 })
