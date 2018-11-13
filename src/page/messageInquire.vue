@@ -131,7 +131,7 @@ export default {
             {
               selectIcon: require("@/assets/images/icon_new.png"),
               selectName: "首期账单查询",
-              selectPath: "",
+              selectPath: "/sqzdList",
               selectLineStyle: "line-down-me"
             },
             {

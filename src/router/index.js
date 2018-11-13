@@ -11,6 +11,11 @@ import toZliao from '@/page/claims/toZliao'
 import toWenda from '@/page/claims/toWenda'
 import toCasemx from '@/page/claims/toCasemx'
 import toyiyuancx from '@/page/claims/toyiyuancx'
+import toCasemxMsg from '@/page/claims/toCasemxMsg'
+
+//账单发票
+import sqzdList from '@/page/bill/sqzdList'
+import sqzdMessage from '@/page/bill/sqzdMessage'
 
 Vue.use(Router)
 
@@ -51,9 +56,24 @@ export default new Router({
       name: 'toCasemx',
       component: toCasemx
     }, {
+      path: '/toCasemxMsg',
+      name: 'toCasemxMsg',
+      component: toCasemxMsg
+    }, {
       path: '/toyiyuancx',
       name: 'toyiyuancx',
       component: toyiyuancx
-    }
+    },
+
+    //账单
+    {
+      path: '/sqzdList',
+      name: 'sqzdList',
+      component: sqzdList
+    }, {
+      path: '/sqzdMessage',
+      name: 'sqzdMessage',
+      component: sqzdMessage
+    },
   ]
 })

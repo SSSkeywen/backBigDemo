@@ -1,28 +1,24 @@
 <template>
     <div class="casemx-box">
         <headerT :headerContent="headerContent"></headerT>
-        <ul>
-            <li>
-              <caseMsg></caseMsg>  
-            </li>
-        </ul>
+        <information></information>
         
     </div>
 </template>
 
 <script>
 import headerT from '../../components/header.vue'
-import caseMsg from '../../components/claimsComponent/caseMsg.vue'
+import information from '../../components/billComponent/information.vue'
 import { mapActions } from "vuex";
 import { Toast } from "vant";
     export default {
         components:{
             headerT,
-            caseMsg
+            information
         },
         data() {
             return {
-                headerContent: '案件进度'
+                headerContent: '首期账单查询'
             }
         },
     }
