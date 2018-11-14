@@ -16,6 +16,8 @@ import toCasemxMsg from '@/page/claims/toCasemxMsg'
 //账单发票
 import sqzdList from '@/page/bill/sqzdList'
 import sqzdMessage from '@/page/bill/sqzdMessage'
+import toNewIndex from '@/page/bill/toNewIndex'
+import toNewIndexMessage from '@/page/bill/toNewIndexMessage'
 
 Vue.use(Router)
 
@@ -74,6 +76,14 @@ export default new Router({
       path: '/sqzdMessage',
       name: 'sqzdMessage',
       component: sqzdMessage
+    }, {
+      path: '/toNewIndex',
+      name: 'toNewIndex',
+      component: toNewIndex
+    }, {
+      path: '/toNewIndexMessage',
+      name: 'toNewIndexMessage',
+      component: toNewIndexMessage
     },
   ]
 })

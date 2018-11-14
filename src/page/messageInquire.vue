@@ -137,7 +137,7 @@ export default {
             {
               selectIcon: require("@/assets/images/icon_xz.png"),
               selectName: "续期账单查询",
-              selectPath: "",
+              selectPath: "/toNewIndex",
               selectLineStyle: "line-down-me"
             },
             {
