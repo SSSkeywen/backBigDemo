@@ -18,13 +18,13 @@ import { Toast } from "vant";
         },
         data() {
             return {
-                headerContent: '首期账单查询'
+                headerContent: '保全账单查询'
             }
         },
         methods: {
             viewElectronicInvoices(index) {
                 console.log(index)
-                this.$router.push({ path: '/sqzdList' });
+                this.$router.push({ path: '/saveTheBillList' });
             }
         },
     }

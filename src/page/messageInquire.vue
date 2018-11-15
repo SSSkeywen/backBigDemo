@@ -131,7 +131,7 @@ export default {
             {
               selectIcon: require("@/assets/images/icon_new.png"),
               selectName: "首期账单查询",
-              selectPath: "/sqzdList",
+              selectPath: "/sqzdMessage",
               selectLineStyle: "line-down-me"
             },
             {
@@ -143,13 +143,13 @@ export default {
             {
               selectIcon: require("@/assets/images/icon_mail.png"),
               selectName: "保全账单查询",
-              selectPath: "",
+              selectPath: "/saveTheBill",
               selectLineStyle: ""
             },
             {
               selectIcon: require("@/assets/images/icon_lp.png"),
               selectName: "理赔账单查询",
-              selectPath: "",
+              selectPath: "/settingTheBill",
               selectLineStyle: ""
             }
           ]

@@ -30,7 +30,7 @@ import { Toast } from "vant";
                             {
                                 navIcon:require('@/assets/classicImg/icon01.png'),
                                 navTitle: '我的保单',
-                                navPath:'',
+                                navPath:'/myGuaranteeSlip',
                             },
                             {
                                 navIcon:require('@/assets/classicImg/icon02.png'),
@@ -107,7 +107,7 @@ import { Toast } from "vant";
                         },
                         pageListDataTwo:{
                             pageTitle:'业务办理',
-                            allPagePath:'',
+                            allPagePath:'/businessHanding',
                             pageLists:[
                                 {
                                     pageBg:require('@/assets/classicImg/bg05@zuzhu.png'),

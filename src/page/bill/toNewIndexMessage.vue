@@ -41,25 +41,28 @@
                     <p>已交费<i><img :src="toDownIcon"></i></p>
                   </div>
                   <div class="tn-list-bottom">
-                    <button>查看账单</button>
-                    <button>查看电子发票</button>
+                    <button @click="seeTheBillMessage">查看账单</button>
+                    <button @click="viewElectronicInvoices">查看电子发票</button>
                   </div>
                 </li>
               </ul>
             </div>
         </section>
+        <seeAtTheBill v-if="isOpenWindow" @clolseWindow="clolseWindow"></seeAtTheBill>
     </div>
 </template>
 
 <script>
 import headerT from "../../components/header.vue";
 import toNewComponent from "../../components/billComponent/toNewComponent.vue";
+import seeAtTheBill from "../../components/billComponent/seeAtTheBill.vue";
 import { mapActions } from "vuex";
 import { Toast } from "vant";
 export default {
   components: {
     headerT,
-    toNewComponent
+    toNewComponent,
+    seeAtTheBill
   },
   data() {
     return {
@@ -67,6 +70,7 @@ export default {
       toDownIcon:require('@/assets/billImg/xq_icon_xia.png'),
       imgSrcTitle: require('@/assets/mgImg/xq_icon_xx.png'),
       isOpenContent: false,
+      isOpenWindow: false,
     };
   },
   methods: {
@@ -75,6 +79,22 @@ export default {
     },
     openContent(){
       this.isOpenContent = !this.isOpenContent
+    },
+
+    //打开查看账单
+    seeTheBillMessage(){
+      this.isOpenWindow = true
+    },
+
+    //关闭查看账单
+    clolseWindow(){
+      this.isOpenWindow = false
+    },
+
+    //跳转到查看电子发票页面
+    viewElectronicInvoices(){
+      // this.$router.push({ path: '/mgPlicyInfo',query: {policyCode: policyCode} });
+      this.$router.push({ path: '/toNewIndexView' });
     }
   }
 };

@@ -30,7 +30,7 @@ import { Toast } from "vant";
         },
         data() {
             return {
-                headerContent: '首期账单查询'
+                headerContent: '理赔账单查询'
             }
         },
         methods: {

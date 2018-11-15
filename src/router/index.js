@@ -1,8 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import classic from '@/page/classic'
-import myGuaranteeSlip from '@/page/policyInfo/myGuaranteeSlip'
 import messageInquire from '@/page/messageInquire'
+import businessHanding from '@/page/businessHanding'
+
+
+import myGuaranteeSlip from '@/page/policyInfo/myGuaranteeSlip'
 import mgPlicyInfo from '@/page/policyInfo/mgPlicyInfo'
 
 //理赔
@@ -18,10 +21,16 @@ import sqzdList from '@/page/bill/sqzdList'
 import sqzdMessage from '@/page/bill/sqzdMessage'
 import toNewIndex from '@/page/bill/toNewIndex'
 import toNewIndexMessage from '@/page/bill/toNewIndexMessage'
+import toNewIndexView from '@/page/bill/toNewIndexView'
+import saveTheBill from '@/page/bill/saveTheBill'
+import saveTheBillList from '@/page/bill/saveTheBillList'
+import settingTheBill from '@/page/bill/settingTheBill'
+import settingTheBillList from '@/page/bill/settingTheBillList'
 
 Vue.use(Router)
 
 export default new Router({
+
   routes: [
     {
       path: '/',
@@ -32,6 +41,12 @@ export default new Router({
       name: 'myGuaranteeSlip',
       component: myGuaranteeSlip
     }, {
+      path: '/businessHanding',
+      name: 'businessHanding',
+      component: businessHanding
+    },
+
+    {
       path: '/messageInquire',
       name: 'messageInquire',
       component: messageInquire
@@ -39,7 +54,7 @@ export default new Router({
       path: '/mgPlicyInfo',
       name: 'mgPlicyInfo',
       component: mgPlicyInfo
-    }, 
+    },
     //理赔
     {
       path: '/toLiucheng',
@@ -84,6 +99,27 @@ export default new Router({
       path: '/toNewIndexMessage',
       name: 'toNewIndexMessage',
       component: toNewIndexMessage
+    }, {
+      path: '/toNewIndexView',
+      name: 'toNewIndexView',
+      component: toNewIndexView
+    }, {
+      path: '/saveTheBill',
+      name: 'saveTheBill',
+      component: saveTheBill
+    }, {
+      path: '/saveTheBillList',
+      name: 'saveTheBillList',
+      component: saveTheBillList
+    },
+    {
+      path: '/settingTheBill',
+      name: 'settingTheBill',
+      component: settingTheBill
+    }, {
+      path: '/settingTheBillList',
+      name: 'settingTheBillList',
+      component: settingTheBillList
     },
   ]
 })

@@ -26,14 +26,19 @@
             </li>
         </ul>
         <div class="im-btn">
-            <button>查询电子发票</button>
+            <button @click="viewElectronicInvoices">查询电子发票</button>
         </div>
     </div>
 </template>
 
 <script>
     export default {
-        
+        methods: {
+            viewElectronicInvoices() {
+                let index = 0
+                this.$emit('viewElectronicInvoices',index)
+            }
+        },
     }
 </script>
 
