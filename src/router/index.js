@@ -4,6 +4,9 @@ import classic from '@/page/classic'
 import messageInquire from '@/page/messageInquire'
 import businessHanding from '@/page/businessHanding'
 
+// 绑定页面
+import userInfo from '@/page/userInfo'
+
 
 import myGuaranteeSlip from '@/page/policyInfo/myGuaranteeSlip'
 import mgPlicyInfo from '@/page/policyInfo/mgPlicyInfo'
@@ -44,6 +47,11 @@ export default new Router({
       path: '/businessHanding',
       name: 'businessHanding',
       component: businessHanding
+    }, 
+    {
+      path: '/userInfo',
+      name: 'userInfo',
+      component: userInfo
     },
 
     {
