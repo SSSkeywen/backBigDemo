@@ -51,6 +51,7 @@ const actions = {
             data: policyCodeData,
             "Content-Type": "multipart/form-data"
         }).then((res) => {
+            console.log(res)
             let result = res.data
             if (result.responseCode == '0') {
                 successCallback(result)

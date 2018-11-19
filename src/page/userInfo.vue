@@ -26,12 +26,12 @@
                     </transition>
                 </div>
                 <input class="user-text" type="text" placeholder="证件号码">
-                <button class="style-click" type="submit" id="login-button"  name="check_btn">验证</button>
+                <button class="style-click" type="submit" @click="validation"  name="check_btn">验证</button>
             </div>
         </div>
         <bgComponent></bgComponent>
         <alertContent :alertCount="alertCount"></alertContent>
-        <sendAlrtContent></sendAlrtContent>
+        <sendAlrtContent v-if="false"></sendAlrtContent>
     </div>
 </template>
 
@@ -96,11 +96,17 @@ export default {
     alertContent,
     sendAlrtContent
   },
+  created(){
+    console.log(this.$route.query.pathAddress)
+  },
   methods: {
     selectCard(index) {
       console.log(index);
       this.cardNameType = this.cardList[index].cardName
       this.isOpenSelect = false
+    },
+    validation(){
+      this.$router.push({ path: this.$route.query.pathAddress });
     }
   }
 };
