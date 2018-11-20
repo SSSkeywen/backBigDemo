@@ -34,7 +34,18 @@ export default {
       ]
     };
   },
+  created() {
+    this.getToNewIndexList({
+      successCallback: res => {
+        console.log(res.result);
+      },
+      fCallback: res => {}
+    });
+  },
   methods: {
+    ...mapActions({
+      getToNewIndexList: "getToNewIndexList"
+    }),
       policyMessage(policyCode) {
             this.$router.push({ path: '/toNewIndexMessage',query: {policyCode: policyCode} });
         },
