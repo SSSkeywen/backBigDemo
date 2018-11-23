@@ -386,7 +386,7 @@ import { mapActions } from "vuex";
             display: flex;
             font-weight: 600;
             .mp-min-left-img{
-                width: 0.3rem;
+                width: 0.45rem;
                 padding-top: 0.17rem;
                 margin-right: 0.2rem;
                 img{

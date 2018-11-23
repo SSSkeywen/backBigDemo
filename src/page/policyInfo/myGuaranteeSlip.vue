@@ -66,10 +66,10 @@ import { Toast } from "vant";
             const toast1 = Toast.loading({
                 mask: true,
                 message: "加载中...",
-                duration: 0
+                duration: 1000
             });
 
-            this.getLates({
+             this.getLates({
                 successCallback: (res) => {
                     console.log(res)
                     

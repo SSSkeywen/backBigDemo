@@ -12,8 +12,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/wxqhb/': {
-        target: 'http://10.7.181.153:8090', // 你接口的域名 fancj
-        // target: 'http://10.7.181.135:8090', // 你接口的域名  zhangr
+        // target: 'http://10.7.181.153:8090', // 你接口的域名 fancj
+        target: 'http://10.7.181.184:8090', // 你接口的域名  zhangr
         // target: 'https://tpwxtestcloud.life.cntaiping.com', // 你接口的域名
         secure: false,
         changeOrigin: true,

@@ -1,4 +1,5 @@
 import axios from 'axios'
+// import {HTTP} from '@/config/http.js'
 
 const getLates = 'getLates'
 const getPolicyInfo = 'getPolicyInfo'
@@ -13,16 +14,17 @@ const mutations = {
 }
 
 const actions = {
-    // getLates(sCallback){
+    // getLates({sCallback=()=>{}}){
     //     HTTP.request({
-    //         url: '/toTaxExtensionPensionIndex.html',
+    //         url: 'policy/toPolicyListVue.html',
     //         methods:'post',
     //         success: (res) => {
+    //             console.log(res)
     //             sCallback(res)
     //         },
-    //         failCallback:(res) => {
-    //         }
-    //     })
+            // failCallback:(res) => {
+            // }
+        // })
     // },
     [getLates]({ commit }, { successCallback = () => { }, failCallback = () => { } }) {
         axios({
@@ -31,6 +33,7 @@ const actions = {
             data: '',
             "Content-Type": "multipart/form-data"
         }).then((res) => {
+            console.log(res)
             let result = res.data
             if (result.responseCode == '0') {
                 successCallback(result)

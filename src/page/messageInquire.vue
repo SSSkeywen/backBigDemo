@@ -46,7 +46,7 @@ export default {
               selectLineStyle: "line-down-me"
             },
             {
-              selectIcon: require("@/assets/images/icon_03.png"),
+              selectIcon: require("@/assets/images/icon_tb.png"),
               selectName: "投保进程查询",
               selectPath: ""
             }
