@@ -2,7 +2,7 @@
     <div class="casemx-box">
         <headerT :headerContent="headerContent"></headerT>
         <ul class="casemx-ul">
-            <li v-for="(item,index) in contentListData" :key="index" @click="policyMessage(item.policyCode)">
+            <li v-for="(item,index) in contentListData" :key="index" @click="policyMessage(item.POLICY_CODE)">
                 <toNewComponent :contentListData="item"></toNewComponent>
             </li>
         </ul>
@@ -23,14 +23,14 @@ export default {
     return {
       headerContent: "续期账单查询",
       contentListData: [
-        {
-          policyCode: "003158178991008",
-          productName:'太平爱爸妈骨折综合意外伤害保险',
-          policyMoney: "5000",
-          insuredName: "",
-          validateDate: null,
-          statusName: "有效"
-        }
+        // {
+        //   policyCode: "003158178991008",
+        //   productName:'太平爱爸妈骨折综合意外伤害保险',
+        //   policyMoney: "5000",
+        //   insuredName: "",
+        //   validateDate: null,
+        //   statusName: "有效"
+        // }
       ]
     };
   },
@@ -38,6 +38,7 @@ export default {
     this.getToNewIndexList({
       successCallback: res => {
         console.log(res.result);
+        this.contentListData = res.result.list
       },
       fCallback: res => {}
     });

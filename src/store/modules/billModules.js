@@ -1,25 +1,32 @@
 import axios from 'axios'
+import {apiConfig} from '../api.js'
 
 //本页为账单/发票目录下的页面的所有接口和数据
 
 const getToNewIndexList = 'getToNewIndexList'
 const getToNewIndexListMsg = 'getToNewIndexListMsg'
+const getBillList ='getBillList'
+const setEndTitem = 'setEndTitem'
 
 
 const state = {
-    ulrData: '/wxqhb/'
+    ulrData: '/wxqhb/',
+    xqDataList:null,
 }
 
 const mutations = {
-    
+    [setEndTitem](key,value){
+        let curTime = new Date().getTime()
+        window.localStorage.setItem(value.name, JSON.stringify({data:value,time:curTime}))
+    }
 }
 
 const actions = {
-    //获取续期账单的列表
-    [getToNewIndexList]({ commit }, { successCallback = () => { }, failCallback = () => { } }) {
+    //获取首期账单的列表的详细信息
+    [getBillList]({ commit }, { typeData, successCallback = () => { }, failCallback = () => { } }) {
         axios({
             method: 'post',
-            url: state.ulrData + 'toXufeiAccountList',
+            url: apiConfig.api_base_url + 'policy/BillInquirylis/' + typeData,
             data: '',
             "Content-Type": "multipart/form-data"
         }).then((res) => {
@@ -35,12 +42,37 @@ const actions = {
             failCallback()
         })
     },
-    //获取续期账单的列表的详细信息
-    [getToNewIndexListMsg]({ commit }, {hospitalSelectData, successCallback = () => { }, failCallback = () => { } }) {
+    //获取续期账单的列表
+    [getToNewIndexList]({ commit }, { successCallback = () => { }, failCallback = () => { } }) {
         axios({
             method: 'post',
-            url: state.ulrData + 'page/toNewPageMenu.html',
-            data: hospitalSelectData,
+            url: apiConfig.api_base_url + 'xufeibill/toXufeiAccountList',
+            data: '',
+            "Content-Type": "multipart/form-data"
+        }).then((res) => {
+            let result = res.data
+            if (result.responseCode == '0') {
+                successCallback(result)
+                state.xqDataList = result
+                console.log(commit)
+                result.result.name = 'xqDataList'
+                commit(setEndTitem,result.result)
+                // window.localStorage.setItem('xqDataList', JSON.stringify(result.result))
+            } else {
+                failCallback()
+            }
+
+        }).catch((err) => {
+            failCallback()
+        })
+    },
+    
+    //获取续期账单的列表的详细信息
+    [getToNewIndexListMsg]({ commit }, { xqPolicyCode, successCallback = () => { }, failCallback = () => { } }) {
+        axios({
+            method: 'post',
+            url: apiConfig.api_base_url + 'xufeibill/toXufeiAccountDetails/' + xqPolicyCode,
+            data: '',
             "Content-Type": "multipart/form-data"
         }).then((res) => {
             console.log(res)
@@ -58,7 +90,9 @@ const actions = {
 }
 
 const getters = {
-    
+    xqDataList(state) {
+        return state.xqDataList
+    },
 }
 
 export default {

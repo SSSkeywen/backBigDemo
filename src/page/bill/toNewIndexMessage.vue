@@ -73,7 +73,27 @@ export default {
       isOpenWindow: false,
     };
   },
+  created(){
+    console.log(this.$route.query.policyCode)
+    let xqPolicyCode = this.$route.query.policyCode
+    // let xqPolicyCode = new FormData()
+    //     xqPolicyCode.append("policyCode", this.$route.query.policyCode);
+    this.getToNewIndexListMsg({
+      xqPolicyCode,
+      successCallback: res => {
+        console.log(res.result);
+      },
+      fCallback: res => {}
+    });
+  },
+  mounted(){
+    // console.log(this.$store.getters.xqDataList)
+    // let xqDataList = JSON.parse(window.localStorage.getItem("xqDataList"));
+  },
   methods: {
+    ...mapActions({
+      getToNewIndexListMsg: "getToNewIndexListMsg"
+    }),
     policyMessage(policyCode) {
       // this.$router.push({ path: '/mgPlicyInfo',query: {policyCode: policyCode} });
     },

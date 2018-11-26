@@ -1,5 +1,6 @@
 import axios from 'axios'
 // import {HTTP} from '@/config/http.js'
+import { get, post } from '@/config/http.js'
 
 const getLates = 'getLates'
 const getPolicyInfo = 'getPolicyInfo'
@@ -10,7 +11,7 @@ const state = {
 }
 
 const mutations = {
-    
+
 }
 
 const actions = {
@@ -22,40 +23,46 @@ const actions = {
     //             console.log(res)
     //             sCallback(res)
     //         },
-            // failCallback:(res) => {
-            // }
-        // })
+    // failCallback:(res) => {
+    // }
+    // })
+    // },
+    // [getLates]({ commit }, { successCallback = () => { }, failCallback = () => { } }) {
+    //     axios({
+    //         method: 'post',
+    //         url: state.ulrData + 'policy/toPolicyListVue.html',
+    //         data: '',
+    //         "Content-Type": "multipart/form-data"
+    //     }).then((res) => {
+    //         console.log(res)
+    //         let result = res.data
+    //         if (result.responseCode == '0') {
+    //             successCallback(result)
+    //         } else {
+    //             failCallback()
+    //         }
+
+    //     }).catch((err) => {
+    //         failCallback()
+    //     })
     // },
     [getLates]({ commit }, { successCallback = () => { }, failCallback = () => { } }) {
-        axios({
-            method: 'post',
-            url: state.ulrData + 'policy/toPolicyListVue.html',
-            data: '',
-            "Content-Type": "multipart/form-data"
-        }).then((res) => {
+        get(state.ulrData + 'policy/toPolicyListVue.html', '').then((res) => {
             console.log(res)
-            let result = res.data
+            let result = res
             if (result.responseCode == '0') {
                 successCallback(result)
             } else {
-                failCallback()
             }
 
         }).catch((err) => {
-            failCallback()
         })
     },
-
     //获取详情
-    [getPolicyInfo]({ commit }, {policyCodeData, successCallback = () => { }, failCallback = () => { } }) {
-        axios({
-            method: 'post',
-            url: state.ulrData + 'policy/newpolicyInfoVue.html',
-            data: policyCodeData,
-            "Content-Type": "multipart/form-data"
-        }).then((res) => {
+    [getPolicyInfo]({ commit }, { policyCodeData, successCallback = () => { }, failCallback = () => { } }) {
+        get(state.ulrData + 'policy/newpolicyInfoVue.html', policyCodeData).then((res) => {
             console.log(res)
-            let result = res.data
+            let result = res
             if (result.responseCode == '0') {
                 successCallback(result)
             } else {
@@ -65,12 +72,29 @@ const actions = {
         }).catch((err) => {
             failCallback()
         })
+        //     axios({
+        //         method: 'post',
+        //         url: state.ulrData + 'policy/newpolicyInfoVue.html',
+        //         data: policyCodeData,
+        //         "Content-Type": "multipart/form-data"
+        //     }).then((res) => {
+        //         console.log(res)
+        //         let result = res.data
+        //         if (result.responseCode == '0') {
+        //             successCallback(result)
+        //         } else {
+        //             failCallback()
+        //         }
+
+        //     }).catch((err) => {
+        //         failCallback()
+        //     })
     },
 
 }
 
 const getters = {
-    
+
 }
 
 export default {

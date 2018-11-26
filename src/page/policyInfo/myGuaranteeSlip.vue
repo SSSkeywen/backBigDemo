@@ -66,13 +66,10 @@ import { Toast } from "vant";
             const toast1 = Toast.loading({
                 mask: true,
                 message: "加载中...",
-                duration: 1000
+                duration: 0
             });
-
              this.getLates({
                 successCallback: (res) => {
-                    console.log(res)
-                    
                     for(let item of res.result){
                         if(item.statusName == '有效'){
                             item.statusStyle = 'green'

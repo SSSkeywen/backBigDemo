@@ -1,21 +1,21 @@
 <template>
     <div>
         <hgroup class="mg-hgroup">
-            <p>保单号：<span v-text="contentListData.policyCode"></span></p>
+            <p>保单号：<span v-text="contentListData.POLICY_CODE"></span></p>
             <div>
                 <img :src="imgSrc" alt="">
             </div>
         </hgroup>
         <ul class="mg-ul">
             <li>
-                <p>{{contentListData.productName}}</p>
+                <p>{{contentListData.PRODUCT_NAME}}</p>
             </li>
             <li>
-                <p>下期保费：{{contentListData.policyMoney}}</p>
+                <p>下期保费：{{contentListData.ACTUAL_PREM}}</p>
             </li>
             <li>
-                <p>生效日期：{{contentListData.validateDate | dateFilter}}</p>
-                <p :class="contentListData.statusStyle">状态：{{contentListData.statusName}}</p>
+                <p>生效日期：{{contentListData.PAY_TO_DATE | dateFilter}}</p>
+                <p :class="contentListData.statusStyle">状态：{{contentListData.LIABILITY_STATUS_NAME}}</p>
             </li>
         </ul>
     </div>

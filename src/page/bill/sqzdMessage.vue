@@ -7,32 +7,47 @@
 </template>
 
 <script>
-import headerT from '../../components/header.vue'
-import information from '../../components/billComponent/information.vue'
+import headerT from "../../components/header.vue";
+import information from "../../components/billComponent/information.vue";
 import { mapActions } from "vuex";
 import { Toast } from "vant";
-    export default {
-        components:{
-            headerT,
-            information
-        },
-        data() {
-            return {
-                headerContent: '首期账单查询'
-            }
-        },
-        methods: {
-            viewElectronicInvoices(index) {
-                console.log(index)
-                this.$router.push({ path: '/sqzdList' });
-            }
-        },
+export default {
+  components: {
+    headerT,
+    information
+  },
+  data() {
+    return {
+      headerContent: "首期账单查询"
+    };
+  },
+  created() {
+    console.log(111);
+    let typeData = 1;
+    this.getBillList({
+      typeData,
+      successCallback: res => {
+        console.log(res.result);
+        // this.contentListData = res.result.list;
+      },
+      fCallback: res => {}
+    });
+  },
+  methods: {
+    ...mapActions({
+      getBillList: "getBillList"
+    }),
+    viewElectronicInvoices(index) {
+      console.log(index);
+      this.$router.push({ path: "/sqzdList" });
     }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-.casemx-box{
-    min-height: 100vh;
-    background: #DCDCDC;
+.casemx-box {
+  min-height: 100vh;
+  background: #dcdcdc;
 }
 </style>
