@@ -60,7 +60,7 @@ const actions = {
     },
     //获取详情
     [getPolicyInfo]({ commit }, { policyCodeData, successCallback = () => { }, failCallback = () => { } }) {
-        get(state.ulrData + 'policy/newpolicyInfoVue.html', policyCodeData).then((res) => {
+        post(state.ulrData + 'policy/newpolicyInfoVue.html', policyCodeData).then((res) => {
             console.log(res)
             let result = res
             if (result.responseCode == '0') {

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { get, post } from '@/config/http.js'
 
 const getClientMessage = 'getClientMessage'
 
@@ -24,14 +25,9 @@ const actions = {
     //     })
     // },
     [getClientMessage]({ commit }, { successCallback = () => { }, failCallback = () => { } }) {
-        axios({
-            method: 'post',
-            url: state.ulrData + 'page/toNewPageMenu.html',
-            data: '',
-            "Content-Type": "multipart/form-data"
-        }).then((res) => {
+        post(state.ulrData + 'page/toNewPageMenu.html', '').then((res) => {
             console.log(res)
-            let result = res.data
+            let result = res
             if (result.responseCode == '0') {
                 successCallback(result)
             } else {
@@ -41,6 +37,23 @@ const actions = {
         }).catch((err) => {
             failCallback()
         })
+        // axios({
+        //     method: 'post',
+        //     url: state.ulrData + 'page/toNewPageMenu.html',
+        //     data: '',
+        //     "Content-Type": "multipart/form-data"
+        // }).then((res) => {
+        //     console.log(res)
+        //     let result = res.data
+        //     if (result.responseCode == '0') {
+        //         successCallback(result)
+        //     } else {
+        //         failCallback()
+        //     }
+
+        // }).catch((err) => {
+        //     failCallback()
+        // })
     },
 
 }

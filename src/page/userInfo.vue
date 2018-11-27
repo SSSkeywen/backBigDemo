@@ -1,5 +1,5 @@
 <template>
-    <div class="user-box">
+    <div class="user-box" @click="closeSelect">
         <div class="user-container">
             <div class="user-logo">
                 <img :src="logoImgSrc" alt="">
@@ -7,7 +7,7 @@
             <div class="user-form">
                 <input class="user-text" type="text" placeholder="姓名">
                 <div class="main_sty">
-                    <input type="text" name='select' lx ='0' class="user-text" @click="isOpenSelect=!isOpenSelect" v-model="cardNameType" style="border:1px solid #dedede;text-align:center;" readonly placeholder="请选择您的证件类型" >
+                    <input type="text" name='select' lx ='0' class="user-text" @click.stop="isOpenSelect=!isOpenSelect" v-model="cardNameType" style="border:1px solid #dedede;text-align:center;" readonly placeholder="请选择您的证件类型" >
                     <transition name="fade">
                     <div class="main_select" v-show="isOpenSelect">
                         <ul>
@@ -107,6 +107,11 @@ export default {
     },
     validation(){
       this.$router.push({ path: this.$route.query.pathAddress });
+    },
+
+    //关闭下拉框
+    closeSelect(){
+      this.isOpenSelect = false
     }
   }
 };
