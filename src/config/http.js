@@ -16,14 +16,19 @@ import { Toast } from 'vant';
 // } else if (process.env.NODE_ENV == 'debug') { 
 //  axios.defaults.baseURL = '';
 // } else if (process.env.NODE_ENV == 'production') { 
-// axios.defaults.baseURL = 'https://tpwxtestcloud.life.cntaiping.com/wxqhb';
+axios.defaults.baseURL = 'http://localhost.cntaiping.com:8080/';
 // }
 // alert(1)
 
 // 请求超时时间
 axios.defaults.timeout = 10000;
 // post请求头
-// axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
+axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
+// response.header("Access-Control-Allow-Origin", "*");
+
+// axios.defaults.headers.post["Access-Control-Allow-Methods"] ="PUT,POST,GET,DELETE,OPTIONS"
+
+// axios.defaults.headers.post["Access-Control-Allow-Headers"]= "Content-Type,Content-Length, Authorization, Accept,X-Requested-With"
 // post请求头
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8;multipart/form-data';
 

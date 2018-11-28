@@ -7,7 +7,7 @@ const getPolicyInfo = 'getPolicyInfo'
 
 
 const state = {
-    ulrData: '/wxqhb/'
+    ulrData: '/'
 }
 
 const mutations = {

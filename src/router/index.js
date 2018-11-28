@@ -30,6 +30,9 @@ import saveTheBillList from '@/page/bill/saveTheBillList'
 import settingTheBill from '@/page/bill/settingTheBill'
 import settingTheBillList from '@/page/bill/settingTheBillList'
 
+//保险服务密码
+import open from '@/page/insuranceServicePassword/open'
+
 Vue.use(Router)
 
 export default new Router({
@@ -128,6 +131,12 @@ export default new Router({
       path: '/settingTheBillList',
       name: 'settingTheBillList',
       component: settingTheBillList
+    },
+    //保险服务密码
+    {
+      path: '/open',
+      name: 'open',
+      component: open
     },
   ]
 })

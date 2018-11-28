@@ -91,7 +91,7 @@ export default {
             {
               selectIcon: require("@/assets/img/kaitong.png"),
               selectName: "开通",
-              selectPath: "",
+              selectPath: "/open",
               selectLineStyle: "line-down-me"
             },
             {
