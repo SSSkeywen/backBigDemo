@@ -57,42 +57,42 @@ const actions = {
     },
     //获取续期账单的列表
     [getToNewIndexList]({ commit }, { successCallback = () => { }, failCallback = () => { } }) {
-        // post(apiConfig.api_base_url + 'xufeibill/toXufeiAccountList', '')
-        //     .then((res) => {
-        //         let result = res
-        //         if (result.responseCode == '0') {
-        //             successCallback(result)
-        //             state.xqDataList = result
-        //             result.result.name = 'xqDataList'
-        //             commit(setEndTitem, result.result)
-        //         } else {
-        //             failCallback()
-        //         }
+        post(apiConfig.api_base_url + 'xufeibill/toXufeiAccountList', '')
+            .then((res) => {
+                let result = res
+                if (result.responseCode == '0') {
+                    successCallback(result)
+                    state.xqDataList = result
+                    result.result.name = 'xqDataList'
+                    commit(setEndTitem, result.result)
+                } else {
+                    failCallback()
+                }
 
-        //     }).catch((err) => {
-        //         failCallback()
-        //     })
-        axios({
-            method: 'post',
-            url: apiConfig.api_base_url + 'xufeibill/toXufeiAccountList',
-            data: '',
-            "Content-Type": "multipart/form-data"
-        }).then((res) => {
-            let result = res.data
-            if (result.responseCode == '0') {
-                successCallback(result)
-                state.xqDataList = result
-                console.log(commit)
-                result.result.name = 'xqDataList'
-                commit(setEndTitem,result.result)
-                // window.localStorage.setItem('xqDataList', JSON.stringify(result.result))
-            } else {
+            }).catch((err) => {
                 failCallback()
-            }
+            })
+        // axios({
+        //     method: 'post',
+        //     url: apiConfig.api_base_url + 'xufeibill/toXufeiAccountList',
+        //     data: '',
+        //     "Content-Type": "multipart/form-data"
+        // }).then((res) => {
+        //     let result = res.data
+        //     if (result.responseCode == '0') {
+        //         successCallback(result)
+        //         state.xqDataList = result
+        //         console.log(commit)
+        //         result.result.name = 'xqDataList'
+        //         commit(setEndTitem,result.result)
+        //         // window.localStorage.setItem('xqDataList', JSON.stringify(result.result))
+        //     } else {
+        //         failCallback()
+        //     }
 
-        }).catch((err) => {
-            failCallback()
-        })
+        // }).catch((err) => {
+        //     failCallback()
+        // })
     },
 
     //获取续期账单的列表的详细信息

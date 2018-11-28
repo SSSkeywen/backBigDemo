@@ -42,13 +42,13 @@ export default {
             {
               selectIcon: require("@/assets/images/cioncx_09.png"),
               selectName: "保全变更记录",
-              selectPath: "",
+              selectPath: "/changeList",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/images/icon_tb.png"),
               selectName: "投保进程查询",
-              selectPath: ""
+              selectPath: "/insureProgress"
             }
           ]
         },
@@ -59,31 +59,31 @@ export default {
             {
               selectIcon: require("@/assets/images/cioncx_17.png"),
               selectName: "万能账户",
-              selectPath: "",
+              selectPath: "/universal",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/images/cioncx_14.png"),
               selectName: "分红账户",
-              selectPath: "",
+              selectPath: "/dividend",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/images/cioncx_25.png"),
               selectName: "贷款账户",
-              selectPath: "",
+              selectPath: "/loans",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/images/cioncx_22.png"),
               selectName: "投连账户",
-              selectPath: "",
+              selectPath: "/unitLinked",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/images/sc.png"),
               selectName: "生存金账户",
-              selectPath: "",
+              selectPath: "/survival",
               selectLineStyle: ""
             }
           ]
@@ -161,37 +161,37 @@ export default {
             {
               selectIcon: require("@/assets/images/icon_baodan.png"),
               selectName: "保单年度报告<br>查询",
-              selectPath: "",
+              selectPath: "/yearReport",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/images/icon_shixiao.png"),
               selectName: "失效通知书<br>查询",
-              selectPath: "",
+              selectPath: "/lostNotice",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/images/icon_yongjiu.png"),
               selectName: "永久失效通知书<br>查询",
-              selectPath: "",
+              selectPath: "/lostForever",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/images/icon_zhuanzhang.png"),
               selectName: "转账成功通知书<br>查询",
-              selectPath: "",
+              selectPath: "/transferSuc",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/images/icon_jifei.png"),
               selectName: "缴费提醒查询",
-              selectPath: "",
+              selectPath: "/payFees",
               selectLineStyle: ""
             },
             {
               selectIcon: require("@/assets/images/icon_tuixin.png"),
               selectName: "退信查询",
-              selectPath: "",
+              selectPath: "/bounce",
               selectLineStyle: ""
             }
           ]

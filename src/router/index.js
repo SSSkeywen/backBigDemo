@@ -30,6 +30,31 @@ import saveTheBillList from '@/page/bill/saveTheBillList'
 import settingTheBill from '@/page/bill/settingTheBill'
 import settingTheBillList from '@/page/bill/settingTheBillList'
 
+//liu feitao
+import changeList from '@/page/policyInfo/changeList/changeList'
+import changeListInfo from '@/page/policyInfo/changeList/changeListInfo'
+import approvalMsg from '@/page/policyInfo/changeList/approvalMsg'
+import insureProgress from '@/page/policyInfo/insureProgress/insureProgress'
+
+import universal from '@/page/account/universal'
+import dividend from '@/page/account/dividend'
+import dividendInfo from '@/page/account/dividendInfo'
+import loans from '@/page/account/loans'
+import unitLinked from '@/page/account/unitLinked'
+import unitLinkedInfo from '@/page/account/unitLinkedInfo'
+
+import survival from '@/page/account/survival'
+import survivalInfo from '@/page/account/survivalInfo'
+
+import yearReport from '@/page/letter/yearReport'
+import lostNotice from '@/page/letter/lostNotice'
+import lostForever from '@/page/letter/lostForever'
+import transferSuc from '@/page/letter/transferSuc'
+import payFees from '@/page/letter/payFees'
+import bounce from '@/page/letter/bounce'
+import addressOk from '@/page/letter/addressOk'
+import addressNew from '@/page/letter/addressNew'
+
 //保险服务密码
 import open from '@/page/insuranceServicePassword/open'
 
@@ -132,6 +157,132 @@ export default new Router({
       name: 'settingTheBillList',
       component: settingTheBillList
     },
+    //liu feitao
+      //changeList 保全变更
+    {
+      path: '/changeList',
+      name: 'changeList',
+      component: changeList
+    },
+    //changeListInfo 保全变更记录
+    {
+      path: '/changeListInfo',
+      name: 'changeListInfo',
+      component: changeListInfo
+    },
+    //approvalMsg 批文信息
+    {
+      path: '/approvalMsg',
+      name: 'approvalMsg',
+      component: approvalMsg
+    },
+    // insureProgress 投保进程查询
+    {
+      path: '/insureProgress',
+      name: 'insureProgress',
+      component: insureProgress
+    },
+    // 账户
+    // universal 万能账户
+    {
+      path: '/universal',
+      name: 'universal',
+      component: universal
+    },
+    // dividend 分红账户
+    {
+      path: '/dividend',
+      name: 'dividend',
+      component: dividend
+    },
+    // dividendInfo 分红账户信息
+    {
+      path: '/dividendInfo',
+      name: 'dividendInfo',
+      component: dividendInfo
+    },
+    // loans 贷款账户
+    {
+      path: '/loans',
+      name: 'loans',
+      component: loans
+    },
+    // unitLinked 连投账户
+    {
+      path: '/unitLinked',
+      name: 'unitLinked',
+      component: unitLinked
+    }
+    ,
+    // unitLinkedInfo 连投账户
+    {
+      path: '/unitLinkedInfo',
+      name: 'unitLinkedInfo',
+      component: unitLinkedInfo
+    },
+    
+    // survival 生存金账户
+    {
+      path: '/survival',
+      name: 'survival',
+      component: survival
+    },
+    // survivalInfo 生存金账户信息
+    {
+      path: '/survivalInfo',
+      name: 'survivalInfo',
+      component: survivalInfo
+    },
+    
+    // yearReport 保单年度报告
+    {
+      path: '/yearReport',
+      name: 'yearReport',
+      component: yearReport
+    },
+    // lostNotice 失效通知书查询
+    {
+      path: '/lostNotice',
+      name: 'lostNotice',
+      component: lostNotice
+    },
+    // lostForever 永久失效通知书查询
+    {
+      path: '/lostForever',
+      name: 'lostForever',
+      component: lostForever
+    },
+    // transferSuc 转账成功通知书查询
+    {
+      path: '/transferSuc',
+      name: 'transferSuc',
+      component: transferSuc
+    },
+    // payFees 缴费提醒查询
+    {
+      path: '/payFees',
+      name: 'payFees',
+      component: payFees
+    },
+    // bounce 退信查询
+    {
+      path: '/bounce',
+      name: 'bounce',
+      component: bounce
+    },
+    // addressNew 地址修改
+    {
+      path: '/addressNew',
+      name: 'addressNew',
+      component: addressNew
+    },
+    // addressOk 地址确认
+    {
+      path: '/addressOk',
+      name: 'addressOk',
+      component: addressOk
+    },
+
     //保险服务密码
     {
       path: '/open',
