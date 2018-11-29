@@ -39,8 +39,7 @@ export default {
 		}
 	},
 	components:{
-		progressInfoMap,
-		// ani
+		progressInfoMap
 	},
 	computed: {
 		//反向排列显示列表

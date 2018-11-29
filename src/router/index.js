@@ -30,22 +30,24 @@ import saveTheBillList from '@/page/bill/saveTheBillList'
 import settingTheBill from '@/page/bill/settingTheBill'
 import settingTheBillList from '@/page/bill/settingTheBillList'
 
-//liu feitao
-import changeList from '@/page/policyInfo/changeList/changeList'
-import changeListInfo from '@/page/policyInfo/changeList/changeListInfo'
-import approvalMsg from '@/page/policyInfo/changeList/approvalMsg'
-import insureProgress from '@/page/policyInfo/insureProgress/insureProgress'
+//保全变更记录
+import changeList from '@/page/policyInfo/changeList'
+import changeListInfo from '@/page/policyInfo/changeListInfo'
+import approvalMsg from '@/page/policyInfo/approvalMsg'
+//投保进程查询
+import insureProgress from '@/page/policyInfo/insureProgress'
 
+// 账户
 import universal from '@/page/account/universal'
+import universalInfo from '@/page/account/universalInfo'
 import dividend from '@/page/account/dividend'
 import dividendInfo from '@/page/account/dividendInfo'
 import loans from '@/page/account/loans'
 import unitLinked from '@/page/account/unitLinked'
 import unitLinkedInfo from '@/page/account/unitLinkedInfo'
-
 import survival from '@/page/account/survival'
 import survivalInfo from '@/page/account/survivalInfo'
-
+// 退信
 import yearReport from '@/page/letter/yearReport'
 import lostNotice from '@/page/letter/lostNotice'
 import lostForever from '@/page/letter/lostForever'
@@ -188,6 +190,12 @@ export default new Router({
       path: '/universal',
       name: 'universal',
       component: universal
+    },
+    // universalInfo 万能账户信息
+    {
+      path: '/universalInfo',
+      name: 'universalInfo',
+      component: universalInfo
     },
     // dividend 分红账户
     {

@@ -65,8 +65,8 @@ data() {
     },
     methods: {
     	jumpUrl(url) {
-    			console.log(url);
-                this.$router.push({ path: '' });
+    			// console.log(url);
+                this.$router.push({ path: '/survivalInfo' });
             }
     }
 }

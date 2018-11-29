@@ -13,7 +13,7 @@
 
 <script>
 import headerT from '../../components/header.vue'
-import mincontentList from '../../components/liufeitao/minContentList.vue'
+import mincontentList from '../../components/policyInfoComponent/minContentList.vue'
 import { mapActions } from "vuex";
 export default {
     components: {
@@ -58,7 +58,7 @@ export default {
             getLates: "getLates"
         }),
         changeMessage(policyCode) {
-            this.$router.push({ path: '/' });
+            this.$router.push({ path: '/dividendInfo' });
         }
     }   
 }

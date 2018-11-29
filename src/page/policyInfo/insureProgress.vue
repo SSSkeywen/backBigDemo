@@ -26,18 +26,18 @@
                     </table>
                     <input @click="queryMsg" class="btn_search" type="button" value="查询" />
                 </section>
-                <!-- <div v-for="(item,index) in myaddData" :key="index">
-                  <progressInfo :myaddData="item"></progressInfo>
-                </div> -->
             </div>
         </div>
         <div v-else class="downBox">该客户名下暂无60内承包的保单</div>
+        <footer id="banquan" class="banquan" style="position: fixed; bottom: 0; z-index:9">
+            <span>版权所有&nbsp;©&nbsp;2001-2016&nbsp;中国太平保险集团有限责任公司</span>
+        </footer>
     </div>
 </template>
 
 <script>
-import headerT from "../../../components/header.vue";
-import progressInfo from "../../../components/liufeitao/progressInfo.vue";
+import headerT from "../../components/header.vue";
+import progressInfo from "../../components/policyInfoComponent/progressInfo.vue";
 import { mapActions } from "vuex";
 export default {
   data() {
@@ -285,6 +285,16 @@ export default {
 </script>
 
 <style lang="" scoped>
+.banquan{
+    width: 100%;
+    height: 45px;
+    margin-top: 8%;
+    line-height: 45px;
+    background-color: #F0F0F0;
+    color: #949494;
+    font-size: 12px;
+    text-align: center;
+}
 .mg-box {
   min-height: 100vh;
   background-color: #eee;

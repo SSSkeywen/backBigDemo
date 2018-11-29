@@ -1,6 +1,6 @@
 <template>
     <div class="mg-box">
-    <headerT :headerContent="headerContent">sss</headerT>
+    <headerT :headerContent="headerContent"></headerT>
     <section class="mg-content-list">
         <ul>
             <li v-for="(item,index) in changeListData" :key="index" @click="changeMessage(item.policyCode)">
@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import headerT from '../../../components/header.vue'
-import mincontentList from '../../../components/liufeitao/minContentList.vue'
+import headerT from '../../components/header.vue'
+import mincontentList from '../../components/policyInfoComponent/minContentList.vue'
 import { mapActions } from "vuex";
 export default {
     components: {

@@ -36,7 +36,7 @@
 
 <script>
 import headerT from '../../components/header.vue'
-import noResult from '../../components/liufeitao/noResult.vue'
+import noResult from '../../components/letterComponent/noResult.vue'
 import { mapActions } from "vuex";
 export default {
     components: {

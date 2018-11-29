@@ -14,17 +14,10 @@
                 </div>
             </div>
             <div class="cm-client-photo">
-                <img :src="clientMsg.AuthorizationMap.headimgurl" alt="">
+                <img :src="scanImgSrc" alt="">
             </div>
-            <div class="cm-client-name">
-                <p class="cm-client-font">{{clientMsg.customer.name}}</p>
-                <div class="cm-client-img">
-                    <img :src="vipBgImgSrc" width="100%">
-                    <!-- <p>黄金级</p> -->
-                </div>
-            </div>
-            <div class="cm-water">
-                <img :src="waterImgSrc" width="100%">
+            <div>
+                
             </div>
         </header>
        <!-- <div><van-button type="warning">警告按钮</van-button></div> -->
@@ -39,14 +32,8 @@
                 scanImgSrc: require('@/assets/classicImg/scan@img.png'),
                 // jumpBgImgSrc: require('@/assets/classicImg/jump@bg.png'),
                 jumpIconImgSrc: require('@/assets/classicImg/jump@icon.png'),
-                waterImgSrc: require('@/assets/classicImg/water@red.png'),
-                vipBgImgSrc: require('@/assets/classicImg/vipbg@gold.png'),
             }
         },
-        props:['clientMsg'],
-        mounted(){
-            console.log(this.clientMsg)
-        }
     }
 </script>
 
@@ -96,47 +83,9 @@
         width: 1.34rem;
         height: 1.34rem;
         border-radius: 1.34rem;
-        background:rgba(216,216,216,1);
-        box-shadow:0px 9px 17px 0px rgba(0,0,0,0.2);
         overflow: hidden;
         img{
             width: 100%;
-        }
-    }
-    .cm-water{
-        width: 100%;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-    }
-    .cm-client-name{
-        position: absolute;
-        top: 2.34rem;
-        left: 3.15rem;
-        display: flex;
-        .cm-client-font{
-            font-size:0.4rem;
-            font-family:PingFangSC-Medium;
-            font-weight:500;
-            color:rgba(255,255,255,1);
-            line-height:0.56rem;
-        }
-        .cm-client-img{
-            width: 1.1rem;
-            position: relative;
-            padding-top: 0.15rem;
-            padding-left: 0.18rem;
-            p{
-                font-size:0.18rem;
-                font-family:PingFangSC-Regular;
-                font-weight:400;
-                color:rgba(255,255,255,1);
-                line-height:0.18rem;
-                text-shadow:0px 1px 1px rgba(189,149,100,1);
-                position: absolute;
-                top: 0.3rem;
-                left: 0.48rem;
-            }
         }
     }
 }
