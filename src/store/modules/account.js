@@ -23,23 +23,23 @@ const actions = {
     //         }
     //     })
     // },
-    [getLates]({ commit }, { successCallback = () => { }, failCallback = () => { } }) {
-        axios({
-            method: 'get',
-            url: state.ulrData + 'policy/toPolicyListVue.html',
-            data: '',
-            "Content-Type": "multipart/form-data"
-        }).then((res) => {
-            console.log(res)
-            let result = res.data
-            if (result.responseCode == '0') {
-                successCallback(result)
-            } else {
-            }
+    // [getLates]({ commit }, { successCallback = () => { }, failCallback = () => { } }) {
+    //     axios({
+    //         method: 'get',
+    //         url: state.ulrData + 'policy/toPolicyListVue.html',
+    //         data: '',
+    //         "Content-Type": "multipart/form-data"
+    //     }).then((res) => {
+    //         console.log(res)
+    //         let result = res.data
+    //         if (result.responseCode == '0') {
+    //             successCallback(result)
+    //         } else {
+    //         }
 
-        }).catch((err) => {
-        })
-    },
+    //     }).catch((err) => {
+    //     })
+    // },
 }
 
 const getters = {

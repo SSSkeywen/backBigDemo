@@ -126,25 +126,25 @@ export default {
             {
               selectIcon: require("@/assets/img/shouji.png"),
               selectName: "手机号码",
-              selectPath: "/",
+              selectPath: "/phoneChange",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/img/mail.png"),
               selectName: "电子邮箱",
-              selectPath: "/",
+              selectPath: "/emilChange",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/img/jiating.png"),
               selectName: "家庭信息",
-              selectPath: "/",
+              selectPath: "/homeAdressChange",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/img/danwei.png"),
               selectName: "单位信息",
-              selectPath: "/",
+              selectPath: "/companyAdressChange",
               selectLineStyle: "line-down-me"
             },
             {

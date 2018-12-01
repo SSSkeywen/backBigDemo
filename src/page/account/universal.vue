@@ -32,7 +32,7 @@ data() {
             accountType:[
             	{
             		typeName:'金账户',
-            		typeUrl:'/'
+            		typeUrl:'/universalInfo'
             	},{
                 	typeName:'财富金账户',
                 	typeUrl:''
@@ -66,7 +66,7 @@ data() {
     methods: {
     	jumpUrl(url) {
     			// console.log(url);
-                this.$router.push({ path: '/survivalInfo' });
+                this.$router.push({ path: url });
             }
     }
 }

@@ -1,4 +1,4 @@
 const apiConfig = {
-    api_base_url: '/wxqhb/v1.1/'
+    api_base_url: 'new_wxqhbCloud/api/v2/'
 }
 export { apiConfig }

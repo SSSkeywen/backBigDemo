@@ -83,7 +83,7 @@ export default {
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
-    progid: DXImageTransform.Microsoft.gradient(startColorstr=#3363370b,endColorstr=#3363370b);
+    /* progid: DXImageTransform.Microsoft.gradient(startColorstr=#3363370b,endColorstr=#3363370b); */
     -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0,0.4) /*firefox*/;
     -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0,0.4) /*webkit*/;
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0,0.4);
@@ -102,7 +102,7 @@ export default {
     -webkit-border-top-right-radius: 10px;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
-    progid: DXImageTransform.Microsoft.gradient(startColorstr=#3363370b,endColorstr=#3363370b);
+    /* progid: DXImageTransform.Microsoft.gradient(startColorstr=#3363370b,endColorstr=#3363370b); */
     -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0,0.3) /*firefox*/;
     -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0,0.3) /*webkit*/;
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0,0.3);

@@ -60,6 +60,12 @@ import addressNew from '@/page/letter/addressNew'
 //保险服务密码
 import open from '@/page/insuranceServicePassword/open'
 
+//个人信息变更
+import phoneChange from '@/page/personalInformationChange/phoneChange'
+import emilChange from '@/page/personalInformationChange/emilChange'
+import homeAdressChange from '@/page/personalInformationChange/homeAdressChange'
+import companyAdressChange from '@/page/personalInformationChange/companyAdressChange'
+
 Vue.use(Router)
 
 export default new Router({
@@ -296,6 +302,28 @@ export default new Router({
       path: '/open',
       name: 'open',
       component: open
+    },
+
+    //个人信息变更
+    {
+      path: '/phoneChange',
+      name: 'phoneChange',
+      component: phoneChange
+    },
+    {
+      path: '/emilChange',
+      name: 'emilChange',
+      component: emilChange
+    },
+    {
+      path: '/homeAdressChange',
+      name: 'homeAdressChange',
+      component: homeAdressChange
+    },
+    {
+      path: '/companyAdressChange',
+      name: 'companyAdressChange',
+      component: companyAdressChange
     },
   ]
 })

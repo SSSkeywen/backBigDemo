@@ -1,5 +1,6 @@
 import axios from 'axios'
 // import {HTTP} from '@/config/http.js'
+import { apiConfig } from '../api.js'
 import { get, post } from '@/config/http.js'
 
 const getLates = 'getLates'
@@ -47,7 +48,7 @@ const actions = {
     //     })
     // },
     [getLates]({ commit }, { successCallback = () => { }, failCallback = () => { } }) {
-        get(state.ulrData + 'policy/toPolicyListVue.html', '').then((res) => {
+        get(apiConfig.api_base_url + 'policy/toPolicyListVue.html', '').then((res) => {
             console.log(res)
             let result = res
             if (result.responseCode == '0') {
