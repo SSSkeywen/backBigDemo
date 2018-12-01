@@ -48,10 +48,10 @@ const actions = {
     //     })
     // },
     [getLates]({ commit }, { successCallback = () => { }, failCallback = () => { } }) {
-        get(apiConfig.api_base_url + 'policy/toPolicyListVue.html', '').then((res) => {
-            console.log(res)
+        console.log(111)
+        post(apiConfig.api_base_url + 'policy/list', '').then((res) => {
             let result = res
-            if (result.responseCode == '0') {
+            if (result.code == '0') {
                 successCallback(result)
             } else {
             }
@@ -61,10 +61,10 @@ const actions = {
     },
     //获取详情
     [getPolicyInfo]({ commit }, { policyCodeData, successCallback = () => { }, failCallback = () => { } }) {
-        post(state.ulrData + 'policy/newpolicyInfoVue.html', policyCodeData).then((res) => {
+        post(apiConfig.api_base_url + 'policy/newpolicyinfo/' + policyCodeData, '').then((res) => {
             console.log(res)
             let result = res
-            if (result.responseCode == '0') {
+            if (result.code == '0') {
                 successCallback(result)
             } else {
                 failCallback()

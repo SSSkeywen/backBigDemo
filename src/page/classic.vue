@@ -4,7 +4,7 @@
             <clientMessage :clientMsg="clientMsg"></clientMessage>
         </header>
         <classicNav :navLists="navLists"></classicNav>
-        <classicSwiper :swiperImgSrcLists="clientMsg.AdvertisingResult"></classicSwiper>
+        <classicSwiper :swiperImgSrcLists="clientMsg.advertisingResult"></classicSwiper>
         <classicPageList class="message-list" :pageListData="pageListData"></classicPageList>
         <classicPageList class="message-list" :pageListData="pageListDataTwo"></classicPageList>
         <!-- <ul>
@@ -26,6 +26,7 @@ import { Toast } from "vant";
                 data() {
                     return {
                         clientMsg:{},
+                        authorizationMap:{},
                         navLists: [
                             {
                                 navIcon:require('@/assets/classicImg/icon01.png'),
@@ -149,8 +150,10 @@ import { Toast } from "vant";
             console.log(111)
             this.getClientMessage({
                 successCallback: (res) => {
-                    console.log(res)
-                    this.clientMsg = res.result
+                    // console.log(res)
+                    this.clientMsg = res.data
+                    console.log(this.clientMsg)
+                    // this.authorizationMap = res.data.authorizationMap
                     // toast1.clear();
                 },
                 fCallback:(res) => {

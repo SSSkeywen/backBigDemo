@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="cm-client-photo">
-                <img :src="clientMsg.AuthorizationMap.headimgurl" alt="">
+                <img :src="clientMsg.authorizationMap.headimgurl" alt="">
             </div>
             <div class="cm-client-name">
                 <p class="cm-client-font">{{clientMsg.customer.name}}</p>

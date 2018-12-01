@@ -89,7 +89,8 @@ export default {
     });
     this.getLates({
       successCallback: res => {
-        for (let item of res.result) {
+        console.log(res)
+        for (let item of res.data.AllPolicyList) {
           if (item.statusName == "有效") {
             item.statusStyle = "green";
           }
@@ -98,7 +99,7 @@ export default {
           }
         }
         this.contentListBox = res;
-        this.contentListData = res.result;
+        this.contentListData = res.data.AllPolicyList;
 
         toast1.clear();
       },

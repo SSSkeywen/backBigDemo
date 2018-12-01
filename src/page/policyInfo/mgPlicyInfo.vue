@@ -292,23 +292,21 @@ import { mapActions } from "vuex";
             }
         },
         created(){
-            // let policyCodeData = {
-            //     policyCode:this.$route.query.policyCode
-            // }
-            let policyCodeData = new FormData();
-                policyCodeData.append("policyCode", this.$route.query.policyCode);
+            let policyCodeData = this.$route.query.policyCode
+            // let policyCodeData = new FormData();
+                // policyCodeData.append("policyCode", this.$route.query.policyCode);
             this.getPolicyInfo({
                 policyCodeData,
                 successCallback: (res) => {
-                    console.log(res.result)
-                    this.InformationMap = res.result.InformationMap
-                    for(let item of res.result.ProductList){
+                    console.log(res.data)
+                    this.InformationMap = res.data.InformationMap
+                    for(let item of res.data.ProductList){
                         item.isShowInformation = false
                         item.isShowSendEmilStyle= false
                     }
-                    this.ProductList = res.result.ProductList
+                    this.ProductList = res.data.ProductList
 
-                    this.CustomerByPolicyCode = res.result.CustomerByPolicyCode
+                    this.CustomerByPolicyCode = res.data.CustomerByPolicyCode
                 },
                 fCallback:(res) => {
                 }

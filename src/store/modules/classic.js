@@ -29,7 +29,7 @@ const actions = {
         post(apiConfig.api_base_url + 'page/tonewpagemenu', '').then((res) => {
             console.log(res)
             let result = res
-            if (result.responseCode == '0') {
+            if (result.code == '0') {
                 successCallback(result)
             } else {
                 failCallback()
