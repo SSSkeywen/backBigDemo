@@ -2,8 +2,8 @@
     <div class="swiper-box">
         <div class="swiper-content">
             <van-swipe :autoplay="5000" >
-                <van-swipe-item v-for="(image, index) in swiperImgSrcLists" :key="index" @click="jumpPage(index)">
-                    <img :src="image.img_path" width="100%" height="100%"/>
+                <van-swipe-item v-for="(image, index) in swiperImgSrcLists" :key="index" >
+                    <img :src="image.img_path" width="100%" @click="jumpPage(index)" height="100%"/>
                 </van-swipe-item>
             </van-swipe>
         </div>
@@ -17,6 +17,7 @@
         methods: {
             jumpPage(index) {
                 console.log(index)
+                window.location.href=this.swiperImgSrcLists[index].link
             }
         },
     }

@@ -16,7 +16,9 @@ import { Toast } from 'vant';
 // } else if (process.env.NODE_ENV == 'debug') { 
 //  axios.defaults.baseURL = '';
 // } else if (process.env.NODE_ENV == 'production') { 
-axios.defaults.baseURL = 'http://localhost.cntaiping.com:8080/';
+// axios.defaults.baseURL = 'http://localhost.cntaiping.com:8080/';
+axios.defaults.baseURL = 'https://tpwxtestcloud.life.cntaiping.com/',
+
 // }
 // alert(1)
 

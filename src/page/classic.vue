@@ -1,10 +1,10 @@
 <template>
     <div class="box">
-        <header>
+        <header v-if="clientMsg">
             <clientMessage :clientMsg="clientMsg"></clientMessage>
         </header>
         <classicNav :navLists="navLists"></classicNav>
-        <classicSwiper :swiperImgSrcLists="clientMsg.advertisingResult"></classicSwiper>
+        <classicSwiper v-if="clientMsg.advertisingResult" :swiperImgSrcLists="clientMsg.advertisingResult"></classicSwiper>
         <classicPageList class="message-list" :pageListData="pageListData"></classicPageList>
         <classicPageList class="message-list" :pageListData="pageListDataTwo"></classicPageList>
         <!-- <ul>
@@ -25,7 +25,14 @@ import { Toast } from "vant";
     export default {
                 data() {
                     return {
-                        clientMsg:{},
+                        clientMsg:{
+                            authorizationMap:{
+                                headimgurl:'',
+                            },
+                            customer:{
+                                name:''
+                            }
+                        },
                         authorizationMap:{},
                         navLists: [
                             {
@@ -142,22 +149,21 @@ import { Toast } from "vant";
             classicPageList
         },
         created(){
-            // const toast1 = Toast.loading({
-            //     mask: true,
-            //     message: "加载中...",
-            //     duration: 0
-            // });
-            console.log(111)
+            const toast1 = Toast.loading({
+                mask: true,
+                message: "加载中...",
+                duration: 1000
+            });
             this.getClientMessage({
                 successCallback: (res) => {
                     // console.log(res)
                     this.clientMsg = res.data
                     console.log(this.clientMsg)
                     // this.authorizationMap = res.data.authorizationMap
-                    // toast1.clear();
+                    toast1.clear();
                 },
                 fCallback:(res) => {
-                    // toast1.clear();
+                    toast1.clear();
                 }
             })
         },
