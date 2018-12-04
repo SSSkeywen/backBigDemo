@@ -63,4 +63,9 @@
 .red{
    color: #ff0000; 
 }
+.grey{
+
+   color: #c7bdbd;
+
+}
 </style>

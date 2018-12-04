@@ -7,73 +7,91 @@
                     <ul class="mp-list">
                         <li class="mp-list-li line-down">
                             <p>保全项目：</p>
-                            <p v-text="changeListInfoData.preserveName"></p>
+                            <p v-text="item.serviceName"></p>
                         </li>
                         <li class="mp-list-li line-down">
                             <p>保全操作状态：</p>
-                            <p v-text="changeListInfoData.preserveStatus"></p>
+                            <p v-text="item.changeStatus"></p>
                         </li>
                         <li class="mp-list-li line-down">
                             <p>保全批单号：</p>
-                            <p v-text="changeListInfoData.preserveCode"></p>
+                            <p v-text="item.noticeCode"></p>
                         </li>
                         <li class="mp-list-li line-down">
                             <p>申请人名称：</p>
-                            <p v-text="changeListInfoData.applicantName"></p>
+                            <p v-text="item.handlerName"></p>
                         </li>
                         <li class="mp-list-li line-down">
                             <p>保全申请时间：</p>
-                            <p v-text="changeListInfoData.applyDate"></p>
+                            <p>{{item.proposeTime | dateFilter}}</p>
                         </li>
                         <li class="mp-list-li line-down">
                             <p>保全生效时间：</p>
-                            <p v-text="changeListInfoData.startDate"></p>
+                            <p>{{item.validateDate | dateFilter}}</p>
                         </li>
                         <li class="mp-list-li line-down">
                             <p>批文信息：</p>
-                            <p class="green" @click="seek(approval,noticeCode)">点击查看</p>
+                            <p class="green"  @click="seek(item.noticeCode)">点击查看</p>
                         </li>
                     </ul>
                 </section>
             </li>
+            <li v-if="changeListInfoData == ''">
+                未查找到符合条件的数据！
+            </li>
         </ul>
+        <alertContent :alertCount="alertCount"></alertContent>
     </div>
 </template>
 
 <script>
 import headerT from '../../components/header.vue'
+import alertContent from "../../components/alertContent";
+import {dateStyle} from '@/filter/dateStyle.js'
 import { mapActions } from "vuex";
 export default {
+    filters: {
+        dateFilter(date){
+            return dateStyle(date)
+        }
+    },
     components:{
-        headerT
+        headerT,
+        alertContent,
     },
     data() {
         return {
             headerContent: '保全变更记录',
             changeListInfoData:[
-                {
-                    serviceName:'',
-                    changeStatus:'',
-                    noticeCode:'',
-                    handlerName:'',
-                    proposeTime:'',
-                    validateDate:'',
-                    approval:'',
-                    noticeCode:''
-                }
-            ]
+                // {
+                //     serviceName:'',
+                //     changeStatus:'',
+                //     noticeCode:'',
+                //     handlerName:'',
+                //     proposeTime:'',
+                //     validateDate:'',
+                //     approval:'',
+                //     noticeCode:''
+                // }
+            ],
+            alertCount:{
+                isShowAlert:false,
+                alertData:'请输入',
+            },
         }
     },
     created(){
-        let policyCodeData = new FormData();
-        policyCodeData.append("policyCode", this.$route.query.policyCode);
+        let policyCode = this.$route.query.policyCode;
+        // policyCodeData.append("policyCode", this.$route.query.policyCode);
         this.getChangeListInfo({
-            policyCodeData,
+            policyCode,
             successCallback: (res) => {
-                console.info("result:"+res.result)
-                this.changeListInfoData = res.result
+                // console.info("result:"+JSON.stringify(res))
+                this.changeListInfoData = res
             },
-            fCallback:(res) => {
+            failCallback:(res) => {
+                this.alertCount.isShowAlert = true;
+                this.alertCount.alertData = res;
             }
         })
     },
@@ -81,10 +99,10 @@ export default {
         ...mapActions({
             getChangeListInfo: "getChangeListInfo"
         }),
-        seek(approval,noticeCode){
-
-            this.$router.push({ path: '/approvalMsg',query: {approval: approval,noticeCode:noticeCode} });
-        }
+        seek(noticeCode){
+            //this.$router.push({ path: '/approvalMsg',query: {approval: approval,noticeCode:noticeCode} });
+            this.$router.push({ path: '/changeListApproval', query: {noticeCode:noticeCode} });
+        },
     }
 }
 </script>

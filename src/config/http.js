@@ -16,8 +16,8 @@ import { Toast } from 'vant';
 // } else if (process.env.NODE_ENV == 'debug') { 
 //  axios.defaults.baseURL = '';
 // } else if (process.env.NODE_ENV == 'production') { 
-// axios.defaults.baseURL = 'http://localhost.cntaiping.com:8080/';
-axios.defaults.baseURL = 'https://tpwxtestcloud.life.cntaiping.com/',
+axios.defaults.baseURL = 'http://localhost.cntaiping.com:8080/';
+// axios.defaults.baseURL = 'https://tpwxtestcloud.life.cntaiping.com/',
 
 // }
 // alert(1)
@@ -32,8 +32,8 @@ axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
 
 // axios.defaults.headers.post["Access-Control-Allow-Headers"]= "Content-Type,Content-Length, Authorization, Accept,X-Requested-With"
 // post请求头
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8;multipart/form-data';
-
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8;multipart/form-data;application/json';
+// alert(11)
 /** 
  * get方法，对应get请求 
  * @param {String} url [请求的url地址] 
@@ -58,6 +58,7 @@ export function get(url, params) {
  * @param {Object} params [请求时携带的参数] 
  */
 export function post(url, params) {
+    // console.log(testPage())
     return new Promise((resolve, reject) => {
         axios.post(url, QS.stringify(params))
             .then(res => {
@@ -68,3 +69,18 @@ export function post(url, params) {
             })
     });
 }
+
+// function testPage(){
+//         axios({
+//             method: 'get',
+//             url: 'https://tpwxtestcloud.life.cntaiping.com/policy/toPolicyListVue.html',
+//             data: '',
+//             "Content-Type": "multipart/form-data"
+//         }).then((res) => {
+//             return true
+
+//         }).catch((err) => {
+//             return false
+//         })
+//         return false
+// }

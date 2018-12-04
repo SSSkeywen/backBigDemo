@@ -6,41 +6,51 @@
             <li v-for="(item,index) in changeListData" :key="index" @click="changeMessage(item.policyCode)">
                 <mincontentList :changeListData="item"></mincontentList>
             </li>
+            <p v-if="changeListData == ''">
+                未查找到符合条件的数据！
+            </p>
         </ul>
     </section>
+    <alertContent :alertCount="alertCount"></alertContent>
     </div>
 </template>
 
 <script>
 import headerT from '../../components/header.vue'
 import mincontentList from '../../components/policyInfoComponent/minContentList.vue'
+import alertContent from "../../components/alertContent";
 import { mapActions } from "vuex";
 export default {
     components: {
         headerT,
-        mincontentList
+        mincontentList,
+        alertContent,
     },
     data() {
         return {
             headerContent: '保全变更记录',
             changeListData:[
-                {
-                    policyCode:'',
-                    productAbbr:'',
-                    applicantName:'',
-                    insuredName:'',
-                    validateDate:null,
-                    agentCode:'',
-                    liabilityState:''
-                }
-            ]
+                // {
+                //     policyCode:'',
+                //     productAbbr:'',
+                //     applicantName:'',
+                //     insuredName:'',
+                //     validateDate:null,
+                //     agentCode:'',
+                //     liabilityState:''
+                // }
+            ],
+            alertCount:{
+                isShowAlert:false,
+                alertData:'请输入',
+            },
         }
     },
     created(){
         this.getChangeList({
             successCallback: (res) => {
-                console.info("result:"+res.result)
-                for(let item of res.result){
+                console.info("result:"+res)
+                for(let item of res){
                     if(item.liabilityState == '有效'){
                         item.statusStyle = 'green'
                     } 
@@ -51,9 +61,11 @@ export default {
                         item.statusStyle = 'grey'
                     } 
                 }
-                this.changeListData = res.result
+                this.changeListData = res
             },
-            fCallback:(res) => {
+            failCallback:(res) => {
+                this.alertCount.isShowAlert = true;
+                this.alertCount.alertData = res;
             }
         })
     },  

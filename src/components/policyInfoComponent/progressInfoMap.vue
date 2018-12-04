@@ -18,6 +18,9 @@
 <script>
 export default {
 	props:['steps','plc','num'],
+	mounted(){
+		// console.log(this.steps)
+	},
 	methods:{
 		beforeEnter(el){
 			el.style.opacity=0;

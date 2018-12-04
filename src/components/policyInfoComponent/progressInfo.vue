@@ -1,30 +1,36 @@
 <template>
-  <div class="box">
-	<section>
-		<ul class="mg-ul">
-            <li>
-                <p>投保单号：{{myaddData.insureCode}}</p>
-                <em class="btn_arrow ani-down" :class="showMap?'add-ani-style':''" @click="slideMap()"><img :src="imgSrcThree" alt=""></em>
-            </li>
-            <li>
-                <p>第一主险名称：{{myaddData.zhuxianName}}</p>
-            </li>
-            <li>
-                <p :class="myaddData.currentStatus">状态：{{myaddData.currentStatus}}</p>
-            </li>
-        </ul>
-	</section>
-	<div class="actBox">
-
-		<!-- <transition name="slide"> -->
-			<ul class="progress" v-if="showMap">
-				<li  v-for="(item,index) in reverseSum" :key="index" >
-					<progressInfoMap :num="reverseSum.length" :steps="item" :plc="index"></progressInfoMap>
-				</li>
-			</ul>
-		<!-- </transition> -->
+<div class="box">
+	<div v-if="myaddData.length!=0">
+		<div v-for="(item,index) in myaddData" :key="index">
+			<section>
+				<ul class="mg-ul">
+					<li>
+						<p>投保单号：{{item.sendCode}}</p>
+						<em class="btn_arrow ani-down" 
+						:class="item.showMap?'add-ani-style':''" 
+						@click="slideMap(item)">
+							<img :src="imgSrcThree" alt="">
+						</em>
+					</li>
+					<li>
+						<p>第一主险名称：{{item.productName}}</p>
+					</li>
+					<li>
+						<p :class="item.currentStatus">状态：{{item.insureStateName}}</p>
+					</li>
+				</ul>
+			</section>
+			<div class="actBox">
+				<ul class="progress" v-if="item.showMap">
+					<li  v-for="(items,index) in item.steps" :key="index" >
+						<progressInfoMap :num="item.steps.length" :steps="items" :plc="index"></progressInfoMap>
+					</li>
+				</ul>
+			</div>
+		</div>
 	</div>
-  </div>
+	<div v-else class="downBox">该客户名下暂无60内承包的保单</div>
+</div>
 </template>
 
 
@@ -39,42 +45,23 @@ export default {
 		}
 	},
 	components:{
-		progressInfoMap
+		progressInfoMap,
 	},
-	computed: {
-		//反向排列显示列表
-	  reverseSum: function () {
-	    return this.myaddData.steps.reverse()
-	  }
+	mounted(){
+		console.log(this.myaddData)
 	},
 	methods:{
-		slideMap(){
-			this.showMap = !this.showMap;
-		},
-		beforeEnter(el){
-			el.style.opacity = 0;
-			console.log(el);
-		},
-		enter(el){
-			console.log(this+'_ent')
-		},
-		afterEnter(el){
-			console.log(this+'_Af')
+		slideMap(item){
+			console.log(item)
+			item.showMap = !item.showMap;
+			// item.showMap = true
+			item.steps=item.steps
 		}
 	}
 }
 </script>
 
 <style scoped>
-/*.slide-move{transition: all .3s cubic-bezier(0.18, 0.89, 0.32, 1.28);}
-.slide-enter-active,.slide-leave-active{
-	transition: all .3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
-    opacity: 1;
-}
-.slide-enter{
-	opacity: 0;
-	transform: translateY(-30%);
-}*/
 .mg-ul li{position: relative;}
 section{
 	position: relative;

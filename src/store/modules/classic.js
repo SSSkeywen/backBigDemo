@@ -14,7 +14,7 @@ const mutations = {
 
 const actions = {
     [getClientMessage]({ commit }, { successCallback = () => { }, failCallback = () => { } }) {
-        post(apiConfig.api_base_url + 'page/tonewpagemenu', '').then((res) => {
+        get(apiConfig.api_base_url + 'page/tonewpagemenu', '').then((res) => {
             // console.log(res)
             let result = res
             if (result.code == '0') {

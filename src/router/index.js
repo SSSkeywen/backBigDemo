@@ -33,7 +33,8 @@ import settingTheBillList from '@/page/bill/settingTheBillList'
 //保全变更记录
 import changeList from '@/page/policyInfo/changeList'
 import changeListInfo from '@/page/policyInfo/changeListInfo'
-import approvalMsg from '@/page/policyInfo/approvalMsg'
+import changeListApproval from '@/page/policyInfo/changeListApproval'
+
 //投保进程查询
 import insureProgress from '@/page/policyInfo/insureProgress'
 
@@ -178,11 +179,11 @@ export default new Router({
       name: 'changeListInfo',
       component: changeListInfo
     },
-    //approvalMsg 批文信息
+    //changeListApproval 批文信息
     {
-      path: '/approvalMsg',
-      name: 'approvalMsg',
-      component: approvalMsg
+      path: '/changeListApproval',
+      name: 'changeListApproval',
+      component: changeListApproval
     },
     // insureProgress 投保进程查询
     {
