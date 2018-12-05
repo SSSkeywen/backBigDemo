@@ -2,7 +2,7 @@ import axios from 'axios'
 import { get, post } from '@/config/http.js'
 import { apiConfig } from '../api.js'
 
-const getClientMessage = 'getClientMessage'
+const checklogin = 'checklogin'
 
 
 const state = {
@@ -13,8 +13,8 @@ const mutations = {
 }
 
 const actions = {
-    [getClientMessage]({ commit }, { successCallback = () => { }, failCallback = () => { } }) {
-        get(apiConfig.api_base_url + 'page/tonewpagemenu', '').then((res) => {
+    [checklogin]({ commit }, {testData, successCallback = () => { }, failCallback = () => { } }) {
+        post(apiConfig.api_base_url + 'user/checklogin', testData).then((res) => {
             console.log(res)
             let result = res.data
             if (res.code == '0') {

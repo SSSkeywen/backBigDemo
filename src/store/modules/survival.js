@@ -1,11 +1,13 @@
-import axios from 'axios'
+// import axios from 'axios'
+import { apiConfig } from '../api.js'
+import { get, post } from '@/config/http.js'
 
 const getSurvivalList = 'getSurvivalList'
 const getSurvivalListInfo = 'getSurvivalListInfo'
 
 
 const state = {
-    ulrData: 'https://tpwxtestcloud.life.cntaiping.com/wxqhb/'
+    // ulrData: 'https://tpwxtestcloud.life.cntaiping.com/wxqhb/'
 }
 
 const mutations = {
@@ -14,39 +16,29 @@ const mutations = {
 
 const actions = {
     [getSurvivalList]({ commit }, { successCallback = () => { }, failCallback = () => { } }) {
-        axios({
-            method: 'get',
-            url: state.ulrData + 'changelist/bqChangeRecordList.html',
-            data: '',
-            "Content-Type": "multipart/form-data"
-        }).then((res) => {
+        post(apiConfig.api_base_url + 'survivalgold/getlist', '').then((res) => {
             console.log(res)
-            let result = res.data
-            if (result.responseCode == '0') {
-                successCallback(result)
+            if (res.code == '0') {
+                successCallback(res.data)
             } else {
-                failCallback(result)
+                failCallback(res.msg)
             }
 
         }).catch((err) => {
+            failCallback("尊敬的用户，数据请求失败，请刷新后重试!")
         })
     },
-    [getSurvivalListInfo]({ commit }, {policyCodeData, successCallback = () => { }, failCallback = () => { } }) {
-        axios({
-            method: 'post',
-            url: state.ulrData + 'changelist/bqChangeRecordDetails.html',
-            data: policyCodeData,
-            "Content-Type": "multipart/form-data"
-        }).then((res) => {
-            console.log(res)
-            let result = res.data
-            if (result.responseCode == '0') {
-                successCallback(result)
+    [getSurvivalListInfo]({ commit }, {policyCode, successCallback = () => { }, failCallback = () => { } }) {
+        console.info("policyCode:"+policyCode)
+        post(apiConfig.api_base_url + 'survivalgold/getinfo/' + policyCode, '').then((res) => {
+            if (res.code == '0') {
+                successCallback(res.data)
             } else {
-                failCallback(result)
+                failCallback(res.msg)
             }
 
         }).catch((err) => {
+            failCallback("尊敬的用户，数据请求失败，请刷新后重试!")
         })
     },
 }

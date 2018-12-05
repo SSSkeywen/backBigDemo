@@ -1,130 +1,66 @@
 <template>
-    <div class="yy-box">
-        <headerT :headerContent="headerContent"></headerT>
-        <section v-show="isShowMsg">
-            <div class="yy-select">
-                <ul class="yy-ul">
-                    <li class="yy-li">
-                        <p class="yy-select-title">请选择省份：</p>
-                        <select name="" id="" @change="selectProvince(proData)" v-model="proData">
-                            <option>
-                                上海市
-                            </option>
-                            <option>
-                                重庆市
-                            </option>
-                            <option>
-                                天津市
-                            </option>
-                            <option>
-                                北京市
-                            </option>
-                            <option>
-                                河北省
-                            </option>
-                            <option>
-                                海南省
-                            </option>
-                            <option>
-                                山西省
-                            </option>
-                            <option>
-                                吉林省
-                            </option>
-                            <option>
-                                黑龙江省
-                            </option>
-                            <option>
-                                江苏省
-                            </option>
-                            <option>
-                                浙江省
-                            </option>
-                            <option>
-                                安徽省
-                            </option>
-                            <option>
-                                云南省
-                            </option>
-                            <option>
-                                青海省
-                            </option>
-                            <option>
-                                宁夏回族自治区
-                            </option>
-                            <option>
-                                新疆维吾尔自治区
-                            </option>
-                            <option>
-                                四川省
-                            </option>
-                            <option>
-                                湖北省
-                            </option>
-                            <option>
-                                湖南省
-                            </option>
-                            <option>
-                                广东省
-                            </option>
-                            <option>
-                                广西壮族自治区
-                            </option>
-                            <option>
-                                浙江省
-                            </option>
-                            <option>
-                                西藏自治区
-                            </option>
-                            <option>
-                                陕西省
-                            </option>
-                            <option>
-                                甘肃省
-                            </option>
-                            <option>
-                                内蒙古自治区
-                            </option>
-                            <option>
-                                辽宁省
-                            </option>
-                            <option>
-                                福建省
-                            </option>
-                            <option>
-                                江西省
-                            </option>
-                            <option>
-                                山东省
-                            </option>
-                            <option>
-                                河南省
-                            </option>
-                            <option>
-                                贵州省
-                            </option>
-                        </select>
-                    </li>
-                    <li class="yy-li">
-                        <p class="yy-select-title">请选择城市：</p>
-                        <select name="" id="" v-model="cityData">
-                            <option :value="item" v-for="(item,index) in cityList" :key="index">{{item}}</option>
-                        </select>
-                    </li>
-                    <li class="yy-li">
-                        <p class="yy-select-title">请输入医院名称：</p>
-                        <input type="text" v-model="hospitalData">
-                    </li>
-                </ul>
-            </div>
-            <div class="yy_cx">
-                <button @click="queryFn">开始查询</button>
-            </div>
-        </section>
-        <section v-show="!isShowMsg">
-            <hospitalList :hospitalListData="hospitalListData" @closeHospitalList="closeHospitalList"></hospitalList>
-        </section>
-    </div>
+  <div class="yy-box">
+    <headerT :headerContent="headerContent"></headerT>
+    <section v-show="isShowMsg">
+      <div class="yy-select">
+        <ul class="yy-ul">
+          <li class="yy-li">
+            <p class="yy-select-title">请选择省份：</p>
+            <select name id @change="selectProvince(proData)" v-model="proData">
+              <option>上海市</option>
+              <option>重庆市</option>
+              <option>天津市</option>
+              <option>北京市</option>
+              <option>河北省</option>
+              <option>海南省</option>
+              <option>山西省</option>
+              <option>吉林省</option>
+              <option>黑龙江省</option>
+              <option>江苏省</option>
+              <option>浙江省</option>
+              <option>安徽省</option>
+              <option>云南省</option>
+              <option>青海省</option>
+              <option>宁夏回族自治区</option>
+              <option>新疆维吾尔自治区</option>
+              <option>四川省</option>
+              <option>湖北省</option>
+              <option>湖南省</option>
+              <option>广东省</option>
+              <option>广西壮族自治区</option>
+              <option>浙江省</option>
+              <option>西藏自治区</option>
+              <option>陕西省</option>
+              <option>甘肃省</option>
+              <option>内蒙古自治区</option>
+              <option>辽宁省</option>
+              <option>福建省</option>
+              <option>江西省</option>
+              <option>山东省</option>
+              <option>河南省</option>
+              <option>贵州省</option>
+            </select>
+          </li>
+          <li class="yy-li">
+            <p class="yy-select-title">请选择城市：</p>
+            <select name id v-model="cityData">
+              <option :value="item" v-for="(item,index) in cityList" :key="index">{{item}}</option>
+            </select>
+          </li>
+          <li class="yy-li">
+            <p class="yy-select-title">请输入医院名称：</p>
+            <input type="text" v-model="hospitalData">
+          </li>
+        </ul>
+      </div>
+      <div class="yy_cx">
+        <button @click="queryFn">开始查询</button>
+      </div>
+    </section>
+    <section v-show="!isShowMsg">
+      <hospitalList :hospitalListData="hospitalListData" @closeHospitalList="closeHospitalList"></hospitalList>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -143,9 +79,9 @@ export default {
       isShowMsg: true,
       proData: "上海市",
       cityData: "全部",
-      cityList:['全部'],
+      cityList: ["全部"],
       hospitalData: "",
-      hospitalListData:[],
+      hospitalListData: []
     };
   },
   created() {},
@@ -156,31 +92,38 @@ export default {
     }),
     selectProvince(proData) {
       //   console.log(JSON.stringify(proData));
-    //   let proData1 = JSON.stringify(proData);
+      //   let proData1 = JSON.stringify(proData);
 
-      let provinceSelectData = new FormData();
-      provinceSelectData.append("province", proData);
+      let provinceSelectData = {
+        provinceName: proData
+      };
       this.hospitalInformation({
         provinceSelectData,
         successCallback: res => {
           console.log(res.result);
-          this.cityList = res.result
+          this.cityList = res.result;
         },
         fCallback: res => {}
       });
     },
     queryFn() {
-    //   this.isShowMsg = !this.isShowMsg;
-console.log(this.proData+'+'+this.cityData+'+'+this.hospitalData)
-      let hospitalSelectData = new FormData();
-      hospitalSelectData.append("sfName", this.proData);
-      hospitalSelectData.append("csName", this.cityData);
-      hospitalSelectData.append("yyName", this.hospitalData);
+      //   this.isShowMsg = !this.isShowMsg;
+      console.log(this.proData + "+" + this.cityData + "+" + this.hospitalData);
+    //   let hospitalSelectData = new FormData();
+    //   hospitalSelectData.append("sfName", this.proData);
+    //   hospitalSelectData.append("csName", this.cityData);
+    //   hospitalSelectData.append("yyName", this.hospitalData);
+      let hospitalSelectData = {
+        provinceName: this.proData,
+        cityName: this.cityData,
+        hospitalName: this.hospitalData
+      };
+
       this.hospitalList({
         hospitalSelectData,
         successCallback: res => {
-          console.log(res.result);
-          this.hospitalListData = res.result
+          //   console.log(res.result);
+          this.hospitalListData = res;
           this.isShowMsg = !this.isShowMsg;
         },
         fCallback: res => {}

@@ -29,6 +29,7 @@ export default {
   data() {
     return {
       titleimg: require("@/assets/images/cioncx_02.png"),
+      clientMsg:{},
       contentLists: [
         {
           titleName: "",
@@ -199,14 +200,17 @@ export default {
       ]
     };
   },
+  created(){
+    this.clientMsg = JSON.parse(window.localStorage.getItem("clientMsg"));
+  },
   methods: {
     jumpPage(pathAddress) {
       console.log(pathAddress);
-      if(true){
-        this.$router.push({ path: '/userInfo',query: {pathAddress: pathAddress} });
-      }else{
+      // if(this.clientMsg.isBinding!=0){
+      //   this.$router.push({ path: '/userInfo',query: {pathAddress: pathAddress} });
+      // }else{
         this.$router.push({ path: pathAddress });
-      }
+      // }
     }
   }
 };

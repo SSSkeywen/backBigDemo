@@ -13,45 +13,53 @@
                 <div @click="showMpList(0)" class="mp-min-right"><img class="ani-down" :class="isShowInformation?'add-ani-style':''" :src="imgSrcThree" alt=""></div>
             </div>
             <ul class="mp-list" v-if="isShowInformation">
-                <li class="mp-list-li line-down">
+                <li class="mp-list-li line-down" v-if="InformationMap.statusName">
                     <p>保单状态：</p>
                     <p v-text="InformationMap.statusName"></p>
                 </li>
-                <li class="mp-list-li line-down">
+                <li class="mp-list-li line-down" v-if="InformationMap.validateDate">
                     <p>保单生效日：</p>
                     <p>{{InformationMap.validateDate | dateFilter}}</p>
                 </li>
-                <li class="mp-list-li line-down">
+                <li class="mp-list-li line-down" v-if="InformationMap.endDate">
                     <p>保单责任终止日：</p>
                     <p>{{InformationMap.endDate | dateFilter}}</p>
                 </li>
-                <li class="mp-list-li line-down">
+                <li class="mp-list-li line-down" v-if="InformationMap.applicantName">
                     <p>投保人：</p>
                     <p v-text="InformationMap.applicantName"></p>
                 </li>
-                <li class="mp-list-li line-down">
+                <li class="mp-list-li line-down" v-if="InformationMap.insuredName">
                     <p>被保人：</p>
                     <p v-text="InformationMap.insuredName"></p>
                 </li>
-                <li class="mp-list-li line-down">
+                <li class="mp-list-li line-down" v-if="InformationMap.bene1Name">
                     <p>生存受益人：</p>
                     <p v-text="InformationMap.bene1Name"></p>
                 </li>
-                <li class="mp-list-li line-down">
+                <li class="mp-list-li line-down" v-if="InformationMap.bene2Name">
                     <p>身故受益人：</p>
                     <p v-text="InformationMap.bene2Name"></p>
                 </li>
-                <li class="mp-list-li line-down">
+                <li class="mp-list-li line-down" v-if="InformationMap.nextDiscountPrem">
                     <p>下期保费：</p>
-                    <p>{{InformationMap.nextDiscountPrem | dateFilter}}</p>
+                    <p>{{InformationMap.nextDiscountPrem}}</p>
                 </li>
-                <li class="mp-list-li line-down">
+                <li class="mp-list-li line-down" v-if="InformationMap.payToDate">
                     <p>下期交费日：</p>
                     <p>{{InformationMap.payToDate | dateFilter}}</p>
                 </li>
-                <li class="mp-list-li line-down">
+                <li class="mp-list-li line-down" v-if="InformationMap.renewalType">
                     <p>下期交费方式：</p>
                     <p v-text="InformationMap.renewalType"></p>
+                </li>
+                <li class="mp-list-li line-down" v-if="InformationMap.bankAccount">
+                    <p>缴费账号：</p>
+                    <p v-text="InformationMap.bankAccount"></p>
+                </li>
+                <li class="mp-list-li line-down" v-if="InformationMap.InformationMaplist">
+                    <p>电子发票信息</p>
+                    <p><button class="see-btn">查看详情</button></p>
                 </li>
             </ul>
         </section>
@@ -66,31 +74,31 @@
                 <div @click="showMpListPolicyMessage(index)" class="mp-min-right"><img class="ani-down" :class="item.isShowInformation?'add-ani-style':''" :src="imgSrcThree" alt=""></div>
             </div>
             <ul class="mp-list" v-if="item.isShowInformation">
-                <li class="mp-list-li line-down">
+                <li class="mp-list-li line-down" v-if="item.productName">
                     <p>险种名称：</p>
                     <p v-text="item.productName"></p>
                 </li>
-                <li class="mp-list-li line-down">
+                <li class="mp-list-li line-down" v-if="item.statusName">
                     <p>险种当前责任状态：</p>
                     <p v-text="item.statusName"></p>
                 </li>
-                <li class="mp-list-li line-down">
+                <li class="mp-list-li line-down" v-if="item.amount">
                     <p>保额：</p>
                     <p v-text="item.amount"></p>
                 </li>
-                <li class="mp-list-li line-down">
+                <li class="mp-list-li line-down" v-if="item.validateDate">
                     <p>险种生效日：</p>
                     <p>{{item.validateDate | dateFilter}}</p>
                 </li>
-                <li class="mp-list-li line-down">
+                <li class="mp-list-li line-down" v-if="item.insuredName">
                     <p>被保人：</p>
                     <p v-text="item.insuredName"></p>
                 </li>
-                <li class="mp-list-li line-down">
+                <li class="mp-list-li line-down" v-if="item.periodPrem">
                     <p>当期保费：</p>
                     <p v-text="item.periodPrem"></p>
                 </li>
-                <li class="mp-list-li line-down">
+                <li class="mp-list-li line-down" v-if="item.payToDate">
                     <p>下期交费日：</p>
                     <p>{{item.payToDate | dateFilter}}</p>
                 </li>
@@ -107,29 +115,33 @@
                 <div @click="showMpList(2)" class="mp-min-right"><img class="ani-down" :class="isShowInformationThree?'add-ani-style':''" :src="imgSrcThree" alt=""></div>
             </div>
             <ul class="mp-list" v-if="isShowInformationThree">
-                <li class="mp-list-li line-down">
+                <li class="mp-list-li line-down" v-if="CustomerByPolicyCode.applicantName">
                     <p>姓名：</p>
                     <p v-text="CustomerByPolicyCode.applicantName"></p>
                 </li>
-                <li class="mp-list-li line-down">
+                <li class="mp-list-li line-down" v-if="CustomerByPolicyCode.applicantBirthday">
                     <p>生日：</p>
                     <p>{{CustomerByPolicyCode.applicantBirthday | dateFilter}}</p>
                 </li>
-                <li class="mp-list-li line-down">
+                <li class="mp-list-li line-down" v-if="CustomerByPolicyCode.applicantGender">
                     <p>性别：</p>
                     <p v-text="CustomerByPolicyCode.applicantGender"></p>
                 </li>
-                <li class="mp-list-li line-down">
+                <li class="mp-list-li line-down" v-if="CustomerByPolicyCode.applicantCertiCode">
                     <p>证件号码：</p>
                     <p v-text="CustomerByPolicyCode.applicantCertiCode"></p>
                 </li>
-                <li class="mp-list-li line-down">
+                <li class="mp-list-li line-down" v-if="CustomerByPolicyCode.applicantCeller">
                     <p>手机：</p>
                     <p v-text="CustomerByPolicyCode.applicantCeller"></p>
                 </li>
                 <li v-if="CustomerByPolicyCode.applicantTel1" class="mp-list-li line-down">
                     <p>家庭电话：</p>
                     <p v-text="CustomerByPolicyCode.applicantTel1"></p>
+                </li>
+                <li v-if="CustomerByPolicyCode.applicantEmail" class="mp-list-li line-down">
+                    <p>电子邮件：</p>
+                    <p v-text="CustomerByPolicyCode.applicantEmail"></p>
                 </li>
             </ul>
         </section>
@@ -144,21 +156,33 @@
                 <div @click="showMpList(3)" class="mp-min-right"><img class="ani-down" :class="isShowInformationFour?'add-ani-style':''" :src="imgSrcThree" alt=""></div>
             </div>
             <ul class="mp-list" v-if="isShowInformationFour">
-                <li class="mp-list-li line-down">
+                <li class="mp-list-li line-down" v-if="CustomerByPolicyCode.insuredName">
                     <p>姓名：</p>
                     <p v-text="CustomerByPolicyCode.insuredName"></p>
                 </li>
-                <li class="mp-list-li line-down">
+                <li class="mp-list-li line-down" v-if="CustomerByPolicyCode.insuredBirthday">
                     <p>生日：</p>
                     <p>{{CustomerByPolicyCode.insuredBirthday| dateFilter}}</p>
                 </li>
-                <li class="mp-list-li line-down">
+                <li class="mp-list-li line-down" v-if="CustomerByPolicyCode.insuredGender">
                     <p>性别：</p>
                     <p v-text="CustomerByPolicyCode.insuredGender"></p>
                 </li>
-                <li class="mp-list-li line-down">
+                <li class="mp-list-li line-down" v-if="CustomerByPolicyCode.insuredCertiCode">
                     <p>证件号码：</p>
                     <p v-text="CustomerByPolicyCode.insuredCertiCode"></p>
+                </li>
+                <li v-if="CustomerByPolicyCode.applicantCeller" class="mp-list-li line-down">
+                    <p>手机：</p>
+                    <p v-text="CustomerByPolicyCode.applicantCeller"></p>
+                </li>
+                <li v-if="CustomerByPolicyCode.applicantTel1" class="mp-list-li line-down">
+                    <p>家庭电话：</p>
+                    <p v-text="CustomerByPolicyCode.applicantTel1"></p>
+                </li>
+                <li v-if="CustomerByPolicyCode.applicantEmail" class="mp-list-li line-down">
+                    <p>电子邮件：</p>
+                    <p v-text="CustomerByPolicyCode.applicantEmail"></p>
                 </li>
             </ul>
         </section>
@@ -183,7 +207,7 @@
                 </li>
             </ul>
         </section>
-        <section class="mp-box-one" v-for="(item,index) in ProductList" :key="index+'0'">
+        <section class="mp-box-one">
             <div class="mp-min-title">
                 <div class="mp-min-left">
                     <div class="mp-min-left-img">
@@ -191,14 +215,19 @@
                     </div>
                     <p>信件发送方式</p>
                 </div>
-                <div @click="showSendEmilStyle(index)" class="mp-min-right"><img class="ani-down" :class="item.isShowSendEmilStyle?'add-ani-style':''" :src="imgSrcThree" alt=""></div>
+                <div @click="showSendEmilStyle(5)" class="mp-min-right"><img class="ani-down" :class="item.isShowSendEmilStyle?'add-ani-style':''" :src="imgSrcThree" alt=""></div>
             </div>
-            <ul class="mp-list" v-if="item.isShowSendEmilStyle">
-                <li class="mp-list-li line-down">
-                    <p>失效通知书：</p>
-                    <p v-text="item.productName"></p>
+            <ul class="mp-list" v-if="isShowInformationSix">
+                <li class="mp-list-li line-down" v-for="(item,index) in PolicyNoticeList" :key="index">
+                    <p>{{item.typeName}}</p>
+                    <p>
+                        <span v-if="item.noticeWay==1">纸质告知</span>
+                        <span v-else-if="item.noticeWay==2">短信告知</span>
+                        <span v-else-if="item.noticeWay==3">EMAIL</span>
+                        <span v-else-if="item.noticeWay==4">自助查询</span>
+                    </p>
                 </li>
-                <li class="mp-list-li line-down">
+                <!-- <li class="mp-list-li line-down">
                     <p>缴费提醒：</p>
                     <p v-text="item.statusName"></p>
                 </li>
@@ -213,7 +242,7 @@
                 <li class="mp-list-li line-down">
                     <p>转账成功通知书：</p>
                     <p v-text="item.insuredName"></p>
-                </li>
+                </li> -->
             </ul>
         </section>
     </div>
@@ -283,7 +312,8 @@ import { mapActions } from "vuex";
                     insuredCeller:'',
                     insuredTel1:'',
                     insuredEmail:''
-                }
+                },
+                PolicyNoticeList:[]
             }
         },
         filters: {
@@ -305,7 +335,7 @@ import { mapActions } from "vuex";
                         item.isShowSendEmilStyle= false
                     }
                     this.ProductList = res.data.ProductList
-
+                    this.PolicyNoticeList = res.data.PolicyNoticeList
                     this.CustomerByPolicyCode = res.data.CustomerByPolicyCode
                 },
                 fCallback:(res) => {
@@ -411,6 +441,9 @@ import { mapActions } from "vuex";
             padding-bottom: 0.1rem;
         }
     }
+}
+.see-btn{
+    background:green; border:none;width: 94px;height: 33px;margin-bottom: 3px;margin-top: -3px; font-size: 0.9em;color: #ffffff;margin-left: -9px;letter-spacing: 3px;font-weight: bold;
 }
 
 /* 动画效果css */

@@ -7,11 +7,6 @@
         <classicSwiper v-if="clientMsg.advertisingResult" :swiperImgSrcLists="clientMsg.advertisingResult"></classicSwiper>
         <classicPageList class="message-list" :pageListData="pageListData"></classicPageList>
         <classicPageList class="message-list" :pageListData="pageListDataTwo"></classicPageList>
-        <!-- <ul>
-            <li>
-                <p @click="myGuaranteeSlip">信息查询</p>
-            </li>
-        </ul> -->
     </div>
 </template>
 
@@ -22,6 +17,7 @@ import classicSwiper from '../components/classicComponent/classicSwiper'
 import classicPageList from '../components/classicComponent/classicPageList'
 import { mapActions } from "vuex";
 import { Toast } from "vant";
+import {config} from '@/config/config.js'
     export default {
                 data() {
                     return {
@@ -155,10 +151,11 @@ import { Toast } from "vant";
                 duration: 1000
             });
             this.getClientMessage({
-                successCallback: (res) => {
+                successCallback: (result) => {
                     // console.log(res)
-                    this.clientMsg = res.data
-                    console.log(this.clientMsg)
+                    this.$set(this.clientMsg.authorizationMap,"headimgurl", result.authorizationMap.headimgurl)
+                    this.clientMsg = result
+                    // console.log(this.clientMsg)
                     // this.authorizationMap = res.data.authorizationMap
                     toast1.clear();
                 },

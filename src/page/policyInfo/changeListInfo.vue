@@ -36,7 +36,7 @@
                     </ul>
                 </section>
             </li>
-            <li v-if="changeListInfoData == ''">
+            <li v-if="changeListInfoData == null">
                 未查找到符合条件的数据！
             </li>
         </ul>

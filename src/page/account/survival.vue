@@ -26,17 +26,19 @@
                     </li>
                 </ul>
             </li>
-            <li v-if="errorMsg == ''">
-                {{ errorMsg }}
+            <li v-if="survivalData == null">
+                未查找到符合条件的数据！
             </li>
         </ul>
     </section>
+    <alertContent :alertCount="alertCount"></alertContent>
     </div>
 </template>
 
 <script>
 import headerT from '../../components/header.vue';
 import { mapActions } from "vuex";
+import alertContent from "../../components/alertContent";
 import {dateStyle} from '@/filter/dateStyle.js'
 export default {
     filters: {
@@ -45,30 +47,28 @@ export default {
         }
     },
     components: {
-        headerT
+        headerT,
+        alertContent,
     },
     data() {
         return {
             imgSrc: require('@/assets/mgImg/icon_xin.png'),
             headerContent: '生存金账户',
-            survivalData:[{
-                policyCode:'001',
-                productName:'太平爱宝贝综合意外伤害保险',
-                insuredName:'范聪杰1',
-                holderName:'范聪杰2',
-                validateDate:null,
-                liabilityStateName:'有效'
-             }],
-             errorMsg:''
+            survivalData:[],
+            alertCount:{
+                isShowAlert:false,
+                alertData:'请输入',
+            },
         }
     },
     created(){
         this.getSurvivalList({
             successCallback: (res) => {
-                this.survivalData = res.result
+                this.survivalData = res
             },
             failCallback:(res) => {
-                this.errorMsg = res.msg;
+                this.alertCount.isShowAlert = true;
+                this.alertCount.alertData = res;
             }
         })
     },

@@ -6,7 +6,7 @@
             <li v-for="(item,index) in changeListData" :key="index" @click="changeMessage(item.policyCode)">
                 <mincontentList :changeListData="item"></mincontentList>
             </li>
-            <p v-if="changeListData == ''">
+            <p v-if="changeListData == null">
                 未查找到符合条件的数据！
             </p>
         </ul>

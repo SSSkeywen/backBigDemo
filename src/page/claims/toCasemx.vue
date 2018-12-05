@@ -3,7 +3,7 @@
         <headerT :headerContent="headerContent"></headerT>
         <ul>
             <li>
-              <caseMsg></caseMsg>  
+              <caseMsg :caseMstList="caseMstList"></caseMsg>  
             </li>
         </ul>
         
@@ -22,8 +22,33 @@ import { Toast } from "vant";
         },
         data() {
             return {
-                headerContent: '案件进度'
+                headerContent: '案件进度',
+                caseMstList:[]
             }
+        },
+        created(){
+            const toast1 = Toast.loading({
+                mask: true,
+                message: "加载中...",
+                duration: 1000
+            });
+            this.lawCaseListFn({
+                successCallback: (result) => {
+                    console.log(result)
+                    this.caseMstList = result
+                    // console.log(this.clientMsg)
+                    // this.authorizationMap = res.data.authorizationMap
+                    toast1.clear();
+                },
+                fCallback:(res) => {
+                    toast1.clear();
+                }
+            })
+        },
+        methods: {
+            ...mapActions({
+                lawCaseListFn: "lawCaseListFn"
+            }),
         },
     }
 </script>

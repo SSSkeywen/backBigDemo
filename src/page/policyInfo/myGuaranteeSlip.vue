@@ -42,7 +42,7 @@ export default {
   },
   data() {
     return {
-      tipsContent:'没有保单1',
+      tipsContent:'没有保单',
       selectData: "0",
       headerContent: "我的保单",
       selectList: [
@@ -103,7 +103,11 @@ export default {
 
         toast1.clear();
       },
-      fCallback: res => {
+      failCallback: res => {
+        console.log(res)
+        if(res.code==2002){
+          this.$router.push({ path: '/userInfo',query: {pathAddress: '/myGuaranteeSlip'} });
+        }
         toast1.clear();
       }
     });
@@ -139,7 +143,7 @@ export default {
       //我是被保人
       if (this.selectData == 2) {
         this.contentListData = [];
-        for (let item of this.contentListBox.result) {
+        for (let item of this.contentListBox.data) {
           if (item.insuredName == this.contentListBox.hiddenParameters.name) {
             this.contentListData.push(item);
           }
@@ -148,7 +152,7 @@ export default {
       //有效保单
       if (this.selectData == 3) {
         this.contentListData = [];
-        for (let item of this.contentListBox.result) {
+        for (let item of this.contentListBox.data) {
           if (item.statusName == "有效") {
             this.contentListData.push(item);
           }
@@ -158,7 +162,7 @@ export default {
       //失效保单
       if (this.selectData == 4) {
         this.contentListData = [];
-        for (let item of this.contentListBox.result) {
+        for (let item of this.contentListBox.data) {
           if (item.statusName != "有效") {
             this.contentListData.push(item);
           }
@@ -173,6 +177,7 @@ export default {
 .mg-box {
   min-height: 100vh;
   background-color: #dcdcdc;
+  padding-bottom: 0.1rem;
 }
 .mg-select {
   width: 90%;

@@ -3,6 +3,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import plicyInfo from './modules/plicyInfo.js'
 import classic from './modules/classic.js'
+import userInfo from './modules/userInfo.js'
 import claimsModules from './modules/claimsModules.js'
 import billModules from './modules/billModules.js'
 
@@ -27,6 +28,7 @@ export default new Vuex.Store({
     modules: {
         plicyInfo,
         classic,
+        userInfo,
         claimsModules,
         billModules,
 

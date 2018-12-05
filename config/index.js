@@ -11,14 +11,14 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      // '/wxqhb/': {
+      // '/nwxqhb/': {
       //   // target: 'http://10.7.181.153:8090', // 你接口的域名 fancj
-      //   target: 'http://10.7.181.143:8090', // 你接口的域名  zhangr
-      //   // target: 'https://tpwxtestcloud.life.cntaiping.com', // 你接口的域名
+      //   // target: 'http://10.7.181.143:8090', // 你接口的域名  zhangr
+      //   target: 'https://tpwxtestcloud.life.cntaiping.com/', // 你接口的域名
       //   secure: false,
       //   changeOrigin: true,
       //   pathRewrite: {
-      //     '^/wxqhb': '/wxqhb'
+      //     '^/nwxqhb': '/nwxqhb'
       //   }
       // }
     },

@@ -23,24 +23,27 @@
                 <p>是否已领取：{{item.isDraw}}</p>
             </li>
             <li>
-                <p v-if="drawDate == ''">领取日期：-</p>
-                <p v-if="drawDate != ''">领取日期：{{item.drawDate | dateFilter}}</p>
+                <p v-if="item.drawDate == null">领取日期：-</p>
+                <p v-if="item.drawDate != null">领取日期：{{item.drawDate | dateFilter}}</p>
             </li>
         </ul>
     </section>
-    <section class="mg-content-list" v-if="errorMsg == ''">
-        {{errorMsg}}
+    <section class="mg-content-list" v-if="survivalData == null">
+        未查找到符合条件的数据！
     </section>
+    <alertContent :alertCount="alertCount"></alertContent>
     </div>
 </template>
 
 <script>
 import headerT from '../../components/header.vue'
 import { mapActions } from "vuex";
+import alertContent from "../../components/alertContent";
 import {dateStyle} from '@/filter/dateStyle.js'
 export default {
     components: {
-        headerT
+        headerT,
+        alertContent,
     },
     filters: {
         dateFilter(date){
@@ -50,24 +53,23 @@ export default {
     data() {
         return {
             headerContent: '生存金账户',
-            survivalData:[{
-                productName:'太平爱宝贝综合意外伤害保险',
-                liabName:'301-生存金',
-                authName:'1-个人授权现金',
-                feeAmount:0,
-                distributeDate:'2001-01-01',
-                isDraw:'否',
-                drawDate:'-'
-             }],
-            errorMsg
+            survivalData:[],
+            alertCount:{
+                isShowAlert:false,
+                alertData:'请输入',
+            },
         }
     },
     created(){
+        let policyCode = this.$route.query.policyCode;
         this.getSurvivalListInfo({
+            policyCode,
             successCallback: (res) => {
-                this.survivalData = res.result
+                this.survivalData = res
             },
             failCallback:(res) => {
+                this.alertCount.isShowAlert = true;
+                this.alertCount.alertData = res;
             }
         })
     },

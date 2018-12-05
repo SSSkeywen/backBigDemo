@@ -5,7 +5,7 @@
       <div class="scan-style">
         <img :src="scanImgSrc" width="100%">
       </div>
-      <div class="cm-jump-page">
+      <div @click="enterVipPage" class="cm-jump-page">
         <div class="cm-jump-content">
           <p>VIP服务</p>
           <div class="cm-jump-ing">
@@ -14,14 +14,14 @@
         </div>
       </div>
       <div class="cm-client-photo">
-        <img :src="clientMsg.authorizationMap.headimgurl" alt>
+        <img :src="clientMsg.authorizationMap.headimgurl" >
       </div>
       <div class="cm-client-name">
-        <div v-if="clientMsg.customer.name">
+        <div v-if="clientMsg.isBinding!='0'">
           <p class="cm-client-font">{{clientMsg.customer.name}}</p>
           <div class="cm-client-img">
             <img :src="vipBgImgSrc" width="100%">
-            <p>黄金级</p>
+            <p>{{vipFont}}</p>
           </div>
         </div>
         <div v-else>
@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import {config} from '@/config/config.js'
 export default {
   data() {
     return {
@@ -45,21 +46,53 @@ export default {
       // jumpBgImgSrc: require('@/assets/classicImg/jump@bg.png'),
       jumpIconImgSrc: require("@/assets/classicImg/jump@icon.png"),
       waterImgSrc: require("@/assets/classicImg/water@red.png"),
-      vipBgImgSrc: require("@/assets/classicImg/vipbg@gold.png")
+      vipBgImgSrc: require("@/assets/classicImg/vipbg@mass.png"),
+      vipFont:'大众级',
+
+      // vipBgImgSrc: require("@/assets/classicImg/vipbg@gold.png"),
+      // vipBgImgSrc: require("@/assets/classicImg/vipbg@platinum.png"),
+      // vipBgImgSrc: require("@/assets/classicImg/vipbg@diamond.png"),
+      // vipBgImgSrc: require("@/assets/classicImg/vipbg@.png"),
     };
   },
   props: ["clientMsg"],
   created() {
     // console.log(this.clientMsg)
   },
+  mounted(){
+    console.log(this.clientMsg)
+    let custPoints = this.clientMsg.customer.custPoints
+    if(custPoints>=0&&custPoints<50000){
+				// linewid=0+20*(custPoints/50000);
+				// gap=50000-custPoints;
+			}else if(custPoints>=50000&&custPoints<100000){
+        this.vipFont = '黄金级'
+        this.vipBgImgSrc = require("@/assets/classicImg/vipbg@gold.png")
+			}else if(custPoints>=100000&&custPoints<400000){
+				this.vipFont = '铂金级'
+        this.vipBgImgSrc = require("@/assets/classicImg/vipbg@platinum.png")
+			}else if(custPoints>=400000&&custPoints<1000000){
+				this.vipFont = '钻石级'
+        this.vipBgImgSrc = require("@/assets/classicImg/vipbg@diamond.png")
+			}else if(custPoints>=1000000&&custPoints<3000000){
+				this.vipFont = '黑钻级'
+        this.vipBgImgSrc = require("@/assets/classicImg/vipbg@blackDiamonds.png")
+			}else if(custPoints>=3000000){
+				this.vipFont = '黑钻级'
+        this.vipBgImgSrc = require("@/assets/classicImg/vipbg@blackDiamonds.png")
+			}
+  },
   computed: {
-    headimgurl() {
-      return this.clientMsg.authorizationMap.headimgurl;
-    }
+    // headimgurl() {
+    //   return this.clientMsg.authorizationMap.headimgurl;
+    // }
   },
   methods: {
       startTest() {
           this.$router.push({ path: "/userInfo" });
+      },
+      enterVipPage(){
+        window.location.href = config.api_address_url+'wxqhb/pagemenu.html?pagemenuType=2'
       }
   },
 };

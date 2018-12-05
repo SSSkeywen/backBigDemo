@@ -5,7 +5,7 @@
                 <img :src="logoImgSrc" alt="">
             </div>
             <div class="user-form">
-                <input class="user-text" type="text" placeholder="姓名">
+                <input class="user-text" max-length="20"  v-model="commName" type="text" placeholder="姓名">
                 <div class="main_sty">
                     <input type="text" name='select' lx ='0' class="user-text" @click.stop="isOpenSelect=!isOpenSelect" v-model="cardNameType" style="border:1px solid #dedede;text-align:center;" readonly placeholder="请选择您的证件类型" >
                     <transition name="fade">
@@ -25,7 +25,7 @@
                     </div>
                     </transition>
                 </div>
-                <input class="user-text" type="text" placeholder="证件号码">
+                <input class="user-text" max-length="20" v-model="usercertcode" type="text" placeholder="证件号码">
                 <button class="style-click" type="submit" @click="validation"  name="check_btn">验证</button>
             </div>
         </div>
@@ -45,6 +45,9 @@ export default {
   data() {
     return {
       cardNameType: "请选择您的证件类型",
+      usercertcode:'',
+      commName:'',
+      certtype:'',
       logoImgSrc: require("@/assets/publicImg/1_03.png"),
       isOpenSelect: false,
       alertCount:{
@@ -100,13 +103,55 @@ export default {
     console.log(this.$route.query.pathAddress)
   },
   methods: {
+    ...mapActions({
+          checklogin: "checklogin"
+      }),
     selectCard(index) {
       console.log(index);
       this.cardNameType = this.cardList[index].cardName
+      this.certtype = this.cardList[index].cardValue
       this.isOpenSelect = false
     },
     validation(){
-      this.$router.push({ path: this.$route.query.pathAddress });
+      if(this.commName == ''){
+        this.alertCount.alertData = '请输入姓名'
+        this.alertCount.isShowAlert = true
+        return false
+      }
+      if(this.cardNameType == ''){
+        this.alertCount.alertData = '请选择'
+        this.alertCount.isShowAlert = true
+        return false
+      }
+      if(this.usercertcode == ''){
+        this.alertCount.alertData = '请输入证件号码'
+        this.alertCount.isShowAlert = true
+        return false
+      }
+      let testData= {
+        name:this.commName,
+        certtype:this.certtype,
+        certcode:this.usercertcode,
+      }
+      console.log(testData)
+      const toast1 = Toast.loading({
+                mask: true,
+                message: "加载中...",
+                duration: 1000
+            });
+            this.checklogin({
+              testData,
+                successCallback: (result) => {
+                  if(result.responsecode == 0){
+
+                  }
+                    toast1.clear();
+                },
+                fCallback:(res) => {
+                    toast1.clear();
+                }
+            })
+      // this.$router.push({ path: this.$route.query.pathAddress });
     },
 
     //关闭下拉框

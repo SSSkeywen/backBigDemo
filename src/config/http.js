@@ -16,8 +16,8 @@ import { Toast } from 'vant';
 // } else if (process.env.NODE_ENV == 'debug') { 
 //  axios.defaults.baseURL = '';
 // } else if (process.env.NODE_ENV == 'production') { 
-axios.defaults.baseURL = 'http://localhost.cntaiping.com:8080/';
-// axios.defaults.baseURL = 'https://tpwxtestcloud.life.cntaiping.com/',
+axios.defaults.baseURL = 'http://localhost.cntaiping.com:8080/nwxqhb';
+// axios.defaults.baseURL = config.api_address_url;
 
 // }
 // alert(1)
@@ -32,7 +32,7 @@ axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
 
 // axios.defaults.headers.post["Access-Control-Allow-Headers"]= "Content-Type,Content-Length, Authorization, Accept,X-Requested-With"
 // post请求头
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8;multipart/form-data;application/json';
+axios.defaults.headers.post['Content-Type'] = 'application/json';
 // alert(11)
 /** 
  * get方法，对应get请求 
@@ -60,7 +60,7 @@ export function get(url, params) {
 export function post(url, params) {
     // console.log(testPage())
     return new Promise((resolve, reject) => {
-        axios.post(url, QS.stringify(params))
+        axios.post(url, JSON.stringify(params))
             .then(res => {
                 resolve(res.data);
             })

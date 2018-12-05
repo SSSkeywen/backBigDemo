@@ -50,13 +50,16 @@ const actions = {
     [getLates]({ commit }, { successCallback = () => { }, failCallback = () => { } }) {
         console.log(111)
         post(apiConfig.api_base_url + 'policy/list', '').then((res) => {
+            console.log(res)
             let result = res
             if (result.code == '0') {
                 successCallback(result)
             } else {
+                failCallback(result)
             }
 
         }).catch((err) => {
+            failCallback(res)
         })
     },
     //获取详情
