@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import classic from '@/page/classic'
 import messageInquire from '@/page/messageInquire'
 import businessHanding from '@/page/businessHanding'
+import userFailPage from '@/page/userFailPage'
 
 // 绑定页面
 import userInfo from '@/page/userInfo'
@@ -89,6 +90,11 @@ export default new Router({
       path: '/userInfo',
       name: 'userInfo',
       component: userInfo
+    }, 
+    {
+      path: '/userFailPage',
+      name: 'userFailPage',
+      component: userFailPage
     },
 
     {

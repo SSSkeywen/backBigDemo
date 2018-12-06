@@ -172,17 +172,17 @@
                     <p>证件号码：</p>
                     <p v-text="CustomerByPolicyCode.insuredCertiCode"></p>
                 </li>
-                <li v-if="CustomerByPolicyCode.applicantCeller" class="mp-list-li line-down">
+                <li v-if="CustomerByPolicyCode.insuredCeller" class="mp-list-li line-down">
                     <p>手机：</p>
-                    <p v-text="CustomerByPolicyCode.applicantCeller"></p>
+                    <p v-text="CustomerByPolicyCode.insuredCeller"></p>
                 </li>
-                <li v-if="CustomerByPolicyCode.applicantTel1" class="mp-list-li line-down">
+                <li v-if="CustomerByPolicyCode.insuredTel1" class="mp-list-li line-down">
                     <p>家庭电话：</p>
-                    <p v-text="CustomerByPolicyCode.applicantTel1"></p>
+                    <p v-text="CustomerByPolicyCode.insuredTel1"></p>
                 </li>
-                <li v-if="CustomerByPolicyCode.applicantEmail" class="mp-list-li line-down">
+                <li v-if="CustomerByPolicyCode.insuredEmail" class="mp-list-li line-down">
                     <p>电子邮件：</p>
-                    <p v-text="CustomerByPolicyCode.applicantEmail"></p>
+                    <p v-text="CustomerByPolicyCode.insuredEmail"></p>
                 </li>
             </ul>
         </section>
@@ -215,7 +215,7 @@
                     </div>
                     <p>信件发送方式</p>
                 </div>
-                <div @click="showSendEmilStyle(5)" class="mp-min-right"><img class="ani-down" :class="item.isShowSendEmilStyle?'add-ani-style':''" :src="imgSrcThree" alt=""></div>
+                <div @click="showMpList(5)" class="mp-min-right"><img class="ani-down" :class="isShowInformationSix?'add-ani-style':''" :src="imgSrcThree" alt=""></div>
             </div>
             <ul class="mp-list" v-if="isShowInformationSix">
                 <li class="mp-list-li line-down" v-for="(item,index) in PolicyNoticeList" :key="index">
@@ -388,6 +388,7 @@ import { mapActions } from "vuex";
 .mg-box{
     min-height: 100vh;
     background-color: #DCDCDC;
+    padding-bottom: 0.1rem;
 }
 .mp-hgroup{
     width: 95%;

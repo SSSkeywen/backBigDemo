@@ -1,7 +1,7 @@
 <template>
   <div class="mg-box">
     <headerT :headerContent="headerContent"></headerT>
-    <div v-if="contentListData.length!=0">
+    <div v-if="contentListBox.data">
       <div class="mg-select">
         <select name id v-model="selectData" @change="selectPolicy()">
           <option
@@ -42,7 +42,7 @@ export default {
   },
   data() {
     return {
-      tipsContent:'没有保单',
+      tipsContent: "没有保单",
       selectData: "0",
       headerContent: "我的保单",
       selectList: [
@@ -89,7 +89,7 @@ export default {
     });
     this.getLates({
       successCallback: res => {
-        console.log(res)
+        console.log(res);
         for (let item of res.data.AllPolicyList) {
           if (item.statusName == "有效") {
             item.statusStyle = "green";
@@ -104,9 +104,12 @@ export default {
         toast1.clear();
       },
       failCallback: res => {
-        console.log(res)
-        if(res.code==2002){
-          this.$router.push({ path: '/userInfo',query: {pathAddress: '/myGuaranteeSlip'} });
+        console.log(res);
+        if (res.code == 2002) {
+          this.$router.push({
+            path: "/userInfo",
+            query: { pathAddress: "/myGuaranteeSlip" }
+          });
         }
         toast1.clear();
       }
@@ -126,16 +129,18 @@ export default {
 
     //select选择框方法
     selectPolicy(ele) {
-      console.log(this.selectData);
+      let myName = JSON.parse(window.localStorage.getItem("clientMsg")).customer
+        .name;
+      console.log(myName);
       if (this.selectData == 0) {
         this.contentListData = [];
-        this.contentListData = this.contentListBox.result;
+        this.contentListData = this.contentListBox.data.AllPolicyList;
       }
       //我是投保人
       if (this.selectData == 1) {
         this.contentListData = [];
-        for (let item of this.contentListBox.result) {
-          if (item.applicantName == this.contentListBox.hiddenParameters.name) {
+        for (let item of this.contentListBox.data.AllPolicyList) {
+          if (item.applicantName == myName) {
             this.contentListData.push(item);
           }
         }
@@ -143,8 +148,8 @@ export default {
       //我是被保人
       if (this.selectData == 2) {
         this.contentListData = [];
-        for (let item of this.contentListBox.data) {
-          if (item.insuredName == this.contentListBox.hiddenParameters.name) {
+        for (let item of this.contentListBox.data.AllPolicyList) {
+          if (item.insuredName == myName) {
             this.contentListData.push(item);
           }
         }
@@ -152,7 +157,7 @@ export default {
       //有效保单
       if (this.selectData == 3) {
         this.contentListData = [];
-        for (let item of this.contentListBox.data) {
+        for (let item of this.contentListBox.data.AllPolicyList) {
           if (item.statusName == "有效") {
             this.contentListData.push(item);
           }
@@ -162,7 +167,7 @@ export default {
       //失效保单
       if (this.selectData == 4) {
         this.contentListData = [];
-        for (let item of this.contentListBox.data) {
+        for (let item of this.contentListBox.data.AllPolicyList) {
           if (item.statusName != "有效") {
             this.contentListData.push(item);
           }
@@ -190,7 +195,7 @@ export default {
     height: 100%;
     border: none;
     border-radius: 7px;
-    background-color: #fff;
+    background: #fff;
   }
 }
 .mg-content-list {

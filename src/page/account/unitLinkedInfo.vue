@@ -4,28 +4,28 @@
     <!-- <section class="xx_lb"> -->
         <div class="mg-content-list">
             <ul>
-                <li  v-for="(item,index) in unitLinkedData" :key="index">
+                <li>
                     <hgroup class="mg-hgroup">
-                        <p>万能账户信息</p>
+                        <p>个人账户</p>
                     </hgroup>
                     <ul class="mg-ul">
                         <li class="mp-list-li line-down">
-                            <p>保单账号：</p><p>{{item.applicantName}}</p>
+                            <p>保单账号：</p><p>{{unitLinkedInfo.policyCode}}</p>
                         </li>
                         <li class="mp-list-li line-down">
-                            <p>保单生效日：</p><p>{{item.effectiveDate | dateFilter}}</p>
+                            <p>保单生效日：</p><p>{{unitLinkedInfo.validateDate | dateFilter}}</p>
                         </li>
                         <li class="mp-list-li line-down">
-                            <p>责任状态：</p><p>{{item.statusName}}</p>
+                            <p>责任状态：</p><p>{{unitLinkedInfo.liabilityState}}</p>
                         </li>
                         <li class="mp-list-li line-down">
-                            <p>投保人：</p><p>{{item.applicantName}}</p>
+                            <p>投保人：</p><p>{{unitLinkedInfo.applicantName}}</p>
                         </li>
                         <li class="mp-list-li line-down">
-                            <p>被保人：</p><p>{{item.insuredName}}</p>
+                            <p>被保人：</p><p>{{unitLinkedInfo.insurantName}}</p>
                         </li>
                         <li class="mp-list-li line-down">
-                            <p>保单主险：</p><p>{{item.productName}}</p>
+                            <p>保单主险：</p><p>{{unitLinkedInfo.productAbbr}}</p>
                         </li>
                     </ul>
                 </li>
@@ -38,7 +38,7 @@
 
 <script>
 import headerT from '../../components/header.vue';
-import { mapActions } from "vuex";
+// import { mapActions } from "vuex";
 import {dateStyle} from '@/filter/dateStyle.js';
 export default {
     filters: {
@@ -51,52 +51,37 @@ export default {
     },
     data() {
         return {
-            headerContent: '连投账户',
-            unitLinkedData:[{
-                policyCode:'001',
-                productName:'太平爱宝贝综合意外伤害保险',
-                applicantName:'范聪杰1',
-                insuredName:'范聪杰2',
-                validateDate:null,
-                statusName:'有效',
-                effectiveDate:'2001-01-01',
-                dividendNum:'1000元'
-             },{
-                policyCode:'002',
-                productName:'太平爱宝贝综合意外伤害保险',
-                applicantName:'范聪杰1',
-                insuredName:'范聪杰2',
-                validateDate:null,
-                statusName:'有效',
-                effectiveDate:'2001-01-01',
-                dividendNum:'1000元'
-             }]
-            
+            headerContent: '投连账户',
+            infoIndex:'',
+            unitLinkedInfo:''
         }
     },
     created(){
-        let policyCodeData = new FormData();
-            policyCodeData.append("policyCode", this.$route.query.policyCode);
-            policyCodeData.append("agentCode", this.$route.query.agentCode);
-            policyCodeData.append("productCate", this.$route.query.productCate);
-            
-        this.postUnitLinked({
-            policyCodeData,
-            successCallback: (res) => {
-                console.log('_______________________');
-                console.log(res.result);
-                this.unitLinkedData = res.result
-            },
-            fCallback:(res) => {
-            }
-        })
+        // 接受上一页面 参数
+        this.infoIndex= this.$route.query.index;
+        // 接受上一页面 ajax存储在localstore 的数据
+        let localData = JSON.parse(window.localStorage.getItem('unitLinkedlist'));
+        console.log(localData);
+        console.log(typeof(localData.data[this.infoIndex].validateDate));
+        this.unitLinkedInfo=localData.data[this.infoIndex];
+        // this.unitLinkedInfo = JSON.parse(window.localStorage.getItem('localData'))[this.infoIndex];;
+        // this.postUnitLinked({
+        //     policyCodeData,
+        //     successCallback: (res) => {
+        //         console.log('_______________________');
+        //         console.log(res.result);
+        //         this.unitLinkedData = res.result
+        //     },
+        //     fCallback:(res) => {
+        //     }
+        // })
     },
     
-    methods: {
-        ...mapActions({
-            postUnitLinked: "postUnitLinked"
-        })
-    }   
+    // methods: {
+    //     ...mapActions({
+    //         postUnitLinked: "postUnitLinked"
+    //     })
+    // }   
 }
 </script>
 

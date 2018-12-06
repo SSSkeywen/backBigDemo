@@ -1,14 +1,16 @@
 import axios from 'axios'
+import { apiConfig } from '../api.js'
+import { get, post } from '@/config/http.js'
 
-const getLates = 'getLates'
-
+const getLatesTwo = 'getLatesTwo'
+const getDevidentaccInfo = 'getDevidentaccInfo'
 
 const state = {
     ulrData: '/wxqhb/'
 }
 
 const mutations = {
-    
+
 }
 
 const actions = {
@@ -23,27 +25,38 @@ const actions = {
     //         }
     //     })
     // },
-    // [getLates]({ commit }, { successCallback = () => { }, failCallback = () => { } }) {
-    //     axios({
-    //         method: 'get',
-    //         url: state.ulrData + 'policy/toPolicyListVue.html',
-    //         data: '',
-    //         "Content-Type": "multipart/form-data"
-    //     }).then((res) => {
-    //         console.log(res)
-    //         let result = res.data
-    //         if (result.responseCode == '0') {
-    //             successCallback(result)
-    //         } else {
-    //         }
+    [getLatesTwo]({ commit }, { successCallback = () => { }, failCallback = () => { } }) {
+      
+        post(apiConfig.api_base_url + 'devidentacc/list', '').then((res) => {
+            console.log(res)
+            let result = res
+            if (result.code == 0) {
+                successCallback(result)
+            } else {
+                failCallback(result)
+            }
 
-    //     }).catch((err) => {
-    //     })
-    // },
+        }).catch((err) => {
+        })
+    },
+    [getDevidentaccInfo]({ commit }, { data, successCallback = () => { }, failCallback = () => { } }) {
+        
+        post(apiConfig.api_base_url + 'devidentacc/info', data).then((res) => {
+            console.log(res)
+            let result = res
+            if (result.code == 0) {
+                successCallback(result)
+            } else {
+                failCallback(result)
+            }
+
+        }).catch((err) => {
+        })
+    }
 }
 
 const getters = {
-    
+
 }
 
 export default {

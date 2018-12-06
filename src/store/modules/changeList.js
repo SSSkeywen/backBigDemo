@@ -25,10 +25,14 @@ const actions = {
             if (res.code == '0') {
                 successCallback(res.data)
             } else {
-                failCallback(res.msg)
+                failCallback(res)
             }
         }).catch((err) => {
-            failCallback("尊敬的用户，数据请求失败，请刷新后重试!")
+            let res = {
+                code: 1005,//接口异常
+                msg: '尊敬的用户，数据请求失败，请刷新后重试!',
+            }
+            failCallback(res)
         })
         // axios({
         //     method: 'get',
@@ -48,17 +52,22 @@ const actions = {
         // })
     },
     [getChangeListInfo]({ commit }, {policyCode, successCallback = () => { }, failCallback = () => { } }) {
+        console.info("policyCode:"+policyCode)
         post(apiConfig.api_base_url + 'bqbgrecord/details/' + policyCode ,'').then((res) => {
             console.log(res)
             // let result = res.data
             if (res.code == '0') {
                 successCallback(res.data)
             } else {
-                failCallback(res.msg)
+                failCallback(res)
             }
 
         }).catch((err) => {
-            failCallback("尊敬的用户，数据请求失败，请刷新后重试!")
+            let res = {
+                code: 1005,//接口异常
+                msg: '尊敬的用户，数据请求失败，请刷新后重试!',
+            }
+            failCallback(res)
         })
         // axios({
         //     method: 'post',
@@ -82,10 +91,14 @@ const actions = {
             if (res.code == '0') {
                 successCallback(res.data)
             } else {
-                failCallback(res.msg)
+                failCallback(res)
             }
         }).catch((err) => {
-            failCallback("尊敬的用户，数据请求失败，请刷新后重试!")
+            let res = {
+                code: 1005,//接口异常
+                msg: '尊敬的用户，数据请求失败，请刷新后重试!',
+            }
+            failCallback(res)
         })
     },
 }

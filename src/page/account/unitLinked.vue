@@ -1,182 +1,114 @@
 <template>
     <div class="mg-box">
-    <headerT :headerContent="headerContent"></headerT>
-    <!-- <section class="xx_lb"> -->
-        <div class="mg-content-list">
+        <headerT :headerContent="headerContent"></headerT>
+        <section v-if="unitLinkedData.length!=0" class="mg-content-list">
             <ul>
-                <li  v-for="(item,index) in unitLinkedData" :key="index">
-                    <hgroup class="mg-hgroup">
-                        <p>万能账户信息</p>
-                    </hgroup>
-                    <ul class="mg-ul">
-                        <li class="mp-list-li line-down">
-                            <p>保单账号：</p><p>{{item.applicantName}}</p>
-                        </li>
-                        <li class="mp-list-li line-down">
-                            <p>保单生效日：</p><p>{{item.effectiveDate | dateFilter}}</p>
-                        </li>
-                        <li class="mp-list-li line-down">
-                            <p>责任状态：</p><p>{{item.statusName}}</p>
-                        </li>
-                        <li class="mp-list-li line-down">
-                            <p>投保人：</p><p>{{item.applicantName}}</p>
-                        </li>
-                        <li class="mp-list-li line-down">
-                            <p>被保人：</p><p>{{item.insuredName}}</p>
-                        </li>
-                        <li class="mp-list-li line-down">
-                            <p>保单主险：</p><p>{{item.productName}}</p>
-                        </li>
-                    </ul>
+                <li v-for="(item,index) in unitLinkedData" :key="index" @click="lookMsg(index)">
+                    <mincontentList :changeListData="item"></mincontentList>
+                    <!-- <span>{{item.validateDate | dateFilter}}</span> -->
                 </li>
             </ul>
-        </div>
-    <!-- </section> -->
-    <a href="javascript: history.back();" class="btn_back">返回</a>
+        </section>
+        <nothing v-else :tipsContent="tipsContent"></nothing>
     </div>
 </template>
 
 <script>
-import headerT from '../../components/header.vue';
+import headerT from '../../components/header.vue'
+import mincontentList from '../../components/policyInfoComponent/minContentList.vue'
+import nothing from '../../components/nothing.vue'
 import { mapActions } from "vuex";
-import {dateStyle} from '@/filter/dateStyle.js'
+import {dateStyle} from '@/filter/dateStyle.js';
 export default {
+    components: {
+        headerT,
+        mincontentList,
+        nothing
+    },
+    data() {
+        return {
+            headerContent: '投连账户',
+            tipsContent:'未查询到符合条件的数据！',
+            unitLinkedData:[]
+            
+        }
+    },
     filters: {
         dateFilter(date){
             return dateStyle(date)
         }
     },
-    components: {
-        headerT
-    },
-    data() {
-        return {
-            headerContent: '连投账户',
-            unitLinkedData:[{
-                policyCode:'001',
-                productName:'太平爱宝贝综合意外伤害保险',
-                applicantName:'范聪杰1',
-                insuredName:'范聪杰2',
-                validateDate:null,
-                statusName:'有效',
-                effectiveDate:'2001-01-01',
-                dividendNum:'1000元'
-             },{
-                policyCode:'002',
-                productName:'太平爱宝贝综合意外伤害保险',
-                applicantName:'范聪杰1',
-                insuredName:'范聪杰2',
-                validateDate:null,
-                statusName:'有效',
-                effectiveDate:'2001-01-01',
-                dividendNum:'1000元'
-             }]
-            
-        }
-    },
     created(){
-        this.getLates({
+        this.getUnitLinked({
             successCallback: (res) => {
-                for(let item of res.result){
-                    if(item.statusName == '有效'){
+                for(let item of res.data){
+                    if(item.liabilityState == '有效'){
                         item.statusStyle = 'green'
                     } 
-                    if(item.statusName == '停效'){
+                    if(item.liabilityState == '终止'){
                         item.statusStyle = 'red'
                     } 
                 }
-                this.survivalData = res.result
+                this.unitLinkedData = res.data;
             },
             fCallback:(res) => {
+                if(res.code==2002){
+                    this.$router.push({  
+                        path: '/userInfo',
+                        query:{pathAddress: '/unitLinked'} 
+                    });
+                }
             }
         })
     },
-    
     methods: {
         ...mapActions({
-            getLates: "getLates"
-        })
+            getUnitLinked: "getUnitLinked"
+        }),
+        lookMsg(index) {
+            this.$router.push({ 
+                path: '/unitLinkedInfo',
+                query: {
+                    index:index
+                } 
+            });
+            
+        }
     }   
 }
 </script>
 
 <style lang="scss" scoped>
-.xx_lb {
-    width: 95%;
-    background-color: #fff;
-    margin: 0 auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
 .mg-box{
     min-height: 100vh;
-    background-color: #DCDCDC;  
+    background-color: #DCDCDC;
+    
+}
+.mg-select{
+    width: 90%;
+    margin: 10px auto;
+    border-radius: 7px;
+    background-color: #fbfbfb;
+    height: 30px;
+    select{
+        width: 100%;
+        height: 100%;
+        border: none;
+        border-radius: 7px;
+        background-color: #fff;
+    }
 }
 .mg-content-list{
     width: 90%;
     margin: 0.2rem auto 0;
-    &>ul{
-        margin-top: 10px;
-        margin-bottom: 10px;
-        &>li{
-            // border-radius: 10px;
+    ul{
+        li{
+            border-radius: 10px;
             background-color: #fff;
-            padding-bottom: 1%;
+            margin-bottom: 0.24rem;
             overflow: hidden;
-            margin-top: 10px;
-        margin-bottom: 10px;
         }
     }
-}
-.mg-hgroup{
-    display: flex;
-    color: #000;
-    width: 100%;
-    padding: 0 6%;
-    margin: 0 auto;
-    line-height: 0.52rem;
-    line-height: 40px;
-    box-sizing: border-box;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: 600;
-    div{
-        width: 7%;
-        img{
-            width: 100%;
-        }
-    }
-}
-.mg-ul{
-    width: 88%;
-    margin: 0 auto;
-    li{
-        display: flex;
-        justify-content: space-between;
-        line-height: 26px;
-    }
-}
-.green{
-    color: #00ae4d;
-}
-.red{
-   color: #898b8b; 
-}
-.btn_back{
-    width: 50%;
-    height: 35px;
-    line-height: 35px;
-    background-color: #00AE4D;
-    color: #fff;
-    margin: 10px auto;
-    margin-top: 10px;
-    margin-right: auto;
-    margin-bottom: 10px;
-    margin-left: auto;
-    border-radius: 5px;
-    display: block;
-    cursor: pointer;
-    text-align: center;
 }
 </style>
 

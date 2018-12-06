@@ -1,11 +1,12 @@
 import axios from 'axios'
+import { apiConfig } from '../api.js'
+import { get, post } from '@/config/http.js'
 
-const getUnitLinked = 'getUnitLinked'
-const postUnitLinked = 'postUnitLinked'
-
+const getUnitLinked = 'getUnitLinked';
+// const getUnitLinkedDetail = 'getUnitLinkedDetail';
 
 const state = {
-    ulrData: '/wxqhb/'
+
 }
 
 const mutations = {
@@ -13,35 +14,15 @@ const mutations = {
 }
 
 const actions = {
-    [getUnitLinked]({ commit }, { successCallback = () => { }, failCallback = () => { } }) {
-        axios({
-            method: 'get',
-            url: state.ulrData + 'policy/toSettleAccountListVue',
-            data: '',
-            "Content-Type": "multipart/form-data"
-        }).then((res) => {
+    //获取投连账户
+    [getUnitLinked]({ commit }, {  successCallback = () => { }, failCallback = () => { } }) {
+        post(apiConfig.api_base_url + 'investmentaccount/getlist', '').then((res) => {
             console.log(res)
-            let result = res.data
-            if (result.responseCode == '0') {
+            let result = res;
+            if (result.code == '0') {
                 successCallback(result)
-            } else {
-            }
-
-        }).catch((err) => {
-        })
-    },
-    // post 获取详情
-    [postUnitLinked]({ commit }, {policyCodeData, successCallback = () => { }, failCallback = () => { } }) {
-        axios({
-            method: 'post',
-            url: state.ulrData + 'policy/toSettleAccountInfoVue',
-            data: policyCodeData,
-            "Content-Type": "multipart/form-data"
-        }).then((res) => {
-            console.log(res)
-            let result = res.data
-            if (result.responseCode == '0') {
-                successCallback(result)
+                // ajax数据 存储在localstore 备用
+                window.localStorage.setItem('unitLinkedlist', JSON.stringify(result))
             } else {
                 failCallback()
             }
@@ -50,6 +31,22 @@ const actions = {
             failCallback()
         })
     },
+    // //获取投连账户 详情
+    // [getUnitLinkedDetail]({ commit }, { typeData, successCallback = () => { }, failCallback = () => { } }) {
+    //     post(apiConfig.api_base_url + 'cfgx/getGoldAccountCFGXRateInfo',typeData).then((res) => {
+    //         console.log(res)
+    //         let result = res
+    //         if (result.code == '0') {
+    //             successCallback(result)
+    //         } else {
+    //             failCallback()
+    //         }
+
+    //     }).catch((err) => {
+    //         failCallback()
+    //     })
+        
+    // }
 }
 
 const getters = {

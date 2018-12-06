@@ -4,18 +4,18 @@
             <p class="alert-font">短信验证码将发送至您尾号为<span></span>的手机，5分钟内有效，请点击获取，请查收！（每日最多五次）</p>
             <div class="alert-input line-down">
                 <div class="alert-left">
-                    <input type="text" placeholder="请输入验证码">
+                    <input v-model="codeData" type="text" placeholder="请输入验证码">
                 </div>
                 <div class="alert-send">
-                    <button class="style-click">获取验证码</button>
+                    <button class="style-click" :disabled="isSendBtn" @click="getCodeFn">{{btnContent}}</button>
                 </div>
             </div>
             <div class="alert-btn">
                 <div class="line-right">
-                    <button class="style-click">取消</button>
+                    <button class="style-click" @click="colseAlertFn">取消</button>
                 </div>
                 <div>
-                    <button class="style-click">确定</button>
+                    <button class="style-click" @click="sureSend">确定</button>
                 </div>
             </div>
         </div>
@@ -26,9 +26,43 @@
 export default {
   data() {
     return {
-      tipsImgSrc: require("@/assets/publicImg/icon_3.jpg")
+      tipsImgSrc: require("@/assets/publicImg/icon_3.jpg"),
+      btnContent:'获取验证码',
+      isSendBtn: false,
+      codeData:''
     };
-  }
+  },
+  methods: {
+    getCodeFn() {
+      this.isSendBtn = true;
+      this.miuFnOne(60);
+
+      setTimeout(() => {
+        this.btnContent = "重新发送";
+        this.isSendBtn = false;
+      }, 60000);
+      this.$emit('sendCodeFn')
+    },
+    sureSend() {
+      
+      this.$emit('sendCodeFnTwo',this.codeData)
+    },
+
+    colseAlertFn(){
+      this.$emit('clolseAlert')
+    },
+
+    miuFnOne(miu) {
+      let miuFn = setTimeout(() => {
+        miu--;
+        this.btnContent = "消息发送中(" + miu + ")";
+        if (miu == 1) {
+          return false;
+        }
+        this.miuFnOne(miu);
+      }, 1000);
+    },
+  },
 };
 </script>
 

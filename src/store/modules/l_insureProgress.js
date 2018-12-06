@@ -17,56 +17,28 @@ const mutations = {
 
 const actions = {
     [getInsureProgressList]({ commit }, { successCallback = () => { }, failCallback = () => { } }) {
-        // axios({
-        //     method: 'post',
-        //     url: state.ulrData + 'insureStaQueByCustomerList.html',
-        //   // url: state.ulrData + 'policy/toPolicyListVue.html',
-        //     data: '',
-        //     "Content-Type": "multipart/form-data"
-        // }).then((res) => {
-            
-        //     let result = res.data
-        //     // console.log(result)
-        //     successCallback(result)
-        //     // if (result.responseCode == '0') {
-        //     //     successCallback(result)
-        //     // } else {
-        //     //     failCallback(res.msg)
-        //     // }
-
-        // }).catch((err) => {
-        // })
-
+        
         post(apiConfig.api_base_url + 'tbjc/insurestaquebycustomerlist', '').then((res) => {
             console.log(res)
             let result = res
-            // if (result.code == '0') {
+            if (result.code == 0) {
                 successCallback(result)
-            // } else {
-            // }
-
+            } else {
+                failCallback(result)
+            }
         }).catch((err) => {
         })
     },
     [insureStaQueByPolicyCode]({ commit }, {policyCodeData, successCallback = () => { }, failCallback = () => { } }) {
-        // axios({
-        //     method: 'post',
-        //     url: state.ulrData + 'insureStaQueByPolicyCode.html',
-        //     data: policyCodeData,
-        //     "Content-Type": "multipart/form-data"
-        // }).then((res) => {
-        //     console.log(res)
-        //     let result = res.data
-        //     if (result.responseCode == '0') {
-        //         successCallback(result)
-        //     } else {
-        //         failCallback(res.msg)
-        //     }
+        
             post(apiConfig.api_base_url + 'tbjc/insurestaquebypolicycode', policyCodeData).then((res) => {
                 console.log(res)
                 let result = res
-                successCallback(result)
-               
+                if (result.code == 0) {
+                    successCallback(result)
+                } else {
+                    failCallback(result)
+                }
         }).catch((err) => {
         })
     },

@@ -1,38 +1,59 @@
 <template>
-    <div class="user-box" @click="closeSelect">
-        <div class="user-container">
-            <div class="user-logo">
-                <img :src="logoImgSrc" alt="">
-            </div>
-            <div class="user-form">
-                <input class="user-text" max-length="20"  v-model="commName" type="text" placeholder="姓名">
-                <div class="main_sty">
-                    <input type="text" name='select' lx ='0' class="user-text" @click.stop="isOpenSelect=!isOpenSelect" v-model="cardNameType" style="border:1px solid #dedede;text-align:center;" readonly placeholder="请选择您的证件类型" >
-                    <transition name="fade">
-                    <div class="main_select" v-show="isOpenSelect">
-                        <ul>
-                            <li :value = "item.cardValue" v-for="(item,index) in cardList" :key="index" @click="selectCard(index)">{{item.cardName}}</li>
-                            <!-- <li value = "2">军人证</li>
-                            <li value = "3">护照</li> -->
-                       <!--      <li value = "4">出生证</li> -->
-                            <!-- <li value = "5">异常身份证</li>
+  <div class="user-box" @click="closeSelect">
+    <div class="user-container">
+      <div class="user-logo">
+        <img :src="logoImgSrc" alt>
+      </div>
+      <div class="user-form">
+        <input class="user-text" max-length="20" v-model="commName" type="text" placeholder="姓名">
+        <div class="main_sty">
+          <input
+            type="text"
+            name="select"
+            lx="0"
+            class="user-text"
+            @click.stop="isOpenSelect=!isOpenSelect"
+            v-model="cardNameType"
+            style="border:1px solid #dedede;text-align:center;"
+            readonly
+            placeholder="请选择您的证件类型"
+          >
+          <transition name="fade">
+            <div class="main_select" v-show="isOpenSelect">
+              <ul>
+                <li
+                  :value="item.cardValue"
+                  v-for="(item,index) in cardList"
+                  :key="index"
+                  @click="selectCard(index)"
+                >{{item.cardName}}</li>
+                <!-- <li value = "2">军人证</li>
+                <li value = "3">护照</li>-->
+                <!--      <li value = "4">出生证</li> -->
+                <!-- <li value = "5">异常身份证</li>
                             <li value = "6">港澳台通行证</li>
                             <li value = "7">士兵证</li>
                             <li value = "8">警官证</li>
                             <li value = "61">外国人永久居留身份证</li>
-                            <li value = "9">其他</li> -->
-                        </ul>
-                    </div>
-                    </transition>
-                </div>
-                <input class="user-text" max-length="20" v-model="usercertcode" type="text" placeholder="证件号码">
-                <button class="style-click" type="submit" @click="validation"  name="check_btn">验证</button>
+                <li value = "9">其他</li>-->
+              </ul>
             </div>
+          </transition>
         </div>
-        <bgComponent></bgComponent>
-        <alertContent :alertCount="alertCount"></alertContent>
-        <sendAlrtContent v-if="false"></sendAlrtContent>
+        <input
+          class="user-text"
+          max-length="20"
+          v-model="usercertcode"
+          type="text"
+          placeholder="证件号码"
+        >
+        <button class="style-click" type="submit" @click="validation" name="check_btn">验证</button>
+      </div>
     </div>
+    <bgComponent></bgComponent>
+    <alertContent :alertCount="alertCount"></alertContent>
+    <sendAlrtContent v-if="sendCode" @clolseAlert="clolseAlert" @sendCodeFnTwo="sendCodeFnTwo" @sendCodeFn="sendCodeFn"></sendAlrtContent>
+  </div>
 </template>
 
 <script>
@@ -45,14 +66,17 @@ export default {
   data() {
     return {
       cardNameType: "请选择您的证件类型",
-      usercertcode:'',
-      commName:'',
-      certtype:'',
+      usercertcode: "",
+      commName: "",
+      certtype: "",
+      phoneNo: "",
+      sendCode: false,
+      codeData: "",
       logoImgSrc: require("@/assets/publicImg/1_03.png"),
       isOpenSelect: false,
-      alertCount:{
-          isShowAlert:false,
-          alertData:'请输入',
+      alertCount: {
+        isShowAlert: false,
+        alertData: "请输入"
       },
       cardList: [
         {
@@ -99,64 +123,255 @@ export default {
     alertContent,
     sendAlrtContent
   },
-  created(){
-    console.log(this.$route.query.pathAddress)
+  created() {
+    // console.log(this.$route.query.pathAddress)
   },
   methods: {
     ...mapActions({
-          checklogin: "checklogin"
-      }),
+      checklogin: "checklogin",
+      loginverificationcode: "loginverificationcode",
+      phonewsercode: "phonewsercode"
+    }),
+
+
     selectCard(index) {
       console.log(index);
-      this.cardNameType = this.cardList[index].cardName
-      this.certtype = this.cardList[index].cardValue
-      this.isOpenSelect = false
+      this.cardNameType = this.cardList[index].cardName;
+      this.certtype = this.cardList[index].cardValue;
+      this.isOpenSelect = false;
     },
-    validation(){
-      if(this.commName == ''){
-        this.alertCount.alertData = '请输入姓名'
-        this.alertCount.isShowAlert = true
-        return false
-      }
-      if(this.cardNameType == ''){
-        this.alertCount.alertData = '请选择'
-        this.alertCount.isShowAlert = true
-        return false
-      }
-      if(this.usercertcode == ''){
-        this.alertCount.alertData = '请输入证件号码'
-        this.alertCount.isShowAlert = true
-        return false
-      }
-      let testData= {
-        name:this.commName,
-        certtype:this.certtype,
-        certcode:this.usercertcode,
-      }
-      console.log(testData)
-      const toast1 = Toast.loading({
-                mask: true,
-                message: "加载中...",
-                duration: 1000
-            });
-            this.checklogin({
-              testData,
-                successCallback: (result) => {
-                  if(result.responsecode == 0){
 
-                  }
-                    toast1.clear();
-                },
-                fCallback:(res) => {
-                    toast1.clear();
-                }
-            })
+    clolseAlert(){
+      this.sendCode = false
+    },
+
+
+    validation() {
+      if (this.commName == "") {
+        this.alertCount.alertData = "请输入您的姓名";
+        this.alertCount.isShowAlert = true;
+        return false;
+      }
+      if (this.certtype == "") {
+        this.alertCount.alertData = "请选择您的证件类型";
+        this.alertCount.isShowAlert = true;
+        return false;
+      }
+      if (this.usercertcode == "") {
+        this.alertCount.alertData = "请输入您的证件号码";
+        this.alertCount.isShowAlert = true;
+        return false;
+      }
+      if (this.certtype == "1") {
+        if (!this.$toolsTwo.codeCrad(this.usercertcode)) {
+          this.alertCount.alertData = "身份证号码格式不正确";
+          this.alertCount.isShowAlert = true;
+          return false;
+        }
+      }
+      if (this.certtype == "61") {
+        if (!this.$toolsTwo.foreignCard(this.usercertcode)) {
+          this.alertCount.alertData = "证件号输入有误，请核实！";
+          this.alertCount.isShowAlert = true;
+          return false;
+        }
+        if (!this.$toolsTwo.foreignName(this.commName)) {
+          this.alertCount.alertData =
+            "外国人永久居留身份证标准的证件格式为：姓+,+名 ，姓与名中间用逗号（半角），前后无空格，如：【ZHENJIAN,YANGBEN】，请检查！";
+          this.alertCount.isShowAlert = true;
+          return false;
+        }
+      } else {
+        // console.log(this.$toolsTwo.clientName(this.commName))
+        if (!this.$toolsTwo.clientName(this.commName)) {
+          this.alertCount.alertData = "姓名格式有误！";
+          this.alertCount.isShowAlert = true;
+          return false;
+        }
+      }
+      // return false
+      let testData = {
+        name: this.commName,
+        certtype: this.certtype,
+        certcode: this.usercertcode
+      };
+      console.log(testData);
+      const toast1 = Toast.loading({
+        mask: true,
+        message: "加载中...",
+        duration: 1000
+      });
+      this.checklogin({
+        testData,
+        successCallback: result => {
+          // if (result.responsecode == 0) {
+          // } else {
+          // }
+          console.log(result);
+          var tipsData;
+          switch (result.responsecode) {
+            case "0":
+              this.phoneNo = result.celler;
+              this.sendCode = true;
+              break;
+            case "1":
+              tipsData = `<p>无法认证</p><span>原因：您在我司系统中留存的个人信息不完整。</span>`;
+              this.$router.push({
+                path: "/userFailPage",
+                query: { tipsData: tipsData }
+              });
+              break;
+            case "2":
+              tipsData = `<p>无法认证</p><span>原因：您在我司系统中留存的个人信息不完整。</span>`;
+              this.$router.push({
+                path: "/userFailPage",
+                query: { tipsData: tipsData }
+              });
+              break;
+            case "3":
+              tipsData = `<p>无法认证</p><span>原因：保全（账户通）-未检索到手机号,无法发送短信验证码。</span>`;
+              this.$router.push({
+                path: "/userFailPage",
+                query: { tipsData: tipsData }
+              });
+              break;
+            case "4":
+              this.alertCount.alertData = result.msg;
+              this.alertCount.isShowAlert = true;
+              break;
+            case "5":
+              tipsData = `请绑定本人信息，谢谢！`;
+              this.$router.push({
+                path: "/userFailPage",
+                query: { tipsData: tipsData }
+              });
+              break;
+            case "6":
+              tipsData = `<p>无法认证</p><span>原因：客户信息已经绑定微信，无法再次绑定！</span>`;
+              this.$router.push({
+                path: "/userFailPage",
+                query: { tipsData: tipsData }
+              });
+              break;
+            default:
+            this.alertCount.alertData = result.msg;
+              this.alertCount.isShowAlert = true;
+              // $("#zfqr_jiaz").css("display", "none");
+              // $("div.con_tk2")
+              //   .find("p[name='msg']")
+              //   .html(data.msg);
+              // $("div.bg_tk2").show();
+              // $("div.con_tk2").show();
+              break;
+          }
+          toast1.clear();
+        },
+        failCallback: res => {
+          toast1.clear();
+        }
+      });
       // this.$router.push({ path: this.$route.query.pathAddress });
     },
 
+    //发送验证码
+    sendCodeFn() {
+      let phoneNoData = {
+        userHandphone: this.phoneNo
+      };
+      this.loginverificationcode({
+        phoneNoData,
+        successCallback: result => {
+          console.log(result)
+          switch (result.responsecode) {
+            case "0":
+              // $("input[name='input_yzm']").val(data.result);
+              this.codeData = result.agentCode;
+              break;
+            case "1":
+              let tipsData = `今日认证次数已达上限，请明天再来！`;
+              this.$router.push({
+                path: "/userFailPage",
+                query: { tipsData: tipsData }
+              });
+              break;
+            default:
+              this.alertCount.alertData = result.msg;
+              this.alertCount.isShowAlert = true;
+              break;
+          }
+        },
+        failCallback: res => {
+          // toast1.clear();
+        }
+      });
+    },
+
+    //进行验证
+    sendCodeFnTwo(codeData) {
+      if(codeData==''){
+        this.alertCount.alertData = '请输入验证码！';
+              this.alertCount.isShowAlert = true;
+              return false
+      }
+      let phoneCodeNoData = {
+        verificationCode: codeData
+      };
+      this.phonewsercode({
+        phoneCodeNoData,
+        successCallback: result => {
+          
+          switch (data.responsecode) {
+            case "0":
+              let tipsData = `认证成功`;
+              this.$router.push({
+                path: "/userFailPage",
+                query: { tipsData: tipsData }
+              });
+              break;
+            case "1":
+              this.alertCount.alertData = result.msg;
+              this.alertCount.isShowAlert = true;
+              break;
+            case "2":
+              tipsData = `绑定失败`;
+              this.$router.push({
+                path: "/userFailPage",
+                query: { tipsData: tipsData }
+              });
+              break;
+            case "3":
+              tipsData = `空中签名绑定成功`;
+              this.$router.push({
+                path: "/userFailPage",
+                query: { tipsData: tipsData }
+              });
+              break;
+            case "9":
+              tipsData = `无效客户 `;
+              this.$router.push({
+                path: "/userFailPage",
+                query: { tipsData: tipsData }
+              });
+              break;
+            default:
+              tipsData = `纯被保人绑定`;
+              this.$router.push({
+                path: "/userFailPage",
+                query: { tipsData: tipsData }
+              });
+              break;
+          }
+        },
+        failCallback: res => {
+          // toast1.clear();
+        }
+      });
+    },
+
+
     //关闭下拉框
-    closeSelect(){
-      this.isOpenSelect = false
+    closeSelect() {
+      this.isOpenSelect = false;
     }
   }
 };

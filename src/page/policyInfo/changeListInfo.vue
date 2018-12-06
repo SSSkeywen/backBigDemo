@@ -90,8 +90,12 @@ export default {
                 this.changeListInfoData = res
             },
             failCallback:(res) => {
-                this.alertCount.isShowAlert = true;
-                this.alertCount.alertData = res;
+                if(res.code == 2002){
+                    this.$router.push({ path: '/userInfo',query: {pathAddress: '/myGuaranteeSlip'} });
+                }else{
+                    this.alertCount.isShowAlert = true;
+                    this.alertCount.alertData = res.msg;
+                }
             }
         })
     },

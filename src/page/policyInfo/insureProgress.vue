@@ -146,123 +146,118 @@ export default {
   created() {
     this.getInsureProgressList({
       successCallback: res => {
-        console.info(res.data.custPolicyInfo);
-
-        // console.log('----------------');
-        // this.myaddData = res.result;
-
-        // console.log(this.myaddData);
-        // console.log(result.code);
-        switch (res.code) {
-          case 0:
-            // alert(0)
-            // for (var item of res.data) {
-            for (let i = 0; i<res.data.length;i++) {
-              if (res.data[i].isFinish != "Y") {
-                  console.info(res.data[i].sendCode);
-                this.myaddData[i].sendCode = res.data[i].sendCode;
-                this.myaddData[i].productName = res.data[i].productName;
-                this.myaddData[i].insureStateName = res.data[i].insureStateName;
-                // console.log(this.insureCode);
-                if (res.data[i].insureState >= 13) {
-                  let newAbject = {
-                    stepText: "",
-                    stepDate: ""
-                  };
-                  newAbject.stepText = "您的保单代理人已签收！";
-                  newAbject.stepDate = res.data[i].agentSignTime;
-                  this.myaddData[i].steps.push(newAbject);
-                }
-                // console.log("=========================");
-                // console.log(this.myaddData);
-                if (res.data[i].insureState >= 12) {
-                  let newAbject = {
-                    stepText: "",
-                    stepDate: ""
-                  };
-                  if (res.data[i].insureState == 12) {
-                    if (res.data[i].isWtDown == "a") {
-                      newAbject.stepText = "您的保单已打印，寄送中！";
-                    } else if (res.data[i].isWtDown == "c") {
-                      newAbject.stepText =
-                        "电子保单已生成，请登录太平保险网上营业厅下载！";
-                    } else {
-                      newAbject.stepText = "保单已打印";
-                    }
+        if (res.data == null) {
+          this.isSowFirstContentList = true;
+          this.myaddData = "";
+        } else {
+          console.info(res.data);
+          console.info(res.data.length);
+          for (let i = 0; i < res.data.length; i++) {
+            if (res.data[i].isFinish != "Y") {
+              console.info(res.data[i].sendCode);
+              this.myaddData[i].sendCode = res.data[i].sendCode;
+              this.myaddData[i].productName = res.data[i].productName;
+              this.myaddData[i].insureStateName = res.data[i].insureStateName;
+              // console.log(this.insureCode);
+              if (res.data[i].insureState >= 13) {
+                let newAbject = {
+                  stepText: "",
+                  stepDate: ""
+                };
+                newAbject.stepText = "您的保单代理人已签收！";
+                newAbject.stepDate = res.data[i].agentSignTime;
+                this.myaddData[i].steps.push(newAbject);
+              }
+              // console.log("=========================");
+              // console.log(this.myaddData);
+              if (res.data[i].insureState >= 12) {
+                let newAbject = {
+                  stepText: "",
+                  stepDate: ""
+                };
+                if (res.data[i].insureState == 12) {
+                  if (res.data[i].isWtDown == "a") {
+                    newAbject.stepText = "您的保单已打印，寄送中！";
+                  } else if (res.data[i].isWtDown == "c") {
+                    newAbject.stepText =
+                      "电子保单已生成，请登录太平保险网上营业厅下载！";
                   } else {
                     newAbject.stepText = "保单已打印";
                   }
-                  newAbject.stepDate = res.data[i].showTime;
-                  this.myaddData[i].steps.push(newAbject);
+                } else {
+                  newAbject.stepText = "保单已打印";
                 }
-
-                if (res.data[i].insureState >= 11) {
-                  let newAbject = {
-                    stepText: "",
-                    stepDate: ""
-                  };
-                  if (res.data[i].insureState == 11) {
-                    newAbject.stepText = "您的保单已承保，打印中！";
-                  } else {
-                    newAbject.stepText = "已承保";
-                  }
-                  newAbject.stepDate = res.data[i].acceptDate;
-                  this.myaddData[i].steps.push(newAbject);
-                }
-
-                if (res.data[i].insureState >= 3) {
-                  let newAbject = {
-                    stepText: "",
-                    stepDate: ""
-                  };
-                  newAbject.stepText = "您的保单已核保完成!";
-                  newAbject.stepDate = res.data[i].operateDate3;
-                  this.myaddData[i].steps.push(newAbject);
-                }
-
-                if (res.data[i].insureState >= 2) {
-                  let newAbject = {
-                    stepText: "",
-                    stepDate: ""
-                  };
-                  newAbject.stepText = "您的保单正在核保中！";
-                  newAbject.stepDate = res.data[i].operateDate2;
-                  this.myaddData[i].steps.push(newAbject);
-                }
-
-                if (res.data[i].insureState >= 1) {
-                  let newAbject = {
-                    stepText: "",
-                    stepDate: ""
-                  };
-                  newAbject.stepText = "您的保单等待核保！";
-                  newAbject.stepDate = res.data[i].operateDate1;
-                  this.myaddData[i].steps.push(newAbject);
-                }
-                // this.myaddData = res.data;
-                this.isSowFirstContentList = true;
+                newAbject.stepDate = res.data[i].showTime;
+                this.myaddData[i].steps.push(newAbject);
               }
-            }
-            break;
-          case 2:
-            console.log(1111);
-            this.alertCount.alertData = res.msg;
-            this.alertCount.isShowAlert = true;
-            break;
-          case 3:
-            this.ok = false;
-            break;
-          default:
-            this.alertCount.alertData = res.msg;
-            this.alertCount.isShowAlert = true;
-            break;
-        }
 
-        // console.log("------------------------");
-        // this.myaddData = res.data;
-        // console.log(this.myaddData);
+              if (res.data[i].insureState >= 11) {
+                let newAbject = {
+                  stepText: "",
+                  stepDate: ""
+                };
+                if (res.data[i].insureState == 11) {
+                  newAbject.stepText = "您的保单已承保，打印中！";
+                } else {
+                  newAbject.stepText = "已承保";
+                }
+                newAbject.stepDate = res.data[i].acceptDate;
+                this.myaddData[i].steps.push(newAbject);
+              }
+
+              if (res.data[i].insureState >= 3) {
+                let newAbject = {
+                  stepText: "",
+                  stepDate: ""
+                };
+                newAbject.stepText = "您的保单已核保完成!";
+                newAbject.stepDate = res.data[i].operateDate3;
+                this.myaddData[i].steps.push(newAbject);
+              }
+
+              if (res.data[i].insureState >= 2) {
+                let newAbject = {
+                  stepText: "",
+                  stepDate: ""
+                };
+                newAbject.stepText = "您的保单正在核保中！";
+                newAbject.stepDate = res.data[i].operateDate2;
+                this.myaddData[i].steps.push(newAbject);
+              }
+
+              if (res.data[i].insureState >= 1) {
+                let newAbject = {
+                  stepText: "",
+                  stepDate: ""
+                };
+                newAbject.stepText = "您的保单等待核保！";
+                newAbject.stepDate = res.data[i].operateDate1;
+                this.myaddData[i].steps.push(newAbject);
+              }
+              // this.myaddData = res.data;
+              this.isSowFirstContentList = true;
+            }
+          }
+         // this.isSowFirstContentList = true;
+          //                 alert(21)
+        }
       },
-      fCallback: res => {}
+      failCallback: res => {
+        if (res.code == 2002) {
+          // this.$route.push({
+          //   path: "/userInfo",
+          //   query: { pathAddress: "/dividend" }
+          // });
+          this.ok = false;
+        }
+        // else if(res.code == 3) {
+        // //   this.ok = false;
+        // // }
+        else {
+          this.alertCount.alertData = res.msg;
+          this.alertCount.isShowAlert = true;
+        }
+      }
     });
   },
 
@@ -278,22 +273,21 @@ export default {
 
     queryMsg() {
       this.btngo = false;
-      
+
       if (this.policyCodeInput != "") {
         this.newNum = "policy";
       } else {
         this.newNum = "cert";
       }
 
-      if(this.certcodeInput != "" && !this.$toolsTwo.codeCrad(this.certcodeInput)){
+      if (
+        this.certcodeInput != "" &&
+        !this.$toolsTwo.codeCrad(this.certcodeInput)
+      ) {
         this.alertCount.alertData = "身份证号不合法，请重新输入";
         this.alertCount.isShowAlert = true;
-        return false
+        return false;
       }
-      // let policyCodeData = new FormData();
-      // policyCodeData.append("policyCode", this.policyCodeInput);
-      // policyCodeData.append("certcode", this.certcodeInput);
-      // policyCodeData.append("num", this.newNum);
       let policyCodeData = {
         policyCode: this.policyCodeInput,
         certcode: this.certcodeInput,
@@ -305,108 +299,104 @@ export default {
 
         successCallback: res => {
           console.info("result:" + res.code);
-            
-          switch (res.code) {
-            case 0:
-              for (let i = 0; i<res.data.length;i++) {
-                  this.myaddData2[i].steps = []
-                if (res.data[i].isFinish != "Y") {
-                  this.myaddData2[i].sendCode = res.data[i].sendCode;
-                  this.myaddData2[i].productName = res.data[i].productName;
-                  this.myaddData2[i].insureStateName = res.data[i].insureStateName;
-                  
-                  if (res.data[i].insureState >= 13) {
-                    let newAbject = {
-                      stepText: "",
-                      stepDate: ""
-                    };
-                    newAbject.stepText = "您的保单代理人已签收！";
-                    newAbject.stepDate = res.data[i].agentSignTime;
-                    this.myaddData2[i].steps.push(newAbject);
-                  }
 
-                  if (res.data[i].insureState >= 12) {
-                    let newAbject = {
-                      stepText: "",
-                      stepDate: ""
-                    };
-                    if (res.data[i].insureState == 12) {
-                      if (res.data[i].isWtDown == "a") {
-                        newAbject.stepText = "您的保单已打印，寄送中！";
-                      } else if (res.data[i].isWtDown == "c") {
-                        newAbject.stepText =
-                          "电子保单已生成，请登录太平保险网上营业厅下载！";
-                      } else {
-                        newAbject.stepText = "保单已打印";
-                      }
-                    } else {
-                      newAbject.stepText = "保单已打印";
-                    }
-                    newAbject.stepDate = res.data[i].showTime;
-                    this.myaddData2[i].steps.push(newAbject);
-                  }
+          for (let i = 0; i < res.data.length; i++) {
+            this.myaddData2[i].steps = [];
+            if (res.data[i].isFinish != "Y") {
+              this.myaddData2[i].sendCode = res.data[i].sendCode;
+              this.myaddData2[i].productName = res.data[i].productName;
+              this.myaddData2[i].insureStateName = res.data[i].insureStateName;
 
-                  if (res.data[i].insureState >= 11) {
-                    let newAbject = {
-                      stepText: "",
-                      stepDate: ""
-                    };
-                    if (res.data[i].insureState == 11) {
-                      newAbject.stepText = "您的保单已承保，打印中！";
-                    } else {
-                      newAbject.stepText = "已承保";
-                    }
-                    newAbject.stepDate = res.data[i].acceptDate;
-                    this.myaddData2[i].steps.push(newAbject);
-                  }
-
-                  if (res.data[i].insureState >= 3) {
-                    let newAbject = {
-                      stepText: "",
-                      stepDate: ""
-                    };
-                    newAbject.stepText = "您的保单已核保完成!";
-                    newAbject.stepDate = res.data[i].operateDate3;
-                    this.myaddData2[i].steps.push(newAbject);
-                  }
-
-                  if (res.data[i].insureState >= 2) {
-                    let newAbject = {
-                      stepText: "",
-                      stepDate: ""
-                    };
-                    newAbject.stepText = "您的保单正在核保中！";
-                    newAbject.stepDate = res.data[i].operateDate2;
-                    this.myaddData2[i].steps.push(newAbject);
-                  }
-
-                  if (res.data[i].insureState >= 1) {
-                    let newAbject = {
-                      stepText: "",
-                      stepDate: ""
-                    };
-                    newAbject.stepText = "您的保单等待核保！";
-                    newAbject.stepDate = res.data[i].operateDate1;
-                    this.myaddData2[i].steps.push(newAbject);
-                  }
-                  this.btngo = true;
-                }
+              if (res.data[i].insureState >= 13) {
+                let newAbject = {
+                  stepText: "",
+                  stepDate: ""
+                };
+                newAbject.stepText = "您的保单代理人已签收！";
+                newAbject.stepDate = res.data[i].agentSignTime;
+                this.myaddData2[i].steps.push(newAbject);
               }
-              break;
-            case 2:
-              console.info("result-----------------:" + res.code);
-              this.alertCount.alertData = res.msg;
-              this.alertCount.isShowAlert = true;
-              break;
-            default:
-                this.alertCount.alertData = res.msg;
-                this.alertCount.isShowAlert = true;
-              break;
-          }
 
-          //   this.myaddData = res.result;
+              if (res.data[i].insureState >= 12) {
+                let newAbject = {
+                  stepText: "",
+                  stepDate: ""
+                };
+                if (res.data[i].insureState == 12) {
+                  if (res.data[i].isWtDown == "a") {
+                    newAbject.stepText = "您的保单已打印，寄送中！";
+                  } else if (res.data[i].isWtDown == "c") {
+                    newAbject.stepText =
+                      "电子保单已生成，请登录太平保险网上营业厅下载！";
+                  } else {
+                    newAbject.stepText = "保单已打印";
+                  }
+                } else {
+                  newAbject.stepText = "保单已打印";
+                }
+                newAbject.stepDate = res.data[i].showTime;
+                this.myaddData2[i].steps.push(newAbject);
+              }
+
+              if (res.data[i].insureState >= 11) {
+                let newAbject = {
+                  stepText: "",
+                  stepDate: ""
+                };
+                if (res.data[i].insureState == 11) {
+                  newAbject.stepText = "您的保单已承保，打印中！";
+                } else {
+                  newAbject.stepText = "已承保";
+                }
+                newAbject.stepDate = res.data[i].acceptDate;
+                this.myaddData2[i].steps.push(newAbject);
+              }
+
+              if (res.data[i].insureState >= 3) {
+                let newAbject = {
+                  stepText: "",
+                  stepDate: ""
+                };
+                newAbject.stepText = "您的保单已核保完成!";
+                newAbject.stepDate = res.data[i].operateDate3;
+                this.myaddData2[i].steps.push(newAbject);
+              }
+
+              if (res.data[i].insureState >= 2) {
+                let newAbject = {
+                  stepText: "",
+                  stepDate: ""
+                };
+                newAbject.stepText = "您的保单正在核保中！";
+                newAbject.stepDate = res.data[i].operateDate2;
+                this.myaddData2[i].steps.push(newAbject);
+              }
+
+              if (res.data[i].insureState >= 1) {
+                let newAbject = {
+                  stepText: "",
+                  stepDate: ""
+                };
+                newAbject.stepText = "您的保单等待核保！";
+                newAbject.stepDate = res.data[i].operateDate1;
+                this.myaddData2[i].steps.push(newAbject);
+              }
+              this.btngo = true;
+            }
+          }
         },
-        fCallback: res => {}
+        
+        failCallback: res => {
+          // if (res.code == 2002) {
+          //   this.$route.push({
+          //     path: "/userInfo",
+          //     query: { pathAddress: "/dividend" }
+          //   });
+          // } else {
+            this.alertCount.alertData = res.msg;
+            this.alertCount.isShowAlert = true;
+          // }
+        }
       });
     },
     //输入投保单号

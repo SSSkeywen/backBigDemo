@@ -21,11 +21,15 @@ const actions = {
             if (res.code == '0') {
                 successCallback(res.data)
             } else {
-                failCallback(res.msg)
+                failCallback(res)
             }
 
         }).catch((err) => {
-            failCallback("尊敬的用户，数据请求失败，请刷新后重试!")
+            let res = {
+                code: 1005,//接口异常
+                msg: '尊敬的用户，数据请求失败，请刷新后重试!',
+            }
+            failCallback(res)
         })
     },
     [getSurvivalListInfo]({ commit }, {policyCode, successCallback = () => { }, failCallback = () => { } }) {
@@ -34,11 +38,15 @@ const actions = {
             if (res.code == '0') {
                 successCallback(res.data)
             } else {
-                failCallback(res.msg)
+                failCallback(res)
             }
 
         }).catch((err) => {
-            failCallback("尊敬的用户，数据请求失败，请刷新后重试!")
+            let res = {
+                code: 1005,//接口异常
+                msg: '尊敬的用户，数据请求失败，请刷新后重试!',
+            }
+            failCallback(res)
         })
     },
 }

@@ -120,6 +120,36 @@ export default {
             resultFlag = false;
         }
         return resultFlag;
-    }
+    },
+
+    //校验客户姓名
+    clientName: (cardData) => {
+        let reg2 = /^[a-zA-Z]{2,10}|[\u4E00-\u9FA5]{2,10}|[\u4E00-\u9FA5]{2,10}(?:·[\u4E00-\u9FA5]{2,10})*$/;
+        let resultFlag = true
+        if (!reg2.test(cardData)) {
+            resultFlag = false;
+        }
+        return resultFlag;
+    },
+
+    //外国身份证
+    foreignCard: (cardData) => {
+        let reg2 = /^[A-Z\d]{15}$/;
+        let resultFlag = true
+        if (!reg2.test(cardData)) {
+            resultFlag = false;
+        }
+        return resultFlag;
+    },
+
+    //外国姓名
+    foreignName: (cardData) => {
+        let reg2 = /^[A-Z\d+(,)]+$/;
+        let resultFlag = true
+        if (!reg2.test(cardData)) {
+            resultFlag = false;
+        }
+        return resultFlag;
+    },
 
 }
