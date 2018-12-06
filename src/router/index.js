@@ -4,6 +4,7 @@ import classic from '@/page/classic'
 import messageInquire from '@/page/messageInquire'
 import businessHanding from '@/page/businessHanding'
 import userFailPage from '@/page/userFailPage'
+import successPage from '@/page/successPage'
 
 // 绑定页面
 import userInfo from '@/page/userInfo'
@@ -95,6 +96,11 @@ export default new Router({
       path: '/userFailPage',
       name: 'userFailPage',
       component: userFailPage
+    }, 
+    {
+      path: '/successPage',
+      name: 'successPage',
+      component: successPage
     },
 
     {

@@ -1,7 +1,7 @@
 <template>
     <div class="alert-box">
         <div class="alert-content">
-            <p class="alert-font">短信验证码将发送至您尾号为<span></span>的手机，5分钟内有效，请点击获取，请查收！（每日最多五次）</p>
+            <p class="alert-font">短信验证码将发送至您尾号为<span>{{pnoneBack}}</span>的手机，5分钟内有效，请点击获取，请查收！（每日最多五次）</p>
             <div class="alert-input line-down">
                 <div class="alert-left">
                     <input v-model="codeData" type="text" placeholder="请输入验证码">
@@ -29,9 +29,11 @@ export default {
       tipsImgSrc: require("@/assets/publicImg/icon_3.jpg"),
       btnContent:'获取验证码',
       isSendBtn: false,
-      codeData:''
+      codeData:'',
+      // pnoneBack:''
     };
   },
+  props:['pnoneBack'],
   methods: {
     getCodeFn() {
       this.isSendBtn = true;
@@ -43,6 +45,10 @@ export default {
       }, 60000);
       this.$emit('sendCodeFn')
     },
+    inputCode(code){
+      this.codeData = code
+    },
+
     sureSend() {
       
       this.$emit('sendCodeFnTwo',this.codeData)

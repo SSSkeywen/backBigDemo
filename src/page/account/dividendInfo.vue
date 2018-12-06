@@ -266,6 +266,8 @@ export default {
   width: 95%;
   padding-left: 2%;
   height: 30px;
+  text-align: center;
+  line-height: 30px;
 }
 
 .mg-box {

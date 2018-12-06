@@ -8,9 +8,12 @@
                     <div class="mp-min-left-img">
                         <img :src="imgSrcTitle" alt="">
                     </div>
-                    <p>基本信息</p>
+                    <p>保单号:</p>
                 </div>
                 <div @click="showMpList(0)" class="mp-min-right"><img class="ani-down" :class="isShowInformation?'add-ani-style':''" :src="imgSrcThree" alt=""></div>
+            </div>
+            <div>
+                
             </div>
             <ul class="mp-list" v-if="isShowInformation">
                 <li class="mp-list-li line-down">
@@ -158,50 +161,9 @@ import { mapActions } from "vuex";
                 isShowInformationFour: false,
                 isShowInformationFive: false,
                 isShowInformationSix: false,
-                InformationMap:{
-                    policyCode:'',
-                    statusName:'',
-                    validateDate:'',
-                    endDate:'',
-                    applicantName:'',
-                    insuredName:'',
-                    bene1Name:'',
-                    bene2Name:'',
-                    nextDiscountPrem:'',
-                    payToDate:'',
-                    renewalType:'',
-                    bankAccount:'',
-
-                    //受益人
-                    bene1Name:'',
-                    bene2Name:''
-                },
-                ProductList:[{
-                    productName:'',
-                    statusName:'',
-                    amount:'',
-                    validateDate:'',
-                    insuredName:'',
-                    periodPrem:'',
-                    payToDate:''
-                }],
-                CustomerByPolicyCode:{
-                    applicantName:'',
-                    applicantBirthday:'',
-                    applicantGender:'',
-                    applicantCertiCode:'',
-                    applicantCeller:'',
-                    applicantTel1:'',
-                    applicantEmail:'',
-
-                    insuredName:'',
-                    insuredBirthday:'',
-                    insuredGender:'',
-                    insuredCertiCode:'',
-                    insuredCeller:'',
-                    insuredTel1:'',
-                    insuredEmail:''
-                }
+                productMap:[],
+                policyMap:[],
+                casePremMap:[],
             }
         },
         filters: {
@@ -210,31 +172,36 @@ import { mapActions } from "vuex";
             }
         },
         created(){
-            // let policyCodeData = new FormData();
-            //     policyCodeData.append("policyCode", this.$route.query.policyCode);
-            // this.getPolicyInfo({
-            //     policyCodeData,
-            //     successCallback: (res) => {
-            //         console.log(res.result)
-            //         this.InformationMap = res.result.InformationMap
-            //         for(let item of res.result.ProductList){
-            //             item.isShowInformation = false
-            //             item.isShowSendEmilStyle= false
-            //         }
-            //         this.ProductList = res.result.ProductList
+            let caseListmessageData = {
+                caseid : this.$route.query.caseNo
+                }
+                console.log(this.$route.query.caseNo)
+            this.caseListmessage({
+                caseListmessageData,
+                successCallback: (res) => {
+                    console.log(res.data)
+                    this.productMap = res.data.productMap
+                    this.policyMap = res.data.policyMap
+                    this.casePremMap = res.data.casePremMap
+                    // this.InformationMap = res.result.InformationMap
+                    // for(let item of res.result.ProductList){
+                    //     item.isShowInformation = false
+                    //     item.isShowSendEmilStyle= false
+                    // }
+                    // this.ProductList = res.result.ProductList
 
-            //         this.CustomerByPolicyCode = res.result.CustomerByPolicyCode
-            //     },
-            //     fCallback:(res) => {
-            //     }
-            // })
+                    // this.CustomerByPolicyCode = res.result.CustomerByPolicyCode
+                },
+                fCallback:(res) => {
+                }
+            })
         },
         components:{
             headerT,
         },
         methods: {
             ...mapActions({
-                // getPolicyInfo: "getPolicyInfo"
+                caseListmessage: "caseListmessage"
             }),
             showMpList(index) {
                 if(index==0){

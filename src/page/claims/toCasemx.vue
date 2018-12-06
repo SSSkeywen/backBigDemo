@@ -1,12 +1,12 @@
 <template>
     <div class="casemx-box">
         <headerT :headerContent="headerContent"></headerT>
-        <ul>
-            <li>
-              <caseMsg :caseMstList="caseMstList"></caseMsg>  
+        <ul v-if="caseMstList">
+            <li v-for="(item,index) in caseMstList" :key="index">
+              <caseMsg :caseMstList="item"></caseMsg>  
             </li>
         </ul>
-        
+        <p class="casemx-p">{{selectResult}}</p>
     </div>
 </template>
 
@@ -23,7 +23,8 @@ import { Toast } from "vant";
         data() {
             return {
                 headerContent: '案件进度',
-                caseMstList:[]
+                caseMstList:[],
+                selectResult:''
             }
         },
         created(){
@@ -35,9 +36,8 @@ import { Toast } from "vant";
             this.lawCaseListFn({
                 successCallback: (result) => {
                     console.log(result)
-                    this.caseMstList = result
-                    // console.log(this.clientMsg)
-                    // this.authorizationMap = res.data.authorizationMap
+                    this.caseMstList = result.data
+                    this.selectResult = result.msg
                     toast1.clear();
                 },
                 fCallback:(res) => {
@@ -57,5 +57,8 @@ import { Toast } from "vant";
 .casemx-box{
     min-height: 100vh;
     background: #DCDCDC;
+}
+.casemx-p{
+    padding: 0.2rem;
 }
 </style>

@@ -3,7 +3,7 @@
 <div class="mg-box">
     <headerT :headerContent="headerContent"></headerT>
     <section v-if="approvalMsg == null" class="mp-box-one">尊敬的用户，你请求的批文不存在。</section>
-    <section v-if="approvalMsg != null" class="mp-box-one"> {{ approvalMsg.approval }} </section>  
+    <section v-if="approvalMsg != null" class="mp-box-one"> {{ approvalMsg }} </section>  
     <a class="btn-back" href="javascript:history.back()">返回</a>
     <alertContent :alertCount="alertCount"></alertContent>
 </div>

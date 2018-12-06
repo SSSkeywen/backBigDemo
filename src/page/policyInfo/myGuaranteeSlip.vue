@@ -93,9 +93,10 @@ export default {
         for (let item of res.data.AllPolicyList) {
           if (item.statusName == "有效") {
             item.statusStyle = "green";
-          }
-          if (item.statusName == "终止") {
+          }else if (item.statusName == "终止") {
             item.statusStyle = "red";
+          }else{
+            item.statusStyle = "grey";
           }
         }
         this.contentListBox = res;
@@ -195,7 +196,8 @@ export default {
     height: 100%;
     border: none;
     border-radius: 7px;
-    background: #fff;
+    background-color: #fff;
+    background-position: 96% center;
   }
 }
 .mg-content-list {

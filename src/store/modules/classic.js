@@ -25,7 +25,7 @@ const actions = {
             }
 
         }).catch((err) => {
-            failCallback(res.msg)
+            failCallback(err)
         })
     },
 

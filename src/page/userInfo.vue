@@ -52,7 +52,7 @@
     </div>
     <bgComponent></bgComponent>
     <alertContent :alertCount="alertCount"></alertContent>
-    <sendAlrtContent v-if="sendCode" @clolseAlert="clolseAlert" @sendCodeFnTwo="sendCodeFnTwo" @sendCodeFn="sendCodeFn"></sendAlrtContent>
+    <sendAlrtContent ref="senAlertContent" :codeData="codeData" v-if="sendCode" @clolseAlert="clolseAlert" @sendCodeFnTwo="sendCodeFnTwo" @sendCodeFn="sendCodeFn"></sendAlrtContent>
   </div>
 </template>
 
@@ -125,6 +125,16 @@ export default {
   },
   created() {
     // console.log(this.$route.query.pathAddress)
+    // history.go(-1).href='http://localhost.cntaiping.com:8080/#/'
+  },
+   mounted() {
+    let that = this;
+    // 添加返回事件监听
+    // window.addEventListener("popstate", function(e) {
+    //   alert(11)
+    //   // history.go(-1).href='http://localhost.cntaiping.com:8080/#/'
+    //   // window.history.go(-2)
+    // }, false);
   },
   methods: {
     ...mapActions({
@@ -236,7 +246,7 @@ export default {
               });
               break;
             case "4":
-              this.alertCount.alertData = result.msg;
+              this.alertCount.alertData = result.responsemsg;
               this.alertCount.isShowAlert = true;
               break;
             case "5":
@@ -254,7 +264,7 @@ export default {
               });
               break;
             default:
-            this.alertCount.alertData = result.msg;
+            this.alertCount.alertData = result.responsemsg;
               this.alertCount.isShowAlert = true;
               // $("#zfqr_jiaz").css("display", "none");
               // $("div.con_tk2")
@@ -275,6 +285,7 @@ export default {
 
     //发送验证码
     sendCodeFn() {
+      // this.$refs.senAlertContent.inputCode(111)
       let phoneNoData = {
         userHandphone: this.phoneNo
       };
@@ -285,7 +296,9 @@ export default {
           switch (result.responsecode) {
             case "0":
               // $("input[name='input_yzm']").val(data.result);
-              this.codeData = result.agentCode;
+              // this.codeData = result.agentCode;
+              // this.$set(this.codeData,result.agentCode)
+              this.$refs.senAlertContent.inputCode(result.agentCode)
               break;
             case "1":
               let tipsData = `今日认证次数已达上限，请明天再来！`;
@@ -295,7 +308,7 @@ export default {
               });
               break;
             default:
-              this.alertCount.alertData = result.msg;
+              this.alertCount.alertData = result.responsemsg;
               this.alertCount.isShowAlert = true;
               break;
           }
@@ -319,46 +332,37 @@ export default {
       this.phonewsercode({
         phoneCodeNoData,
         successCallback: result => {
-          
-          switch (data.responsecode) {
+          console.log(result)
+          switch (result.responsecode) {
             case "0":
-              let tipsData = `认证成功`;
+              // let tipsData = `认证成功`;
               this.$router.push({
-                path: "/userFailPage",
-                query: { tipsData: tipsData }
+                path: "/successPage",
+                query: { pathAddress: this.$route.query.pathAddress }
               });
               break;
             case "1":
-              this.alertCount.alertData = result.msg;
+              this.alertCount.alertData = result.responsemsg;
               this.alertCount.isShowAlert = true;
               break;
             case "2":
-              tipsData = `绑定失败`;
-              this.$router.push({
-                path: "/userFailPage",
-                query: { tipsData: tipsData }
-              });
+              this.alertCount.alertData = result.responsemsg;
+              this.alertCount.isShowAlert = true;
               break;
             case "3":
-              tipsData = `空中签名绑定成功`;
-              this.$router.push({
-                path: "/userFailPage",
-                query: { tipsData: tipsData }
-              });
+              this.alertCount.alertData = result.responsemsg;
+              this.alertCount.isShowAlert = true;
               break;
             case "9":
-              tipsData = `无效客户 `;
+              tipsData = result.responsemsg;
               this.$router.push({
                 path: "/userFailPage",
                 query: { tipsData: tipsData }
               });
               break;
             default:
-              tipsData = `纯被保人绑定`;
-              this.$router.push({
-                path: "/userFailPage",
-                query: { tipsData: tipsData }
-              });
+              this.alertCount.alertData = result.responsemsg;
+              this.alertCount.isShowAlert = true;
               break;
           }
         },

@@ -60,18 +60,21 @@
     <section v-show="!isShowMsg">
       <hospitalList :hospitalListData="hospitalListData" @closeHospitalList="closeHospitalList"></hospitalList>
     </section>
+    <alertContent :alertCount="alertCount"></alertContent>
   </div>
 </template>
 
 <script>
 import headerT from "../../components/header.vue";
+import alertContent from "../../components/alertContent.vue";
 import hospitalList from "../../components/claimsComponent/hospitalList.vue";
 import { mapActions } from "vuex";
 import { Toast } from "vant";
 export default {
   components: {
     headerT,
-    hospitalList
+    hospitalList,
+    alertContent
   },
   data() {
     return {
@@ -81,38 +84,40 @@ export default {
       cityData: "全部",
       cityList: ["全部"],
       hospitalData: "",
-      hospitalListData: []
+      hospitalListData: [],
+      alertCount: {
+        isShowAlert: false,
+        alertData: ""
+      }
     };
   },
-  created() {},
+  created() {
+    this.selectProvince(this.proData);
+  },
   methods: {
     ...mapActions({
       hospitalInformation: "hospitalInformation",
       hospitalList: "hospitalList"
     }),
     selectProvince(proData) {
-      //   console.log(JSON.stringify(proData));
-      //   let proData1 = JSON.stringify(proData);
-
       let provinceSelectData = {
         provinceName: proData
       };
       this.hospitalInformation({
         provinceSelectData,
-        successCallback: res => {
-          console.log(res.result);
-          this.cityList = res.result;
+        successCallback: result => {
+          this.cityList = result;
+          this.cityData = this.cityList[0];
         },
         fCallback: res => {}
       });
     },
     queryFn() {
-      //   this.isShowMsg = !this.isShowMsg;
-      console.log(this.proData + "+" + this.cityData + "+" + this.hospitalData);
-    //   let hospitalSelectData = new FormData();
-    //   hospitalSelectData.append("sfName", this.proData);
-    //   hospitalSelectData.append("csName", this.cityData);
-    //   hospitalSelectData.append("yyName", this.hospitalData);
+      if (this.hospitalData == "") {
+        this.alertCount.isShowAlert = true;
+        this.alertCount.alertData = '请输入医院名称';
+        return false;
+      }
       let hospitalSelectData = {
         provinceName: this.proData,
         cityName: this.cityData,
@@ -121,10 +126,14 @@ export default {
 
       this.hospitalList({
         hospitalSelectData,
-        successCallback: res => {
-          //   console.log(res.result);
-          this.hospitalListData = res;
-          this.isShowMsg = !this.isShowMsg;
+        successCallback: result => {
+          this.hospitalListData = result.data;
+          if (this.hospitalListData) {
+            this.isShowMsg = !this.isShowMsg;
+          } else {
+            this.alertCount.isShowAlert = true;
+            this.alertCount.alertData = result.msg;
+          }
         },
         fCallback: res => {}
       });
@@ -141,11 +150,12 @@ export default {
 <style lang="scss" scoped>
 .yy-box {
   min-height: 100vh;
-  padding-bottom: 0.2rem;
   background-color: #dcdcdc;
+  padding-bottom: 0.2rem;
+  box-sizing: border-box;
   .yy-select {
     width: 95%;
-    background-color: #fff;
+    background: #fff;
     margin: 0 auto;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -168,6 +178,7 @@ export default {
           border-radius: 7px;
           padding-left: 0.1rem;
           border: 1px solid #999;
+          background-position: 96% center;
         }
       }
       .yy-xx-li {
