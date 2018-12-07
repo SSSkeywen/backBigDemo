@@ -71,13 +71,10 @@ export default {
 			}else if(custPoints>=100000&&custPoints<400000){
 				this.vipFont = '铂金级'
         this.vipBgImgSrc = require("@/assets/classicImg/vipbg@platinum.png")
-			}else if(custPoints>=400000&&custPoints<1000000){
+			}else if(custPoints>=400000&&custPoints<100000000){
 				this.vipFont = '钻石级'
         this.vipBgImgSrc = require("@/assets/classicImg/vipbg@diamond.png")
-			}else if(custPoints>=1000000&&custPoints<3000000){
-				this.vipFont = '黑钻级'
-        this.vipBgImgSrc = require("@/assets/classicImg/vipbg@blackDiamonds.png")
-			}else if(custPoints>=3000000){
+			}else if(custPoints>=100000000){
 				this.vipFont = '黑钻级'
         this.vipBgImgSrc = require("@/assets/classicImg/vipbg@blackDiamonds.png")
 			}
@@ -194,9 +191,9 @@ export default {
         font-weight: 400;
         color: rgba(255, 255, 255, 1);
         line-height: 0.2rem;
-        text-shadow: 0px 1px 1px rgba(189, 149, 100, 1);
+        text-shadow:0px 0px 0px rgba(189,149,100,1);
         position: absolute;
-        top: 0.07rem;
+        top: 0.09rem;
         left: 0.38rem;
       }
     }

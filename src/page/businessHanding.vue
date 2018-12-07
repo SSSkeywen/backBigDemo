@@ -347,11 +347,11 @@ export default {
   methods: {
     jumpPage(pathAddress) {
       console.log(pathAddress);
-      if(true){
-        this.$router.push({ path: '/userInfo',query: {pathAddress: pathAddress} });
-      }else{
+      // if(true){
+      //   this.$router.push({ path: '/userInfo',query: {pathAddress: pathAddress} });
+      // }else{
         this.$router.push({ path: pathAddress });
-      }
+      // }
     }
   }
 };

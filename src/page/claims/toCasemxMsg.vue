@@ -1,72 +1,19 @@
 <template>
     <div class="mg-box">
         <headerT :headerContent="headerContent"></headerT>
-        <hgroup class="mp-hgroup">合计金额：{{InformationMap.policyCode}}</hgroup>
-        <section class="mp-box-one">
+        <hgroup class="mp-hgroup">合计金额：{{totalAmount}}</hgroup>
+        <section class="mp-box-one" v-for="(item,index) in productMap" :key="index">
             <div class="mp-min-title">
                 <div class="mp-min-left">
                     <div class="mp-min-left-img">
                         <img :src="imgSrcTitle" alt="">
                     </div>
-                    <p>保单号:</p>
+                    <p>保单号:<span>{{item.policyCode}}</span></p>
                 </div>
-                <div @click="showMpList(0)" class="mp-min-right"><img class="ani-down" :class="isShowInformation?'add-ani-style':''" :src="imgSrcThree" alt=""></div>
+                <div @click="showMpListPolicyMessage(index)" class="mp-min-right"><img class="ani-down" :class="item.isShowInformation?'add-ani-style':''" :src="imgSrcThree" alt=""></div>
             </div>
             <div>
                 
-            </div>
-            <ul class="mp-list" v-if="isShowInformation">
-                <li class="mp-list-li line-down">
-                    <p>保单状态：</p>
-                    <p v-text="InformationMap.statusName"></p>
-                </li>
-                <li class="mp-list-li line-down">
-                    <p>保单生效日：</p>
-                    <p>{{InformationMap.validateDate | dateFilter}}</p>
-                </li>
-                <li class="mp-list-li line-down">
-                    <p>保单责任终止日：</p>
-                    <p>{{InformationMap.endDate | dateFilter}}</p>
-                </li>
-                <li class="mp-list-li line-down">
-                    <p>投保人：</p>
-                    <p v-text="InformationMap.applicantName"></p>
-                </li>
-                <li class="mp-list-li line-down">
-                    <p>被保人：</p>
-                    <p v-text="InformationMap.insuredName"></p>
-                </li>
-                <li class="mp-list-li line-down">
-                    <p>生存受益人：</p>
-                    <p v-text="InformationMap.bene1Name"></p>
-                </li>
-                <li class="mp-list-li line-down">
-                    <p>身故受益人：</p>
-                    <p v-text="InformationMap.bene2Name"></p>
-                </li>
-                <li class="mp-list-li line-down">
-                    <p>下期保费：</p>
-                    <p>{{InformationMap.nextDiscountPrem | dateFilter}}</p>
-                </li>
-                <li class="mp-list-li line-down">
-                    <p>下期交费日：</p>
-                    <p>{{InformationMap.payToDate | dateFilter}}</p>
-                </li>
-                <li class="mp-list-li line-down">
-                    <p>下期交费方式：</p>
-                    <p v-text="InformationMap.renewalType"></p>
-                </li>
-            </ul>
-        </section>
-        <section class="mp-box-one" v-for="(item,index) in ProductList" :key="index">
-            <div class="mp-min-title">
-                <div class="mp-min-left">
-                    <div class="mp-min-left-img">
-                        <img :src="imgSrcTitleTwo" alt="">
-                    </div>
-                    <p>险种信息</p>
-                </div>
-                <div @click="showMpListPolicyMessage(index)" class="mp-min-right"><img class="ani-down" :class="item.isShowInformation?'add-ani-style':''" :src="imgSrcThree" alt=""></div>
             </div>
             <ul class="mp-list" v-if="item.isShowInformation">
                 <li class="mp-list-li line-down">
@@ -74,65 +21,102 @@
                     <p v-text="item.productName"></p>
                 </li>
                 <li class="mp-list-li line-down">
-                    <p>险种当前责任状态：</p>
-                    <p v-text="item.statusName"></p>
+                    <p>险种责任：</p>
+                    <p>{{item.liabName}}</p>
                 </li>
                 <li class="mp-list-li line-down">
-                    <p>保额：</p>
-                    <p v-text="item.amount"></p>
+                    <p>理赔结论：</p>
+                    <p>{{item.auditConclusion}}</p>
                 </li>
                 <li class="mp-list-li line-down">
-                    <p>险种生效日：</p>
-                    <p>{{item.validateDate | dateFilter}}</p>
+                    <p>理赔金额：</p>
+                    <p>{{item.payAmount}} 元</p>
                 </li>
                 <li class="mp-list-li line-down">
-                    <p>被保人：</p>
-                    <p v-text="item.insuredName"></p>
+                    <p>退费金额：</p>
+                    <p v-text="item.returnAmount"></p>
                 </li>
                 <li class="mp-list-li line-down">
-                    <p>当期保费：</p>
-                    <p v-text="item.periodPrem"></p>
-                </li>
-                <li class="mp-list-li line-down">
-                    <p>下期交费日：</p>
-                    <p>{{item.payToDate | dateFilter}}</p>
+                    <p>生存受益人：</p>
+                    <p v-text="item.auditAccording"></p>
                 </li>
             </ul>
         </section>
-        <section class="mp-box-one">
+        <section class="mp-box-one" v-for="(item,index) in policyMap" :key="index+'0'">
+            <div class="mp-min-title">
+                <div class="mp-min-left">
+                    <div class="mp-min-left-img">
+                        <img :src="imgSrcTitleTwo" alt="">
+                    </div>
+                    <p>保单费用信息</p>
+                </div>
+                <div @click="showMpListPolicyMessageTwo(index)" class="mp-min-right"><img class="ani-down" :class="item.isShowInformation?'add-ani-style':''" :src="imgSrcThree" alt=""></div>
+            </div>
+            <ul class="mp-list" v-if="item.isShowInformation">
+                <li class="mp-list-li line-down">
+                    <p>欠交保费：</p>
+                    <p v-text="item.underdeliveryPremium"></p>
+                </li>
+                <li class="mp-list-li line-down">
+                    <p>溢交保费：</p>
+                    <p v-text="item.excessivepayPremium"></p>
+                </li>
+                <li class="mp-list-li line-down">
+                    <p>红利：</p>
+                    <p v-text="item.dividendAmount"></p>
+                </li>
+                <li class="mp-list-li line-down">
+                    <p>保单贷款：</p>
+                    <p>{{item.loanAmount}}</p>
+                </li>
+                <li class="mp-list-li line-down">
+                    <p>自动垫缴：</p>
+                    <p v-text="item.automaticPremium"></p>
+                </li>
+            </ul>
+        </section>
+        <section class="mp-box-one" v-for="(item,index) in casePremMap" :key="index+' '">
             <div class="mp-min-title">
                 <div class="mp-min-left">
                     <div class="mp-min-left-img">
                         <img :src="imgSrcTitleThree" alt="">
                     </div>
-                    <p>投保人</p>
+                    <p>案件费用信息</p>
                 </div>
-                <div @click="showMpList(2)" class="mp-min-right"><img class="ani-down" :class="isShowInformationThree?'add-ani-style':''" :src="imgSrcThree" alt=""></div>
+                <div @click="showMpListPolicyMessageThree(index)" class="mp-min-right"><img class="ani-down" :class="item.isShowInformation?'add-ani-style':''" :src="imgSrcThree" alt=""></div>
             </div>
-            <ul class="mp-list" v-if="isShowInformationThree">
+            <ul class="mp-list" v-if="item.isShowInformation">
                 <li class="mp-list-li line-down">
-                    <p>姓名：</p>
-                    <p v-text="CustomerByPolicyCode.applicantName"></p>
+                    <p>住院发票金额：</p>
+                    <p v-text="item.inpatientExpense403"></p>
                 </li>
                 <li class="mp-list-li line-down">
-                    <p>生日：</p>
-                    <p>{{CustomerByPolicyCode.applicantBirthday | dateFilter}}</p>
+                    <p>统筹支付：</p>
+                    <p>{{item.inpatientExpense404}}</p>
                 </li>
                 <li class="mp-list-li line-down">
-                    <p>性别：</p>
-                    <p v-text="CustomerByPolicyCode.applicantGender"></p>
+                    <p>其他扣除：</p>
+                    <p v-text="item.inpatientExpense405"></p>
                 </li>
                 <li class="mp-list-li line-down">
-                    <p>证件号码：</p>
-                    <p v-text="CustomerByPolicyCode.applicantCertiCode"></p>
+                    <p>自费费用：</p>
+                    <p v-text="item.inpatientExpense406"></p>
                 </li>
                 <li class="mp-list-li line-down">
-                    <p>手机：</p>
-                    <p v-text="CustomerByPolicyCode.applicantCeller"></p>
+                    <p>门诊发票金额：</p>
+                    <p v-text="item.clinicExpense403"></p>
                 </li>
-                <li v-if="CustomerByPolicyCode.applicantTel1" class="mp-list-li line-down">
-                    <p>家庭电话：</p>
-                    <p v-text="CustomerByPolicyCode.applicantTel1"></p>
+                <li class="mp-list-li line-down">
+                    <p>统筹支付：</p>
+                    <p v-text="item.clinicExpense404"></p>
+                </li>
+                <li class="mp-list-li line-down">
+                    <p>其他扣除：</p>
+                    <p v-text="item.clinicExpense405"></p>
+                </li>
+                <li class="mp-list-li line-down">
+                    <p>自费费用：</p>
+                    <p v-text="item.clinicExpense406"></p>
                 </li>
             </ul>
         </section>
@@ -155,12 +139,13 @@ import { mapActions } from "vuex";
                 imgSrcTitleFive: require('@/assets/mgImg/xq_icon_syr.png'),   //收益人icon
                 imgSrcTitleSix: require('@/assets/mgImg/xq_icon_xxfs.png'),   //收益人icon
                 imgSrcThree: require('@/assets/mgImg/xq_icon_xia.png'),
-                isShowInformation: true,
-                isShowInformationTwo: false,
-                isShowInformationThree: false,
-                isShowInformationFour: false,
-                isShowInformationFive: false,
-                isShowInformationSix: false,
+                // isShowInformation: true,
+                // isShowInformationTwo: false,
+                // isShowInformationThree: false,
+                // isShowInformationFour: false,
+                // isShowInformationFive: false,
+                // isShowInformationSix: false,
+                totalAmount:'',
                 productMap:[],
                 policyMap:[],
                 casePremMap:[],
@@ -180,17 +165,22 @@ import { mapActions } from "vuex";
                 caseListmessageData,
                 successCallback: (res) => {
                     console.log(res.data)
+                    this.totalAmount = res.data.totalAmount
+                    for(let item of res.data.productMap){
+                        item.isShowInformation = false
+                    }
                     this.productMap = res.data.productMap
-                    this.policyMap = res.data.policyMap
-                    this.casePremMap = res.data.casePremMap
-                    // this.InformationMap = res.result.InformationMap
-                    // for(let item of res.result.ProductList){
-                    //     item.isShowInformation = false
-                    //     item.isShowSendEmilStyle= false
-                    // }
-                    // this.ProductList = res.result.ProductList
 
-                    // this.CustomerByPolicyCode = res.result.CustomerByPolicyCode
+
+                    for(let item of res.data.policyMap){
+                        item.isShowInformation = false
+                    }
+                    this.policyMap = res.data.policyMap
+
+                    for(let item of res.data.casePremMap){
+                        item.isShowInformation = false
+                    }
+                    this.casePremMap = res.data.casePremMap
                 },
                 fCallback:(res) => {
                 }
@@ -203,36 +193,20 @@ import { mapActions } from "vuex";
             ...mapActions({
                 caseListmessage: "caseListmessage"
             }),
-            showMpList(index) {
-                if(index==0){
-                    this.isShowInformation = !this.isShowInformation
-                }
-                if(index==1){
-                    this.isShowInformationTwo = !this.isShowInformationTwo
-                }
-                if(index==2){
-                    this.isShowInformationThree = !this.isShowInformationThree
-                }
-                if(index==3){
-                    this.isShowInformationFour = !this.isShowInformationFour
-                }
-                if(index==4){
-                    this.isShowInformationFive = !this.isShowInformationFive
-                }
-                if(index==5){
-                    this.isShowInformationSix = !this.isShowInformationSix
-                }
-            },
 
             //险种信息的显示
             showMpListPolicyMessage(index){
-                this.ProductList[index].isShowInformation = !this.ProductList[index].isShowInformation
+                this.productMap[index].isShowInformation = !this.productMap[index].isShowInformation
             },
 
-            //信件发送方式的显示
-            showSendEmilStyle(index){
-                this.ProductList[index].isShowSendEmilStyle = !this.ProductList[index].isShowSendEmilStyle
-            }
+            showMpListPolicyMessageTwo(index){
+                this.policyMap[index].isShowInformation = !this.policyMap[index].isShowInformation
+            },
+
+            showMpListPolicyMessageThree(index){
+                this.casePremMap[index].isShowInformation = !this.casePremMap[index].isShowInformation
+            },
+
         },
         
     }

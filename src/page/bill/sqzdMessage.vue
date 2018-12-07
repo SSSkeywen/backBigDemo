@@ -1,7 +1,10 @@
 <template>
     <div class="casemx-box">
         <headerT :headerContent="headerContent"></headerT>
-        <information @viewElectronicInvoices="viewElectronicInvoices"></information>
+        <div v-for="(item,index) in contentListData" :key="index">
+          <information :contentData="item"  @viewElectronicInvoices="viewElectronicInvoices"></information>
+        </div>
+        
         
     </div>
 </template>
@@ -18,17 +21,17 @@ export default {
   },
   data() {
     return {
-      headerContent: "首期账单查询"
+      headerContent: "首期账单查询",
+      contentListData:[]
     };
   },
   created() {
     console.log(111);
-    let typeData = 1;
+    let typeData = 'sqbdlist';
     this.getBillList({
       typeData,
-      successCallback: res => {
-        console.log(res.result);
-        // this.contentListData = res.result.list;
+      successCallback: result => {
+        this.contentListData = result;
       },
       fCallback: res => {}
     });

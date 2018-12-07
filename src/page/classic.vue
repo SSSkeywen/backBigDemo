@@ -39,7 +39,7 @@ import {config} from '@/config/config.js'
                             {
                                 navIcon:require('@/assets/classicImg/icon02.png'),
                                 navTitle: '热卖万能',
-                                navPath:'',
+                                navPath:'/universal',
                             },
                             {
                                 navIcon:require('@/assets/classicImg/icon03@huizhi.png'),
@@ -95,17 +95,17 @@ import {config} from '@/config/config.js'
                                     pageBg:require('@/assets/classicImg/bg02@tubao.png'),
                                     pageName:'投保进程',
                                     pageIcon:require('@/assets/classicImg/listIcon02@tubao.png'),
-                                    pagePath:'',
+                                    pagePath:'/insureProgress',
                                 },{
                                     pageBg:require('@/assets/classicImg/bg03@daikuan.png'),
                                     pageName:'贷款账户',
                                     pageIcon:require('@/assets/classicImg/listIcon03@daikuan.png'),
-                                    pagePath:'',
+                                    pagePath:'/loans',
                                 },{
                                     pageBg:require('@/assets/classicImg/bg04@lipei.png'),
                                     pageName:'理赔流程',
                                     pageIcon:require('@/assets/classicImg/listIcon04@lipei.png'),
-                                    pagePath:'',
+                                    pagePath:'/toLiucheng',
                                 }
                             ]
                         },

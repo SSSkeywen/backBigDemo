@@ -1,26 +1,24 @@
 <template>
-<div class="box">
+<div class="tabli-con">
 	<div v-if="myaddData.length!=0">
 		<div v-for="(item,index) in myaddData" :key="index">
-			<section>
-				<ul class="mg-ul">
+			<section class="bd_fk">
+				<ul>
 					<li>
-						<p>投保单号：{{item.sendCode}}</p>
-						<em class="btn_arrow ani-down" 
-						:class="item.showMap?'add-ani-style':''" 
-						@click="slideMap(item)">
-							<img :src="imgSrcThree" alt="">
-						</em>
+						<span>投保单号：</span><i>{{item.sendCode}}</i>
 					</li>
 					<li>
-						<p>第一主险名称：{{item.productName}}</p>
+						<span>第一主险名称：</span><i> {{item.productName}}</i>
 					</li>
 					<li>
-						<p :class="item.currentStatus">状态：{{item.insureStateName}}</p>
+						<span :class="item.currentStatus">当前状态：</span><i style="color: #3B6A8F;">{{item.insureStateName}}</i>
 					</li>
 				</ul>
+				<div id="div" class="bd_xz bd_xz1" @click="slideMap(item)">
+					<img :src="imgSrcThree" id="img" class="xuanzhuan" :class="item.showMap?'add-ani-style':''">
+				</div>
 			</section>
-			<div class="actBox">
+			<div class="bd_nr">
 				<ul class="progress" v-if="item.showMap">
 					<li  v-for="(items,index) in item.steps" :key="index" >
 						<progressInfoMap :num="item.steps.length" :steps="items" :plc="index"></progressInfoMap>
@@ -40,8 +38,8 @@ export default {
 	props:['myaddData'],
 	data() {
 		return {
-			showMap: false,
-			imgSrcThree: require('@/assets/mgImg/xq_icon_xia.png'),
+			// showMap: false,
+			imgSrcThree: require('@/assets/policyimg/bd_icon.png'),
 		}
 	},
 	components:{
@@ -62,101 +60,53 @@ export default {
 </script>
 
 <style scoped>
-.mg-ul li{position: relative;}
-section{
-	position: relative;
-	z-index: 10;
-	border-radius: 10px;
-    background-color: #fff;
-    margin-bottom: 0.24rem;
-    overflow: hidden;
+.tabli-con{
+	width: 91%;
+  	margin: auto;
+	font-size: 14px;
+    line-height: 1.5;
+	color: #666;
 }
-.mg-ul{
-    width: 88%;
+.tabli-con:last-child{padding-bottom: 65px;}
+.bd_fk {
+    /* width: 85%; */
     margin: 0 auto;
-    
+    margin-top: 7%;
+    background: url('../../assets/policyimg/bd_bg.png');
+    background-size: 100% 100%;
+    display: -webkit-flex;
+    display: flex;
+    padding: 3%;
+    position: relative;
+    box-shadow: 5px 5px 10px;
 }
-.mg-ul li{
-	position: relative;
-    line-height: 0.6rem;
+.bd_fk>ul {
+    width: 80%;
 }
-.btn_arrow{
-	position: absolute;
-	right: 0px;
-	top: 4px;
-	width: 24px;
-	height: 24px;
-	transform: rotate(-90deg);
-	transform-origin: 50% 50%;
+.bd_fk>ul i {
+    font-size: 16px;
+    color: #000;
 }
-.btn_arrow img{
-	position: absolute;
-	width: 100%;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%,-50%);
+.bd_fk .bd_xz {
+    width: 10%;
+    float: right;
+    margin-left: 10%;
+    padding-top: 8%;
 }
-.actBox{
-	position: relative;
-	z-index: 1;
-	margin-top: -20px;
+.bd_fk .bd_xz1 img {
+	width: 70%;
+	vertical-align: middle;
+    transform: rotate(-90deg);
 }
-.progress{
-	/*display: none;*/
-	margin-left: 10px;
-	padding-left: 30px;
-	padding-top: 10px;
-	padding-bottom: 10px;
-	border-left: 2px solid #00ae4d;
-}
-.progress .son{
-	position: relative;
-	width: 80%;
-	padding:0px 20px;
-	margin-top: 20px;
-	border-radius:8px;
-	background-color: #00ae4d;
-	line-height: 30px;
-	color: #fff;
-}
-.ball{
-	position: absolute;
-	width: 16px;
-	height: 16px;
-	border-radius:50%;
-	background-color: rgba(0, 244, 0, 0.5);
-	left: -39px;
-	top: 50%;
-	transform: translateY(-50%) rotate(45deg);
-}
-.ball:after{
-	position: absolute;
-	content:'';
-	width:100%;
-	height: 100%;
-	border-radius:50%;
-	background-color: #00ae4d;
-	transform:scale3d(0.5, 0.5, 0.5);
-	transform-origin: (50% ,50%);
-}
-.arrow{
-	position: absolute;
-	width: 16px;
-	height: 16px;
-	background-color: #00ae4d;
-	left: -8px;
-	top: 50%;
-	transform: translateY(-50%) rotate(45deg);
-}
-.stepDate{
-	display: block;
-}
-.stepName{display: block;}
+.bd_nr{ margin-top: 1%; width: 95%; margin-left: 3%;}
+.bd_nr>ul { border-left: 2px solid #747576;}
+
+/* .bd_nr>ul>li:nth-child(1){background: mediumblue url('../../assets/policyimg/bd_bg3.png');} */
 /* 动画效果css */
 .ani-down{
     transition: all .2s;
 }
-.add-ani-style{
+.bd_fk .bd_xz1 img.add-ani-style{
     transform: rotateZ(0deg);
 }
 </style>

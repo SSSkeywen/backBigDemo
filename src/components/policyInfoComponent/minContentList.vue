@@ -61,11 +61,9 @@
     color: #00ae4d;
 }
 .red{
-   color: #ff0000; 
+   color: #d2003b; 
 }
-.grey{
-
-   color: #c7bdbd;
-
+.zhongzhi{
+    color: #898b8b
 }
 </style>

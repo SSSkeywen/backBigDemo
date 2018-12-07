@@ -80,6 +80,10 @@ import {dateStyle} from '@/filter/dateStyle.js'
     color: #00ae4d;
 }
 .red{
-   color: #898b8b; 
+   color: #d2003b; 
 }
+.zhongzhi{
+    color: #898b8b
+}
+
 </style>

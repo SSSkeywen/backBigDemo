@@ -1,7 +1,9 @@
 <template>
     <div class="casemx-box">
         <headerT :headerContent="headerContent"></headerT>
-        <information @viewElectronicInvoices="viewElectronicInvoices"></information>
+        <div v-for="(item,index) in contentListData" :key="index">
+          <information :contentData="item"  @viewElectronicInvoices="viewElectronicInvoices"></information>
+        </div>
         
     </div>
 </template>
@@ -18,16 +20,17 @@ export default {
   },
   data() {
     return {
-      headerContent: "理赔账单查询"
+      headerContent: "理赔账单查询",
+      contentListData:[]
     };
   },
   created() {
-    let typeData = 3;
+    let typeData = 'lplist';
     this.getBillList({
       typeData,
-      successCallback: res => {
-        console.log(res.result);
-        // this.contentListData = res.result.list;
+      successCallback: result => {
+        // console.log(res.result);
+        this.contentListData = result;
       },
       fCallback: res => {}
     });
@@ -36,8 +39,8 @@ export default {
     ...mapActions({
       getBillList: "getBillList"
     }),
-    viewElectronicInvoices(index) {
-      console.log(index);
+    viewElectronicInvoices(policyCode,butonFlag) {
+      console.log(policyCode+'-'+butonFlag);
       this.$router.push({ path: "/settingTheBillList" });
     }
   }

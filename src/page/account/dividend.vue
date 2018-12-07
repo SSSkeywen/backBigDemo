@@ -52,8 +52,9 @@ export default {
         for (let item of res.data.bounsAccountList) {
           if (item.liabilityState == "有效") {
             item.statusStyle = "green";
-          }
-          if (item.liabilityState == "停效") {
+          } else if (item.liabilityState == "终止") {
+            item.statusStyle = "zhongzhi";
+          } else if (item.liabilityState == "停效") {
             item.statusStyle = "red";
           }
         }

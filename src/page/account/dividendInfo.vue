@@ -260,13 +260,15 @@ export default {
   width: 100%;
   border-radius: 0;
   /* background: url(img/icon_date.png) no-repeat right center; */
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAC0VX7mAAAAYklEQVQ4T63SsQ3AIAxEUXvW1FQMEDIAFTWzEl0kIgQYQ8I1173qsw/RMdNJG5YSXQxnBwrMmsM94F80Y3Be8CtaYg24itZYF5xFe5gIaqiEDUEJHWEqWKMaNgVmFI/OtP5v3kJBSA9vLDoAAAAASUVORK5CYII=) no-repeat scroll 95% transparent;
+  background-size: .2rem .1rem;
   background-color: #fff;
   border: none;
   font-size: 14px;
   width: 95%;
   padding-left: 2%;
   height: 30px;
-  text-align: center;
+  // text-align: center;
   line-height: 30px;
 }
 

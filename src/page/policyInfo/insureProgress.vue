@@ -7,10 +7,10 @@
       <li class="liClient" :class="{current: !ok}" @click="tog(2)">客户保单状态查询</li>
     </ul>
     <div class="downBox">
-      <div class="libox" v-show="ok">
+      <div class="tabli-box" v-show="ok">
         <progressInfo v-if="isSowFirstContentList" :myaddData="myaddData"></progressInfo>
       </div>
-      <div class="libox" v-show="!ok">
+      <div class="tabli-box" v-show="!ok">
         <section class="searchBox">
           <table>
             <tr>
@@ -450,10 +450,7 @@ export default {
 .tabBox li.current {
   background-color: #00ae4d;
 }
-.libox:nth-child(1) {
-  width: 88%;
-  margin: auto;
-}
+
 .searchBox table {
   table-layout: fixed;
   width: 100%;

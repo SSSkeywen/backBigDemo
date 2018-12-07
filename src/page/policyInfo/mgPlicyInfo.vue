@@ -121,7 +121,7 @@
                 </li>
                 <li class="mp-list-li line-down" v-if="CustomerByPolicyCode.applicantBirthday">
                     <p>生日：</p>
-                    <p>{{CustomerByPolicyCode.applicantBirthday | dateFilter}}</p>
+                    <p>{{CustomerByPolicyCode.applicantBirthday}}</p>
                 </li>
                 <li class="mp-list-li line-down" v-if="CustomerByPolicyCode.applicantGender">
                     <p>性别：</p>
@@ -162,7 +162,7 @@
                 </li>
                 <li class="mp-list-li line-down" v-if="CustomerByPolicyCode.insuredBirthday">
                     <p>生日：</p>
-                    <p>{{CustomerByPolicyCode.insuredBirthday| dateFilter}}</p>
+                    <p>{{CustomerByPolicyCode.insuredBirthday}}</p>
                 </li>
                 <li class="mp-list-li line-down" v-if="CustomerByPolicyCode.insuredGender">
                     <p>性别：</p>

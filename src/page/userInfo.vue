@@ -162,6 +162,11 @@ export default {
         this.alertCount.isShowAlert = true;
         return false;
       }
+      if (!this.$toolsTwo.clientName(this.commName)) {
+          this.alertCount.alertData = "姓名格式有误！";
+          this.alertCount.isShowAlert = true;
+          return false;
+        }
       if (this.certtype == "") {
         this.alertCount.alertData = "请选择您的证件类型";
         this.alertCount.isShowAlert = true;
@@ -192,7 +197,6 @@ export default {
           return false;
         }
       } else {
-        // console.log(this.$toolsTwo.clientName(this.commName))
         if (!this.$toolsTwo.clientName(this.commName)) {
           this.alertCount.alertData = "姓名格式有误！";
           this.alertCount.isShowAlert = true;

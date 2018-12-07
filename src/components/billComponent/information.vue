@@ -1,42 +1,43 @@
 <template>
     <div class="im-box">
         <hgroup class="im-hgroup">
-            <span>保单号：003158178991008</span>
+            <span>保单号：{{contentData.policyCode}}</span>
         </hgroup>
         <ul class="im-ul">
             <li>
                 <p>生效日期：</p>
-                <p>2011-03-23</p>
+                <p>{{contentData.validateDate}}</p>
             </li>
             <li>
                 <p>主险名称：</p>
-                <p>太平爱爸妈骨折综合意外伤害保险</p>
+                <p>{{contentData.productName}}</p>
             </li>
             <li>
                 <p>投保人：</p>
-                <p>黄澄澄</p>
+                <p>{{contentData.applicantName}}</p>
             </li>
             <li>
                 <p>被保险人：</p>
-                <p>张亚芳</p>
+                <p>{{contentData.insuredName}}</p>
             </li>
             <li>
                 <p>费用发生日期：</p>
-                <p>2011-03-23</p>
+                <p>{{contentData.finishTime}}</p>
             </li>
         </ul>
         <div class="im-btn">
-            <button @click="viewElectronicInvoices">查询电子发票</button>
+            <button @click="viewElectronicInvoices(contentData.policyCode,contentData.butonFlag)">{{contentData.butonFlag}}</button>
         </div>
     </div>
 </template>
 
 <script>
     export default {
+        props:['contentData'],
         methods: {
             viewElectronicInvoices() {
                 let index = 0
-                this.$emit('viewElectronicInvoices',index)
+                this.$emit('viewElectronicInvoices',(policyCode,butonFlag))
             }
         },
     }

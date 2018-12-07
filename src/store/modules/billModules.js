@@ -57,14 +57,14 @@ const actions = {
     },
     //获取续期账单的列表
     [getToNewIndexList]({ commit }, { successCallback = () => { }, failCallback = () => { } }) {
-        post(apiConfig.api_base_url + 'xufeibill/toXufeiAccountList', '')
+        post(apiConfig.api_base_url + 'dzfp/', '')
             .then((res) => {
                 let result = res
-                if (result.responseCode == '0') {
-                    successCallback(result)
-                    state.xqDataList = result
-                    result.result.name = 'xqDataList'
-                    commit(setEndTitem, result.result)
+                if (result.code == '0') {
+                    successCallback(result.data)
+                    // state.xqDataList = result
+                    // result.result.name = 'xqDataList'
+                    // commit(setEndTitem, result.result)
                 } else {
                     failCallback()
                 }

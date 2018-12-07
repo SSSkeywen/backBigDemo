@@ -94,9 +94,9 @@ export default {
           if (item.statusName == "有效") {
             item.statusStyle = "green";
           }else if (item.statusName == "终止") {
+            item.statusStyle = "zhongzhi";
+          }else if (item.statusName == "停效") {
             item.statusStyle = "red";
-          }else{
-            item.statusStyle = "grey";
           }
         }
         this.contentListBox = res;

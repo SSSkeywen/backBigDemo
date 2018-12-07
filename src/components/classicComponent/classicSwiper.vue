@@ -3,7 +3,9 @@
     <div class="swiper-content">
       <van-swipe :autoplay="5000">
         <van-swipe-item v-for="(image, index) in swiperImgSrcLists" :key="index">
-          <img :src="'https://'+image.img_path" width="100%" @click="jumpPage(index)" height="100%">
+          <div class="img-box">
+            <img :src="'https://'+image.img_path" width="100%" @click="jumpPage(index)">
+          </div>
         </van-swipe-item>
       </van-swipe>
     </div>
@@ -38,5 +40,13 @@ export default {
 }
 .swiper-box .swiper-content .van-swipe {
   border-radius: 1.34rem !important;
+}
+.img-box{
+  border-radius: 1.34rem !important;
+  height: 1.34rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
