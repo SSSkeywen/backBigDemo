@@ -1,49 +1,54 @@
 <template>
-    <div class="mg-box">
+<div class="survival-box">
     <headerT :headerContent="headerContent"></headerT>
-    <section class="mg-content-list">
-        <ul>
-            <li v-for="(item,index) in survivalData" :key="index" @click="nextFloor(item.policyCode)">
-                <hgroup class="mg-hgroup">
-                    <p>保单号：<span v-text="item.policyCode"></span></p>
-                    <div>
-                        <img :src="imgSrc" alt="">
+    <div class="content_one" v-for="(item,index) in survivalData" :key="index" @click="nextFloor(item.policyCode)">
+        <div class="content_one_top clearfix">
+            <div class="content_one_topL">
+                <span>保单号：{{item.policyCode}}</span>
+                <div class="bd_r"></div>  
+            </div>
+        </div>
+        <div class="content_one_xia">
+            <ul>
+                <li style="display: -webkit-flex;display: flex;">
+                    <span style="width: 22%;">被保人：</span>
+                    <span style="width: 78%;">{{item.insuredName}}</span>
+                </li>
+                <li style="display: -webkit-flex;display: flex;">
+                    <span style="width: 22%;">投保人：</span>
+                    <span style="width: 78%;">{{item.holderName}}</span>
+                </li>
+                <li class="mc">
+                    <span style="width: 30%;">保单主险：</span>
+                    <span>{{item.productName}}</span>
+                </li>
+                <li style="display: -webkit-flex;display: flex;">
+                    <div style="width: 60%;">
+                        <span>生效日期：</span>
+                        <span>{{item.validateDate | dateFilter2}}</span>
                     </div>
-                </hgroup>
-                <ul class="mg-ul">
-                    <li>
-                        <p>被保人：{{item.insuredName}}</p>
-                    </li>
-                    <li>
-                        <p>投保人：{{item.holderName}}</p>
-                    </li>
-                    <li>
-                        <p>保单主险：{{item.productName}}</p>
-                    </li>
-                    <li>
-                        <p>生效日期：{{item.validateDate | dateFilter}}</p>
-                        <p>责任状态：{{item.liabilityStateName}}</p>
-                    </li>
-                </ul>
-            </li>
-            <li v-if="survivalData == null">
-                未查找到符合条件的数据！
-            </li>
-        </ul>
-    </section>
-    <alertContent :alertCount="alertCount"></alertContent>
+                    <div style="width: 40%;">
+                        <span>责任状态：</span>
+                        <span>{{item.liabilityStateName}}</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
+    <div v-if="survivalData == null">未查找到符合条件的数据！</div>
+    <alertContent :alertCount="alertCount"></alertContent>
+</div>    
 </template>
 
 <script>
 import headerT from '../../components/header.vue';
 import { mapActions } from "vuex";
 import alertContent from "../../components/alertContent";
-import {dateStyle} from '@/filter/dateStyle.js'
+import {dateStyle2} from '@/filter/dateStyle.js'
 export default {
     filters: {
-        dateFilter(date){
-            return dateStyle(date)
+        dateFilter2(date){
+            return dateStyle2(date)
         }
     },
     components: {
@@ -89,68 +94,57 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.mg-box{
-    min-height: 100vh;
-    background-color: #DCDCDC;  
-}
-.mg-select{
-    width: 90%;
-    margin: 10px auto;
-    border-radius: 7px;
-    background-color: #fbfbfb;
-    height: 30px;
-    select{
-        width: 100%;
-        height: 100%;
-        border: none;
-        border-radius: 7px;
-        background-color: #fff;
-    }
-}
-.mg-content-list{
-    width: 90%;
-    margin: 0.2rem auto 0;
-    &>ul{
-        &>li{
-            border-radius: 10px;
-            background-color: #fff;
-            margin-bottom: 0.24rem;
-            overflow: hidden;
-        }
-    }
-}
-.mg-hgroup{
-    display: flex;
-    background-color: #00ae4d;
-    color: #FFFFFF;
+.survival-box{
+    overflow-x: hidden;
+    line-height: 1.5;
+    font-family: 'Microsoft Yahei';
     width: 100%;
-    padding: 0 6%;
+    min-height:100vh;
+    background-color: #ebebeb;
+}
+.content_one {
+    width: 95%;
+    margin: 10px auto;
+    border: 1px solid #DCDCDC;
+    background-color: #fff;
+    border-radius: 7px;
+}
+.content_one_top {
+    width: 100%;
+    background-color: #00AE4F;
+    line-height: 26px;
+    border-radius: 7px 7px 0 0;
+    position: relative;
+}
+.content_one_topL {
+    width: 92%;
     margin: 0 auto;
-    line-height: 0.52rem;
-    box-sizing: border-box;
-    justify-content: space-between;
-    align-items: center;
-    div{
-        width: 7%;
-        img{
-            width: 100%;
-        }
-    }
+    color: #FFFFFF;
 }
-.mg-ul{
-    width: 88%;
+.clearfix:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: "";
+    clear: both;
+    height: 0;
+}
+.bd_r{
+    margin-top: 4px;
+    width: 16px;
+    height: 16px;
+    float: right;
+    background: url('../../../src/assets/mgImg/icon_xin.png');
+    background-size: 100% 100%;
+}
+.content_one_xia ul {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+.content_one_xia ul li {
+    width: 92%;
+    line-height: 26px;
     margin: 0 auto;
-    li{
-        display: flex;
-        justify-content: space-between;
-        line-height: 0.6rem;
-    }
-}
-.green{
-    color: #00ae4d;
-}
-.red{
-   color: #898b8b; 
 }
 </style>
 

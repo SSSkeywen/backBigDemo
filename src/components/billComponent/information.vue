@@ -35,9 +35,9 @@
     export default {
         props:['contentData'],
         methods: {
-            viewElectronicInvoices() {
-                let index = 0
-                this.$emit('viewElectronicInvoices',(policyCode,butonFlag))
+            viewElectronicInvoices(policyCode,butonFlag) {
+                console.log(policyCode+'-'+butonFlag)
+                this.$emit('viewElectronicInvoices',policyCode,butonFlag)
             }
         },
     }

@@ -3,7 +3,7 @@
         <headerT :headerContent="headerContent"></headerT>
         <div>
             <div>
-                <img src="" alt="">
+                <img :src="toDownIcon" alt="">
             </div>
             <p>发票申请已提交成功</p>
             <p>电子发票将会尽快完成开具，如有延迟请耐心等待</p>

@@ -91,7 +91,9 @@ export default {
     width: 10%;
     float: right;
     margin-left: 10%;
-    padding-top: 8%;
+    /* padding-top: 8%; */
+	display: flex;
+    align-items: center;
 }
 .bd_fk .bd_xz1 img {
 	width: 70%;

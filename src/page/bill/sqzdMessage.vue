@@ -1,12 +1,11 @@
 <template>
-    <div class="casemx-box">
-        <headerT :headerContent="headerContent"></headerT>
-        <div v-for="(item,index) in contentListData" :key="index">
-          <information :contentData="item"  @viewElectronicInvoices="viewElectronicInvoices"></information>
-        </div>
-        
-        
+  <div class="casemx-box">
+    <headerT :headerContent="headerContent"></headerT>
+    <div v-if="contentListData.length!=0" v-for="(item,index) in contentListData" :key="index">
+      <information :contentData="item" @viewElectronicInvoices="viewElectronicInvoices"></information>
     </div>
+    <p v-else>未查询到信息！</p>
+  </div>
 </template>
 
 <script>
@@ -22,15 +21,16 @@ export default {
   data() {
     return {
       headerContent: "首期账单查询",
-      contentListData:[]
+      contentListData: []
     };
   },
   created() {
     console.log(111);
-    let typeData = 'sqbdlist';
+    let typeData = "sqbdlist";
     this.getBillList({
       typeData,
       successCallback: result => {
+        console.log(result);
         this.contentListData = result;
       },
       fCallback: res => {}
@@ -38,11 +38,27 @@ export default {
   },
   methods: {
     ...mapActions({
-      getBillList: "getBillList"
+      getBillList: "getBillList",
+      applyInvoice: "applyInvoice"
     }),
-    viewElectronicInvoices(index) {
-      console.log(index);
-      this.$router.push({ path: "/sqzdList" });
+    viewElectronicInvoices(policyCode, butonFlag) {
+      console.log(policyCode + "+" + butonFlag);
+      let typeData={
+        prem:butonFlag,
+        flg:'1'
+      }
+      if (butonFlag == "申请电子发票") {
+        this.applyInvoice({
+          typeData,
+          successCallback: result => {
+            console.log(result);
+            this.$router.push({ path: "/toNewIndexView" });
+          },
+          fCallback: res => {}
+        });
+      } else {
+        this.$router.push({ path: "/sqzdList" });
+      }
     }
   }
 };
@@ -52,5 +68,7 @@ export default {
 .casemx-box {
   min-height: 100vh;
   background: #dcdcdc;
+  padding-bottom: 0.1rem;
+  box-sizing: border-box;
 }
 </style>

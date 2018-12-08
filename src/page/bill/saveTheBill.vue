@@ -1,10 +1,10 @@
 <template>
     <div class="casemx-box">
         <headerT :headerContent="headerContent"></headerT>
-        <div v-for="(item,index) in contentListData" :key="index">
+        <div v-if="contentListData.length!=0" v-for="(item,index) in contentListData" :key="index">
           <information :contentData="item"  @viewElectronicInvoices="viewElectronicInvoices"></information>
         </div>
-        
+        <p v-else>未查询到信息！</p>
     </div>
 </template>
 

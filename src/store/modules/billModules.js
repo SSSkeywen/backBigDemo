@@ -8,6 +8,7 @@ const getToNewIndexList = 'getToNewIndexList'
 const getToNewIndexListMsg = 'getToNewIndexListMsg'
 const getBillList = 'getBillList'
 const setEndTitem = 'setEndTitem'
+const applyInvoice = 'applyInvoice'
 
 
 const state = {
@@ -23,13 +24,13 @@ const mutations = {
 }
 
 const actions = {
-    //获取首期账单的列表的详细信息
+    //获取保单的列表的详细信息
     [getBillList]({ commit }, { typeData, successCallback = () => { }, failCallback = () => { } }) {
-        post(apiConfig.api_base_url + 'policy/BillInquirylist/' + typeData, '').then((res) => {
+        post(apiConfig.api_base_url + 'dzfp/' + typeData, '').then((res) => {
             console.log(res)
             let result = res
-            if (result.responseCode == '0') {
-                successCallback(result)
+            if (result.code == '0') {
+                successCallback(result.data)
             } else {
                 failCallback()
             }
@@ -37,24 +38,24 @@ const actions = {
         }).catch((err) => {
             failCallback()
         })
-        // axios({
-        //     method: 'post',
-        //     url: apiConfig.api_base_url + 'policy/BillInquirylis/' + typeData,
-        //     data: '',
-        //     "Content-Type": "multipart/form-data"
-        // }).then((res) => {
-        //     console.log(res)
-        //     let result = res.data
-        //     if (result.responseCode == '0') {
-        //         successCallback(result)
-        //     } else {
-        //         failCallback()
-        //     }
-
-        // }).catch((err) => {
-        //     failCallback()
-        // })
     },
+
+    //申请电子发票
+    [applyInvoice]({ commit }, { typeData, successCallback = () => { }, failCallback = () => { } }) {
+        post(apiConfig.api_base_url + 'dzfp/elec', typeData).then((res) => {
+            console.log(res)
+            let result = res
+            if (result.code == '0') {
+                successCallback(result.data)
+            } else {
+                failCallback()
+            }
+
+        }).catch((err) => {
+            failCallback()
+        })
+    },
+
     //获取续期账单的列表
     [getToNewIndexList]({ commit }, { successCallback = () => { }, failCallback = () => { } }) {
         post(apiConfig.api_base_url + 'dzfp/', '')
@@ -72,27 +73,6 @@ const actions = {
             }).catch((err) => {
                 failCallback()
             })
-        // axios({
-        //     method: 'post',
-        //     url: apiConfig.api_base_url + 'xufeibill/toXufeiAccountList',
-        //     data: '',
-        //     "Content-Type": "multipart/form-data"
-        // }).then((res) => {
-        //     let result = res.data
-        //     if (result.responseCode == '0') {
-        //         successCallback(result)
-        //         state.xqDataList = result
-        //         console.log(commit)
-        //         result.result.name = 'xqDataList'
-        //         commit(setEndTitem,result.result)
-        //         // window.localStorage.setItem('xqDataList', JSON.stringify(result.result))
-        //     } else {
-        //         failCallback()
-        //     }
-
-        // }).catch((err) => {
-        //     failCallback()
-        // })
     },
 
     //获取续期账单的列表的详细信息
@@ -109,23 +89,6 @@ const actions = {
             }).catch((err) => {
                 failCallback()
             })
-        // axios({
-        //     method: 'post',
-        //     url: apiConfig.api_base_url + 'xufeibill/toXufeiAccountDetails/' + xqPolicyCode,
-        //     data: '',
-        //     "Content-Type": "multipart/form-data"
-        // }).then((res) => {
-        //     console.log(res)
-        //     let result = res.data
-        //     if (result.responseCode == '0') {
-        //         successCallback(result)
-        //     } else {
-        //         failCallback()
-        //     }
-
-        // }).catch((err) => {
-        //     failCallback()
-        // })
     },
 }
 

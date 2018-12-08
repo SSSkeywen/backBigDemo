@@ -25,7 +25,8 @@ export default {
   methods: {
     IKnowClose() {
       // WeixinJSBridge.call("closeWindow");
-      this.$router.push({ path: this.$route.query.pathAddress });
+      console.log()
+      this.$router.push({ path: this.$route.query.pathAddress||'/' });
     }
   }
 };

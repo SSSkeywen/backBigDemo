@@ -1,53 +1,74 @@
 <template>
-    <div class="mg-box">
+<div class="survival-box">
     <headerT :headerContent="headerContent"></headerT>
-    <section class="mg-content-list" v-for="(item,index) in survivalData" :key="index">
-                <!-- <survivalInfoList :survivalData="item"></survivalInfoList> -->
-        <hgroup class="mg-hgroup">
-            <p>险种名称：<span v-text="item.productName"></span></p>
-        </hgroup>
-        <ul class="mg-ul">
-            <li>
-                <p>生存金类型：{{item.liabName}}</p>
-            </li>
-            <li>
-                <p>授权给付方式：{{item.authName}}</p>
-            </li>
-            <li>
-                <p>生存金金额：{{item.feeAmount}}</p>
-            </li>
-            <li>
-                <p>分配日期：{{item.distributeDate | dateFilter}}</p>
-            </li>
-            <li>
-                <p>是否已领取：{{item.isDraw}}</p>
-            </li>
-            <li>
-                <p v-if="item.drawDate == null">领取日期：-</p>
-                <p v-if="item.drawDate != null">领取日期：{{item.drawDate | dateFilter}}</p>
-            </li>
-        </ul>
-    </section>
-    <section class="mg-content-list" v-if="survivalData == null">
-        未查找到符合条件的数据！
-    </section>
-    <alertContent :alertCount="alertCount"></alertContent>
+    <div class="content_one" v-for="(item,index) in survivalData" :key="index">
+        <div class="content_one_top clearfix">
+            <div class="content_one_topL mc">
+                <span>险种名称：</span>
+                <span>{{item.productName}}</span>
+            </div>
+        </div>
+        <div class="content_one_xia">
+            <ul>
+                <li>
+                    <div>
+                        <span style="width: 30%;">生存金类型：</span>
+                        <span>{{item.liabName}}</span>
+                    </div>
+                </li>
+                <li class="mc">
+                    <span>授权给付方式：</span>
+                    <span>{{item.authName}}</span>
+                </li>
+                <li style="display: -webkit-flex;display: flex;">
+                    <div>
+                        <span>生存金金额：</span>
+                        <span>{{item.feeAmount}}&nbsp;元</span>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <span>分配日期：</span>
+                        <span>{{item.distributeDate | dateFilter2}}</span>
+                    </div>
+                </li>
+                <li style="display: -webkit-flex;display: flex;">
+                    <div>
+                        <span>是否已领取：</span>
+                        <span>{{item.isDraw}}</span>
+                    </div>
+                </li>
+                <li style="display: -webkit-flex;display: flex;">
+                    <div v-if="item.drawDate == null">
+                        <span>领取日期：</span>
+                        <span>-</span>
+                    </div>
+                    <div v-if="item.drawDate != null">
+                        <span>领取日期：</span>
+                        <span>{{item.drawDate | dateFilter2}}</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
+    <div v-if="survivalData == null">未查找到符合条件的数据！</div>
+    <alertContent :alertCount="alertCount"></alertContent>
+</div>    
 </template>
 
 <script>
 import headerT from '../../components/header.vue'
 import { mapActions } from "vuex";
 import alertContent from "../../components/alertContent";
-import {dateStyle} from '@/filter/dateStyle.js'
+import {dateStyle2} from '@/filter/dateStyle.js'
 export default {
     components: {
         headerT,
         alertContent,
     },
     filters: {
-        dateFilter(date){
-            return dateStyle(date)
+        dateFilter2(date){
+            return dateStyle2(date)
         }
     },
     data() {
@@ -77,7 +98,6 @@ export default {
             }
         })
     },
-    
     methods: {
         ...mapActions({
             getSurvivalListInfo: "getSurvivalListInfo"
@@ -87,49 +107,61 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.mg-box{
-    min-height: 100vh;
-    background-color: #DCDCDC;
-}
-.mg-content-list{
-    width: 90%;
-    margin: 0.2rem auto 0;
-    background-color: #fff;
-    border-radius:10px;
-    overflow: hidden;
-}
-.mg-hgroup{
-    display: flex;
-    background-color: #00ae4d;
-    color: #FFFFFF;
+.survival-box{
+    overflow-x: hidden;
+    line-height: 1.5;
+    font-family: 'Microsoft Yahei';
     width: 100%;
-    padding: 0 6%;
+    min-height:100vh;
+    background-color: #ebebeb;
+}
+.content_one {
+    width: 95%;
+    margin: 10px auto;
+    border: 1px solid #DCDCDC;
+    background-color: #fff;
+    border-radius: 7px;
+}
+.mc{display: flex;}
+@media only screen and(min-width:321px){
+   .mc{display: block;} 
+}
+.content_one_top {
+    width: 100%;
+    background-color: #00AE4F;
+    line-height: 26px;
+    border-radius: 7px 7px 0 0;
+    position: relative;
+}
+.content_one_topL {
+    width: 92%;
     margin: 0 auto;
-    line-height: 0.52rem;
-    box-sizing: border-box;
-    justify-content: space-between;
-    align-items: center;
-    div{
-        width: 7%;
-        img{
-            width: 100%;
-        }
-    }
+    color: #FFFFFF;
 }
-.mg-ul{
-    width: 88%;
-    margin: 5px auto 10px;
-    li{
-        display: flex;
-        justify-content: space-between;
-        line-height: 0.6rem;
-    }
+.clearfix:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: "";
+    clear: both;
+    height: 0;
 }
-.green{
-    color: #00ae4d;
+.bd_r{
+    margin-top: 4px;
+    width: 16px;
+    height: 16px;
+    float: right;
+    background: url('../../../src/assets/mgImg/icon_xin.png');
+    background-size: 100% 100%;
 }
-.red{
-   color: #898b8b; 
+.content_one_xia ul {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+.content_one_xia ul li {
+    width: 92%;
+    line-height: 26px;
+    margin: 0 auto;
 }
 </style>
 

@@ -25,7 +25,7 @@ export default {
     };
   },
   created() {
-    let typeData = 'lplist';
+    let typeData = 'lpbdlist';
     this.getBillList({
       typeData,
       successCallback: result => {
