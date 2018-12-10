@@ -47,18 +47,44 @@ export default {
         prem:butonFlag,
         flg:'1'
       }
-      if (butonFlag == "申请电子发票") {
+      // if (butonFlag == "申请电子发票") {
         this.applyInvoice({
           typeData,
           successCallback: result => {
             console.log(result);
-            this.$router.push({ path: "/toNewIndexView" });
+            // this.$router.push({ path: "/toNewIndexView" });
+            if(result.RETURN_FLAG=='1'){
+              // let billmessage = {
+
+              // }
+              let tipsData = JSON.stringify(result.INVOICE_DETAILS)
+              console.log(tipsData)
+              this.$router.push({
+                path: "/sqzdList",
+                query: { tipsData: tipsData }
+              });
+            }
           },
           fCallback: res => {}
         });
-      } else {
-        this.$router.push({ path: "/sqzdList" });
-      }
+      // } else {
+      //   this.applyInvoice({
+      //     typeData,
+      //     successCallback: result => {
+      //       console.log(result);
+      //       // this.$router.push({ path: "/toNewIndexView" });
+      //       if(result.RETURN_FLAG=='1'){
+      //         let tipsData = result.RETURN_MESSAGE;
+      //         this.$router.push({
+      //           path: "/userFailPage",
+      //           query: { tipsData: tipsData }
+      //         });
+      //       }
+      //     },
+      //     fCallback: res => {}
+      //   });
+      //   // this.$router.push({ path: "/sqzdList" });
+      // }
     }
   }
 };

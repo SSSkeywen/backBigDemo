@@ -5,10 +5,10 @@
             <hgroup>发票已开具</hgroup>
             <p class="xu-line">····························································································································</p>
             <ul class="case-list">
-                <li>
+                <li v-for="(item,index) in sqzdList" :key="index">
                     <p>电子发票</p>
                     <div>
-                        <button class="style-click" @click="lookMsg">查看详情</button>
+                        <button class="style-click" @click="lookMsg(index)">查看详情</button>
                     </div>
                 </li>
             </ul>
@@ -30,26 +30,49 @@ export default {
   },
   data() {
     return {
-      headerContent: "首期账单查询"
+      headerContent: "首期账单查询",
+      sqzdList:[]
     };
   },
   created() {
-      console.log(111)
-    let typeData = 1;
-    this.getBillList({
+      console.log()
+      this.sqzdList=JSON.parse(this.$route.query.tipsData)
+    // let typeData = 1;
+    // this.getBillList({
+    //   typeData,
+    //   successCallback: res => {
+    //     console.log(res.result);
+    //     // this.contentListData = res.result.list;
+    //   },
+    //   fCallback: res => {}
+    // });
+  },
+  methods: {
+    ...mapActions({
+      getBillList: "getBillList",
+      LookApplyInvoice:"LookApplyInvoice"
+    }),
+    lookMsg(index) {
+      // let typeData = this.sqzdList[index]
+      let typeData = {
+        invoice_code:this.sqzdList[index].INVOICE_CODE,
+        invoice_no:this.sqzdList[index].INVOICE_NO,
+        taxpayer_id:this.sqzdList[index].TAXPAYER_ID,
+      }
+      console.log(typeData)
+      this.LookApplyInvoice({
       typeData,
       successCallback: res => {
-        console.log(res.result);
+        // window.location.href = res
+        this.$router.push({
+                path: "/sendInvoice",
+                query: { tipsData: res }
+              });
         // this.contentListData = res.result.list;
       },
       fCallback: res => {}
     });
-  },
-  methods: {
-    ...mapActions({
-      getBillList: "getBillList"
-    }),
-    lookMsg() {}
+    }
   }
 };
 </script>

@@ -72,7 +72,7 @@ export default {
             {
               selectIcon: require("@/assets/images/cioncx_25.png"),
               selectName: "贷款账户",
-              selectPath: "/loans",
+              selectPath: "/loanHistory",
               selectLineStyle: "line-down-me"
             },
             {

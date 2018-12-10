@@ -31,6 +31,8 @@ import saveTheBill from '@/page/bill/saveTheBill'
 import saveTheBillList from '@/page/bill/saveTheBillList'
 import settingTheBill from '@/page/bill/settingTheBill'
 import settingTheBillList from '@/page/bill/settingTheBillList'
+import successMessage from '@/page/bill/successMessage' 
+import sendInvoice from '@/page/bill/sendInvoice' 
 
 //保全变更记录
 import changeList from '@/page/policyInfo/changeList'
@@ -45,7 +47,7 @@ import universal from '@/page/account/universal'
 import universalInfo from '@/page/account/universalInfo'
 import dividend from '@/page/account/dividend'
 import dividendInfo from '@/page/account/dividendInfo'
-import loans from '@/page/account/loans'
+import loanHistory from '@/page/credit/loanHistory'
 import unitLinked from '@/page/account/unitLinked'
 import unitLinkedInfo from '@/page/account/unitLinkedInfo'
 import survival from '@/page/account/survival'
@@ -177,7 +179,18 @@ export default new Router({
       path: '/settingTheBillList',
       name: 'settingTheBillList',
       component: settingTheBillList
-    },
+    }, {
+      path: '/successMessage',
+      name: 'successMessage',
+      component: successMessage
+    }, 
+    {
+      path: '/sendInvoice',
+      name: 'sendInvoice',
+      component: sendInvoice
+    }, 
+
+    
     //liu feitao
       //changeList 保全变更
     {
@@ -228,11 +241,11 @@ export default new Router({
       name: 'dividendInfo',
       component: dividendInfo
     },
-    // loans 贷款账户
+    // loanHistory 贷款账户
     {
-      path: '/loans',
-      name: 'loans',
-      component: loans
+      path: '/loanHistory',
+      name: 'loanHistory',
+      component: loanHistory
     },
     // unitLinked 连投账户
     {

@@ -9,6 +9,8 @@ const getToNewIndexListMsg = 'getToNewIndexListMsg'
 const getBillList = 'getBillList'
 const setEndTitem = 'setEndTitem'
 const applyInvoice = 'applyInvoice'
+const LookApplyInvoice = 'LookApplyInvoice'
+const sendEmail = 'sendEmail'
 
 
 const state = {
@@ -43,6 +45,38 @@ const actions = {
     //申请电子发票
     [applyInvoice]({ commit }, { typeData, successCallback = () => { }, failCallback = () => { } }) {
         post(apiConfig.api_base_url + 'dzfp/elec', typeData).then((res) => {
+            console.log(res)
+            let result = res
+            if (result.code == '0') {
+                successCallback(result.data)
+            } else {
+                failCallback()
+            }
+
+        }).catch((err) => {
+            failCallback()
+        })
+    },
+
+    //查看电子发票
+    [LookApplyInvoice]({ commit }, { typeData, successCallback = () => { }, failCallback = () => { } }) {
+        post(apiConfig.api_base_url + 'dzfp/downtionpdf', typeData).then((res) => {
+            console.log(res)
+            let result = res
+            if (result.code == '0') {
+                successCallback(result.data)
+            } else {
+                failCallback()
+            }
+
+        }).catch((err) => {
+            failCallback()
+        })
+    },
+
+    //发送Email
+    [sendEmail]({ commit }, { emailAddress, successCallback = () => { }, failCallback = () => { } }) {
+        post(apiConfig.api_base_url + 'dzfp/sendmail', emailAddress).then((res) => {
             console.log(res)
             let result = res
             if (result.code == '0') {

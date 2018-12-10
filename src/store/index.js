@@ -18,6 +18,7 @@ import l_insureProgress from './modules/l_insureProgress.js'
 //hy
 import changeList from './modules/changeList.js'
 import survival from './modules/survival.js'
+import loanHistory from './modules/credit/loanHistory.js'
 
 
 
@@ -39,6 +40,7 @@ export default new Vuex.Store({
         l_insureProgress,
 
         changeList,
-        survival
+        survival,
+        loanHistory
     }
 })

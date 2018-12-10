@@ -100,7 +100,7 @@ import {config} from '@/config/config.js'
                                     pageBg:require('@/assets/classicImg/bg03@daikuan.png'),
                                     pageName:'贷款账户',
                                     pageIcon:require('@/assets/classicImg/listIcon03@daikuan.png'),
-                                    pagePath:'/loans',
+                                    pagePath:'/loanHistory',
                                 },{
                                     pageBg:require('@/assets/classicImg/bg04@lipei.png'),
                                     pageName:'理赔流程',
