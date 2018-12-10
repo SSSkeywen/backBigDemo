@@ -49,7 +49,7 @@
           </li>
           <li class="yy-li">
             <p class="yy-select-title">请输入医院名称：</p>
-            <input type="text" v-model="hospitalData">
+            <input type="text" placeholder="请输入2-15个字符" v-model="hospitalData">
           </li>
         </ul>
       </div>
@@ -82,7 +82,7 @@ export default {
       isShowMsg: true,
       proData: "上海市",
       cityData: "全部",
-      cityList: ["全部"],
+      cityList: ["全部城市"],
       hospitalData: "",
       hospitalListData: [],
       alertCount: {
@@ -106,7 +106,8 @@ export default {
       this.hospitalInformation({
         provinceSelectData,
         successCallback: result => {
-          this.cityList = result;
+          this.cityList = ["全部城市"]
+          this.cityList.push(result);
           this.cityData = this.cityList[0];
         },
         fCallback: res => {}
