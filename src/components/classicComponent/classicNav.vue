@@ -18,7 +18,14 @@
         },
         methods: {
             jumpChildPage(pathAddress) {
-                this.$router.push({ path: pathAddress });
+                let isBinding = JSON.parse(window.localStorage.getItem('isBinding'))
+                console.log(isBinding)
+                if(isBinding == '1'){
+                    this.$router.push({ path: pathAddress });
+                }else{
+                    this.$router.push({ path: '/userInfo',query: {pathAddress: pathAddress} });
+                }
+                
             }
         },
     }

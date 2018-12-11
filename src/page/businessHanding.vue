@@ -77,7 +77,7 @@ export default {
             {
               selectIcon: require("@/assets/img/jiebang.png"),
               selectName: "自助解绑",
-              selectPath: ""
+              selectPath: "/unbindSelf"
             }
           ]
         }
@@ -97,7 +97,7 @@ export default {
             {
               selectIcon: require("@/assets/img/xiugai.png"),
               selectName: "修改与重设",
-              selectPath: "",
+              selectPath: "/modifyRest",
               selectLineStyle: "line-down-me"
             },
             {

@@ -282,6 +282,8 @@ export default {
         },
         failCallback: res => {
           toast1.clear();
+          this.alertCount.alertData = res;
+              this.alertCount.isShowAlert = true;
         }
       });
       // this.$router.push({ path: this.$route.query.pathAddress });
@@ -318,6 +320,8 @@ export default {
           }
         },
         failCallback: res => {
+          this.alertCount.alertData = res;
+              this.alertCount.isShowAlert = true;
           // toast1.clear();
         }
       });
@@ -339,6 +343,7 @@ export default {
           console.log(result)
           switch (result.responsecode) {
             case "0":
+            window.localStorage.setItem('isBinding', '1')
               // let tipsData = `认证成功`;
               this.$router.push({
                 path: "/successPage",
@@ -371,7 +376,8 @@ export default {
           }
         },
         failCallback: res => {
-          // toast1.clear();
+          this.alertCount.alertData = res;
+              this.alertCount.isShowAlert = true;
         }
       });
     },

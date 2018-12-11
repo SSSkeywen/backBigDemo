@@ -1,73 +1,94 @@
 <template>
 <div class="mg-box">
 	<headerT :headerContent="headerContent"></headerT>
-	<div style="width: 100%;height: 10px;"></div>
-	<section class="sq clearfix" v-for="(item,index) in accountType" :key="index">
-	  <div class="sq_xz">
-			<ul>
-				<li>
-					<div class="sq_mc">
-						<span>{{item.typeName}}</span>
-					</div>
-					<div class="sq_nr" @click="jumpUrl(item.typeUrl)">
-						<div id="" style="width: 100%;">
-						<i><img :src="imgSrc" style="width: 50%;"></i>
-						</div>
-					</div>
-				</li>
-			</ul>
-		</div>
-	</section>
+    <div v-if="this.universalList.length!=0">
+    	<div style="width: 100%;height: 10px;"></div>
+    	<section class="sq clearfix" v-for="(item,index) in universalList" :key="index">
+    	  <div class="sq_xz">
+    			<ul>
+    				<li>
+    					<div class="sq_mc">
+    						<span>{{item.productNameAbb}}</span>
+    					</div>
+    					<div class="sq_nr" @click="jumpUrl(index)">
+    						<div id="" style="width: 100%;">
+    						<i><img :src="imgSrc" style="width: 50%;"></i>
+    						</div>
+    					</div>
+    				</li>
+    			</ul>
+    		</div>
+    	</section>
+    </div>
+    <nothing v-else :tipsContent="tipsContent"></nothing>
 </div>
 </template>
 
 
 <script>
-import headerT from '../../components/header.vue'
+import headerT from '../../components/header.vue';
+import nothing from '../../components/nothing.vue';
+import { mapActions } from "vuex";
 export default {
 data() {
         return {
             headerContent: '万能账户',
             imgSrc: require('@/assets/mgImg/icon-arrow-right.png'),
-            accountType:[
-            	{
-            		typeName:'金账户',
-            		typeUrl:'/universalInfo'
-            	},{
-                	typeName:'财富金账户',
-                	typeUrl:''
-                },{
-                	typeName:'财富金账户（个险）',
-                	typeUrl:''
-                },{
-                	typeName:'财富金账户（银险）',
-                	typeUrl:''
-                },{
-                	typeName:'幸福金账户',
-                	typeUrl:''
-                },{
-                	typeName:'财富砖账户',
-                	typeUrl:''
-                },{
-                	typeName:'砖石账户',
-                	typeUrl:''
-                },{
-                	typeName:'云账户',
-                	typeUrl:''
-                },{
-                	typeName:'盈账户',
-                	typeUrl:''
-            }]
+            tipsContent: '目前没有万能账户保单。',
+            universalList:[]
         }
     },
+    created() {
+		console.log('Ajax 开始');
+        this.getUniversalList({
+          successCallback: res => {
+			console.log(res.data);
+			this.universalList=res.data;
+          },
+          fCallback: res => {}
+        });
+    },
     components:{
-    	headerT
+    	headerT,
+        nothing
     },
     methods: {
-    	jumpUrl(url) {
-    			// console.log(url);
-                this.$router.push({ path: url });
-            }
+        ...mapActions({
+		  getUniversalList: "getUniversalList",
+		  getUniversalUrl: 'getUniversalUrl'
+        }),
+    	jumpUrl(index) {
+			let typeData = this.universalList[index].productId
+			this.getUniversalUrl({
+				typeData,
+				successCallback: res => {
+					// 判断获取的数据长度  如果一个以上 正常跳转到universalInfo
+					if(res.data.length>1){
+						window.localStorage.setItem('localData', JSON.stringify(res.data))
+						this.$router.push({ 
+						    path: '/universalInfo'
+						});
+					}else{ // 判断获取的数据长度  如果一个 跳到universalWorth
+						this.$router.push({ 
+							path: '/universalWorth',
+							query:{
+								productId: res.data[index].productId,
+								policyId: res.data[index].policyId,
+								itemId: res.data[index].itemId
+							}
+						});
+					}
+				},
+				fCallback: res => {}
+				});
+
+            // this.$router.push({ 
+            //     path: '/universalInfo',
+            //     query:{
+            //         myIndex: index
+            //     }
+			// });
+        }
     }
 }
 </script>

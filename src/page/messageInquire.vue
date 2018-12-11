@@ -209,8 +209,15 @@ export default {
       // if(this.clientMsg.isBinding!=0){
       //   this.$router.push({ path: '/userInfo',query: {pathAddress: pathAddress} });
       // }else{
-        this.$router.push({ path: pathAddress });
+        // this.$router.push({ path: pathAddress });
       // }
+      let isBinding = JSON.parse(window.localStorage.getItem('isBinding'))
+                console.log(isBinding)
+                if(isBinding == '1'||pathAddress=='/toLiucheng'||pathAddress=='/toZliao'||pathAddress=='/toWenda'){
+                    this.$router.push({ path: pathAddress });
+                }else{
+                    this.$router.push({ path: '/userInfo',query: {pathAddress: pathAddress} });
+                }
     }
   }
 };

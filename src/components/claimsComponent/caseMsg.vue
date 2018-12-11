@@ -3,31 +3,43 @@
         <ul>
             <li>
                 <p>案件状态：</p>
-                <p>{{caseMstList.caseStatus}}</p>
+                <p>{{caseMstList.caseStatus | caseMsgFn}}</p>
             </li>
             <li>
                 <p>操作机构：</p>
-                <p>{{caseMstList.organName}}</p>
+                <p>{{caseMstList.organName | organNameTestFn}}</p>
             </li>
-            <li>
+            <li v-if="caseMstList.finishTime">
                 <p>结案时间：</p>
-                <p>{{caseMstList.finishTime}}</p>
+                <p>{{caseMstList.finishTime | finishTimeTestFn}}</p>
             </li>
             <li>
                 <p>保单号：</p>
                 <p>{{caseMstList.policyCode}}</p>
             </li>
             <li v-if="caseMstList.caseStatus=='已结案提交付款'">
-                <p>提交的案件：</p>
-                <p>结案<span class="orange" @click="clickLookOver(caseMstList.caseNo)">点击查看</span></p>
+                <p> </p>
+                <p><span class="green" @click="clickLookOver(caseMstList.caseNo)"> 点击查看案件详情</span></p>
             </li>
         </ul>
     </div>
 </template>
 
 <script>
+import {caseMsg,organNameTest,finishTimeTest} from '@/filter/caseData.js'
     export default {
         props:['caseMstList'],
+        filters: {
+            caseMsgFn(date){
+                return caseMsg(date)
+            },
+            organNameTestFn(date){
+                return organNameTest(date)
+            },
+            finishTimeTestFn(date){
+                return finishTimeTest(date)
+            }
+        },
         methods: {
             clickLookOver(caseNo) {
                 this.$router.push({ path: "/toCasemxMsg",query: {caseNo: caseNo} });
@@ -57,7 +69,7 @@
         }
     }
 }
-.orange{
-    color: #fba41c;
+.green{
+    color: #00ae4d;
 }
 </style>

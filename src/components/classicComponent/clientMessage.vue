@@ -60,7 +60,6 @@ export default {
     // console.log(this.clientMsg)
   },
   mounted(){
-    console.log(this.clientMsg)
     let custPoints = this.clientMsg.customer.custPoints
     if(custPoints>=0&&custPoints<50000){
 				// linewid=0+20*(custPoints/50000);

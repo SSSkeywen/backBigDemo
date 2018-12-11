@@ -107,7 +107,10 @@ export default {
         provinceSelectData,
         successCallback: result => {
           this.cityList = ["全部城市"]
-          this.cityList.push(result);
+          for(let item of result){
+            this.cityList.push(item);
+          }
+          
           this.cityData = this.cityList[0];
         },
         fCallback: res => {}
@@ -116,7 +119,7 @@ export default {
     queryFn() {
       if (this.hospitalData == "") {
         this.alertCount.isShowAlert = true;
-        this.alertCount.alertData = '请输入医院名称';
+        this.alertCount.alertData = '输入医院名称不能为空！';
         return false;
       }
       let hospitalSelectData = {

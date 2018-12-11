@@ -11,7 +11,7 @@
             </div>
         </hgroup>
         <ul class="cp-list">
-            <li v-for="(item,index) in pageListData.pageLists" :key="index">
+            <li v-for="(item,index) in pageListData.pageLists" :key="index" @click="jumpMessagePage(item.pagePath)">
                 <img :src="item.pageBg" width="100%">
                 <div class="cp-list-content">
                     <p class="cp-list-p" v-html="item.pageName"></p>
@@ -37,7 +37,18 @@
         methods: {
             myGuaranteeSlip(pageAddress) {
                 this.$router.push({ path: pageAddress });
-            }
+            },
+            jumpMessagePage(pageAddress) {
+                let isBinding = JSON.parse(window.localStorage.getItem('isBinding'))
+                console.log(isBinding)
+                if(isBinding == '1'){
+                    this.$router.push({ path: pathAddress });
+                }else{
+                    this.$router.push({ path: '/userInfo',query: {pathAddress: pathAddress} });
+                }
+                // console.log(pageAddress)
+                // this.$router.push({ path: pageAddress });
+            },
         },
     }
 </script>

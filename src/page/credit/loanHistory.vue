@@ -8,25 +8,26 @@
 				<span style="width:45%;">结束时间</span>
 			</li>
 			<li>
-				<input type="text" v-model="selectAgoDate" @click="openDate('ago')" > 
+				<input class="dateRili" type="text" v-model="selectAgoDate" @click="openDate('ago')" readonly> 
 				<em>—</em>
-				<input type="text" v-model="selectNowDate" @click="openDate('now')"></li>
+				<input class="dateRili" type="text" v-model="selectNowDate" @click="openDate('now')" readonly></li>
 			<li class="grzx_top_li">
-				<button class="grzx_btn" @click="select()">
+				<button ref="searchBtn" class="grzx_btn" @click="select()">
 					<img :src="imgSrc" width="20px;" height="20px">查询
 				</button>
 			</li>
 		</ul>
 	</div>
-	<div class="dateBox">
-		<van-datetime-picker v-show="pickerShow" v-model="pickerDate" type="date" @confirm="ok" @cancel="cancel()" />
-	</div>
-
+    <div class="date-wrap" v-show="pickerShow">
+        <div class="dateBox">
+            <van-datetime-picker v-show="pickerShow" v-model="pickerDate" type="date" @confirm="ok" @cancel="cancel()" />
+        </div>
+    </div>
     <div v-if="loansData.showFlog == '1'">
         <div class="recordBox">      
             <div v-if="loansData.registerType!='1'">
                 <figure class="ssd_hklb_fig1">贷款记录</figure>
-                <div v-if=" loansData.LOANLIST==null && loansData.LOANNORESULTLIST==null"  >
+                <div v-if=" (loansData.LOANLIST==null && loansData.LOANNORESULTLIST==null)||(loansData.LOANLIST=='' && loansData.LOANNORESULTLIST=='')"  >
                     <span>&nbsp;&nbsp;现查询的时间段内您名下无贷款记录！</span>
                 </div>
                 <!-- 贷款申请成功记录-->
@@ -118,7 +119,7 @@
 
         <div class="recordBox">
             <figure class="ssd_hklb_fig1">还款记录</figure>
-            <div v-if=" loansData.DISLIST==null && loansData.REFUNDNORESULTLIST==null"  >
+            <div v-if="(loansData.DISLIST==null && loansData.REFUNDNORESULTLIST==null)||(loansData.DISLIST=='' && loansData.REFUNDNORESULTLIST=='') "  >
                 <span>&nbsp;&nbsp;现查询的时间段内您名下无还款记录！</span>
             </div>
             <!-- 还款申请成功记录-->
@@ -185,6 +186,9 @@
         <div class="recordBox">
             <div v-if="loansData.registerType!='1'">
                 <figure class="ssd_hklb_fig1">结息记录</figure>
+                <div v-if=" loansData.CAPILIST==null||loansData.CAPILIST=='' "  >
+                    <span>&nbsp;&nbsp;现查询的时间段内您名下无结息记录！</span>
+                </div>
                 <section class="ssd_hklb_nav " v-for="(item,index) in loansData.CAPILIST" :key="index">
                     <div class="ssd_hklb_list">
                         <div class="ssd_hkld_list_title "> 
@@ -251,13 +255,14 @@ export default {
                 isShowAlert:false,
                 alertData:'请输入',
             },
+            ifErrorTime: true,//用于记录选择时间是否有问题
         }
     },
     created(){
         // this.setInitDate();
         this.historyinit({//取服务器当前时间
             successCallback: (res) => {
-                console.info("result:"+res)
+                // console.info("result:"+res)
                 this.selectAgoDate = res.start_date;
                 this.selectNowDate = res.end_date;
             },
@@ -273,104 +278,85 @@ export default {
     },
     methods: {
         select(){
-            let date = {
-                start_date: this.selectAgoDate, 
-                end_date: this.selectNowDate
-            }
-            const toast1 = Toast.loading({
-                mask: true,
-                message: "加载中...",
-                duration: 3000
-            });
-            this.historyquery({
-                date,
-                successCallback: (res) => {
-                    toast1.clear();
-                    console.info("result:"+JSON.stringify(res))
-                    console.info((0.045*100).toFixed(2) + '%')
-
-                    if(res.LOANLIST!=null){
-                        (res.LOANLIST).forEach((item, index) => {
-                            if(index==0){
-                                item.listShow =true;
-                            }else{
-                                item.listShow =false;
-                            }
-                        });
-                    }
-
-                    if(res.LOANNORESULTLIST!=null){
-                        (res.LOANNORESULTLIST).forEach((item, index) => {
-                            if(index==0){
-                                item.listShow =true;
-                            }else{
-                                item.listShow =false;
-                            }
-                        });
-                    }
-
-                    if(res.DISLIST!=null){
-                        (res.DISLIST).forEach((item, index) => {
-                            if(index==0){
-                                item.listShow =true;
-                            }else{
-                                item.listShow =false;
-                            }
-                        });
-                    }
-
-                    if(res.REFUNDNORESULTLIST!=null){
-                        (res.REFUNDNORESULTLIST).forEach((item, index) => {
-                            console.info("item.index:"+index)
-                            if(index==0){
-                                item.listShow =true;
-                            }else{
-                                item.listShow =false;
-                            }
-                        });
-                    }
-
-                    if(res.CAPILIST!=null){
-                        (res.CAPILIST).forEach((item, index) => {
-                            if(index==0){
-                                item.listShow =true;
-                            }else{
-                                item.listShow =false;
-                            }
-                        });
-                    }
-
-                    this.loansData = res;
-                },
-                failCallback:(res) => {
-                    toast1.clear();
-                    this.alertCount.isShowAlert = true;
-                    this.alertCount.alertData = res.msg;
+            console.info("ifErrorTime:"+this.ifErrorTime)
+            if(this.ifErrorTime){
+                let date = {
+                    start_date: this.selectAgoDate, 
+                    end_date: this.selectNowDate
                 }
-            })
-        },
-        // setInitDate(){//设置默认开始时间为 当前日期前两天
-        //     let nowTime = new Date().getTime();
-        //     let agoTime = nowTime - 172800000;
+                const toast1 = Toast.loading({
+                    mask: true,
+                    message: "加载中...",
+                    duration: 3000
+                });
+                this.historyquery({
+                    date,
+                    successCallback: (res) => {
+                        toast1.clear();
+                        // console.info("result:"+JSON.stringify(res))
+                        // console.info((0.045*100).toFixed(2) + '%')
 
-        //     let selectNowDate = this.computeDate(new Date(nowTime));
-        //     let selectAgoDate = this.computeDate(new Date(agoTime));
-        //     console.info("selectNowDate:"+selectNowDate);
-        //     console.info("selectAgoDate:"+selectAgoDate);
-        //     this.selectAgoDate = selectAgoDate;
-        //     this.selectNowDate = selectNowDate;
-        // },
-        // computeDate(date){
-        //     let month = date.getMonth() - 0 + 1;
-        //     if (month < 10) {
-        //         month = "0" + month;
-        //     }
-        //     let today = date.getDate();
-        //     if (today < 10) {
-        //         today = "0" + today;
-        //     }
-        //     return date.getFullYear() + "-" + month + "-" + today;
-        // },
+                        if(res.LOANLIST!=null){
+                            (res.LOANLIST).forEach((item, index) => {
+                                if(index==0){
+                                    item.listShow =true;
+                                }else{
+                                    item.listShow =false;
+                                }
+                            });
+                        }
+
+                        if(res.LOANNORESULTLIST!=null){
+                            (res.LOANNORESULTLIST).forEach((item, index) => {
+                                if(index==0){
+                                    item.listShow =true;
+                                }else{
+                                    item.listShow =false;
+                                }
+                            });
+                        }
+
+                        if(res.DISLIST!=null){
+                            (res.DISLIST).forEach((item, index) => {
+                                if(index==0){
+                                    item.listShow =true;
+                                }else{
+                                    item.listShow =false;
+                                }
+                            });
+                        }
+
+                        if(res.REFUNDNORESULTLIST!=null){
+                            (res.REFUNDNORESULTLIST).forEach((item, index) => {
+                                // console.info("item.index:"+index)
+                                if(index==0){
+                                    item.listShow =true;
+                                }else{
+                                    item.listShow =false;
+                                }
+                            });
+                        }
+
+                        if(res.CAPILIST!=null){
+                            (res.CAPILIST).forEach((item, index) => {
+                                if(index==0){
+                                    item.listShow =true;
+                                }else{
+                                    item.listShow =false;
+                                }
+                            });
+                        }
+
+                        this.loansData = res;
+                    },
+                    failCallback:(res) => {
+                        toast1.clear();
+                        this.alertCount.isShowAlert = true;
+                        this.alertCount.alertData = res.msg;
+                    }
+                })
+            }
+        },
         tog(item,index){
             item.listShow=!item.listShow
         },
@@ -397,12 +383,21 @@ export default {
             let nowTime = new Date(this.selectNowDate).getTime();
             let todayTime = new Date().getTime();
             let diffDays = parseInt(Math.abs(agoTime-nowTime)/1000/60/60/24);
+            this.ifErrorTime = true;
             if(agoTime > nowTime){
-                alert("结束时间不能在开始时间之前！");
+                Toast("结束时间不能在开始时间之前！");
+                this.ifErrorTime = false;
             }else if(diffDays >= 365){
-                alert("结束时间和开始时间间隔不能超过一年！");
+                Toast("结束时间和开始时间间隔不能超过一年！");
+                this.ifErrorTime = false;
             }else if(nowTime > todayTime){
-                alert("结束时间不能超过当天！");
+                Toast("结束时间不能超过当天！");
+                this.ifErrorTime = false;
+            }
+            if(!this.ifErrorTime){
+               this.$refs.searchBtn.style.backgroundColor='#ddd' 
+            }else{
+               this.$refs.searchBtn.style.backgroundColor='#fb6362'
             }
         },
         cancel(){
@@ -425,8 +420,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.date-wrap{
+    position: fixed;
+    z-index: 99;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0);
+}
 .dateBox{
-	position: fixed;
+	position: absolute;
+    z-index: 99;
 	bottom: 0;
 	width: 100%;
 }
@@ -434,7 +439,8 @@ export default {
     min-height: 100vh;
     // background-color: #DCDCDC;  
 }
-input[type="text"] {box-sizing: border-box;padding: 3px;border: 1px solid #e0e0e1; color:#999;    outline: 0;}
+input[type="text"] {box-sizing: border-box;padding: 3px;border: 1px solid #e0e0e1; border-radius: 2px; color:#999;outline: 0;}
+.dateRili{background: url('../../assets/mgImg/rili.png') right center no-repeat}
 .grzx_btn{height:40px;margin:10px auto;width:200px; border:none;color:#fff;font-size:14px;border-radius:7px;}
 .grzx_bg{height:30px;line-height:30px;}
 .grzx_top{margin:20px 2% 0px 2%;width: 96%;}

@@ -31,8 +31,8 @@ import saveTheBill from '@/page/bill/saveTheBill'
 import saveTheBillList from '@/page/bill/saveTheBillList'
 import settingTheBill from '@/page/bill/settingTheBill'
 import settingTheBillList from '@/page/bill/settingTheBillList'
-import successMessage from '@/page/bill/successMessage' 
-import sendInvoice from '@/page/bill/sendInvoice' 
+import successMessage from '@/page/bill/successMessage'
+import sendInvoice from '@/page/bill/sendInvoice'
 
 //保全变更记录
 import changeList from '@/page/policyInfo/changeList'
@@ -44,7 +44,12 @@ import insureProgress from '@/page/policyInfo/insureProgress'
 
 // 账户
 import universal from '@/page/account/universal'
+
 import universalInfo from '@/page/account/universalInfo'
+
+import universalWorth from '@/page/account/universalWorth'
+
+import universalDetial from '@/page/account/universalDetial'
 import dividend from '@/page/account/dividend'
 import dividendInfo from '@/page/account/dividendInfo'
 import loanHistory from '@/page/credit/loanHistory'
@@ -64,12 +69,18 @@ import addressNew from '@/page/letter/addressNew'
 
 //保险服务密码
 import open from '@/page/insuranceServicePassword/open'
+import modifyRest from '@/page/insuranceServicePassword/modifyRest'
 
 //个人信息变更
 import phoneChange from '@/page/personalInformationChange/phoneChange'
 import emilChange from '@/page/personalInformationChange/emilChange'
 import homeAdressChange from '@/page/personalInformationChange/homeAdressChange'
 import companyAdressChange from '@/page/personalInformationChange/companyAdressChange'
+
+//基本服务
+import unbindSelf from '@/page/baseService/unbindSelf'
+import unbindHistory from '@/page/baseService/unbindHistory'
+import unbindSuc from '@/page/baseService/unbindSuc'
 
 Vue.use(Router)
 
@@ -88,17 +99,17 @@ export default new Router({
       path: '/businessHanding',
       name: 'businessHanding',
       component: businessHanding
-    }, 
+    },
     {
       path: '/userInfo',
       name: 'userInfo',
       component: userInfo
-    }, 
+    },
     {
       path: '/userFailPage',
       name: 'userFailPage',
       component: userFailPage
-    }, 
+    },
     {
       path: '/successPage',
       name: 'successPage',
@@ -183,16 +194,16 @@ export default new Router({
       path: '/successMessage',
       name: 'successMessage',
       component: successMessage
-    }, 
+    },
     {
       path: '/sendInvoice',
       name: 'sendInvoice',
       component: sendInvoice
-    }, 
+    },
 
-    
+
     //liu feitao
-      //changeList 保全变更
+    //changeList 保全变更
     {
       path: '/changeList',
       name: 'changeList',
@@ -218,16 +229,51 @@ export default new Router({
     },
     // 账户
     // universal 万能账户
+
     {
+
       path: '/universal',
+
       name: 'universal',
+
       component: universal
+
     },
+
     // universalInfo 万能账户信息
+
     {
+
       path: '/universalInfo',
+
       name: 'universalInfo',
+
       component: universalInfo
+
+    },
+
+    // survivalWorth 万能账户信息 现有账户价值
+
+    {
+
+      path: '/universalWorth',
+
+      name: 'universalWorth',
+
+      component: universalWorth
+
+    },
+
+    // universalDetial 万能账户信息 现有账户价值 详细信息
+
+    {
+
+      path: '/universalDetial',
+
+      name: 'universalDetial',
+
+      component: universalDetial
+
     },
     // dividend 分红账户
     {
@@ -260,7 +306,7 @@ export default new Router({
       name: 'unitLinkedInfo',
       component: unitLinkedInfo
     },
-    
+
     // survival 生存金账户
     {
       path: '/survival',
@@ -273,7 +319,7 @@ export default new Router({
       name: 'survivalInfo',
       component: survivalInfo
     },
-    
+
     // yearReport 保单年度报告
     {
       path: '/yearReport',
@@ -329,6 +375,17 @@ export default new Router({
       name: 'open',
       component: open
     },
+    //修改和重置
+
+    {
+
+      path: '/modifyRest',
+
+      name: 'modifyRest',
+
+      component: modifyRest
+
+    },
 
     //个人信息变更
     {
@@ -350,6 +407,25 @@ export default new Router({
       path: '/companyAdressChange',
       name: 'companyAdressChange',
       component: companyAdressChange
+    },
+
+    //基本服务
+    {
+      path: '/unbindSelf',
+      name: 'unbindSelf',
+      component: unbindSelf
+    },
+    // 自助解绑 历史记录
+    {
+      path: '/unbindHistory',
+      name: 'unbindHistory',
+      component: unbindHistory
+    },
+    // 自助解绑 成功
+    {
+      path: '/unbindSuc',
+      name: 'unbindSuc',
+      component: unbindSuc
     },
   ]
 })

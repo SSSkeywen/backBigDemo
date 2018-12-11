@@ -8,12 +8,15 @@ import claimsModules from './modules/claimsModules.js'
 import billModules from './modules/billModules.js'
 
 //刘飞涛
+import universal from './modules/universal.js'
 import account from './modules/account.js'
 import dividend from './modules/dividend.js'
 import unitLinked from './modules/unitLinked.js'
+import modifyRest from './modules/modifyRest.js'
 
 //李y
 import l_insureProgress from './modules/l_insureProgress.js'
+import unbindSelf from './modules/unbindSelf.js'
 
 //hy
 import changeList from './modules/changeList.js'
@@ -34,10 +37,13 @@ export default new Vuex.Store({
         billModules,
 
         account,
+        universal,
         dividend,
         unitLinked,
+        modifyRest,
 
         l_insureProgress,
+        unbindSelf,
 
         changeList,
         survival,

@@ -15,10 +15,11 @@ const mutations = {
 const actions = {
     [getClientMessage]({ commit }, { successCallback = () => { }, failCallback = () => { } }) {
         get(apiConfig.api_base_url + 'page/tonewpagemenu', '').then((res) => {
-            console.log(res)
             let result = res.data
             if (res.code == '0') {
-                window.localStorage.setItem('clientMsg', JSON.stringify(result))
+                window.localStorage.clear()
+                // window.localStorage.setItem('clientMsg', JSON.stringify(result))
+                window.localStorage.setItem('isBinding', JSON.stringify(result.isBinding))
                 successCallback(result)
             } else {
                 failCallback(res.msg)
