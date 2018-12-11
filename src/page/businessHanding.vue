@@ -1,44 +1,54 @@
 <template>
-    <div class="me-box">
-        <div class="me-title">
-            <img :src="titleimgOne" alt="">
-        </div>
-        <div v-for="(item,index) in contentListsOne" :key="index">
-            <div class="me-min-title" v-if="item.titleName">
-                <div :class="item.titleLineStyle"></div>
-                <p v-html="item.titleName"></p>
-            </div>
-            <div class="me-content-list">
-                  <ul>
-                      <li :class="itemTwo.selectLineStyle" v-for="(itemTwo,indexTwo) in item.selectLists" :key="indexTwo" @click="jumpPage(itemTwo.selectPath)">
-                          <div class="me-content-list-img">
-                              <img :src="itemTwo.selectIcon" alt="">
-                          </div>
-                          <p v-html="itemTwo.selectName"></p>
-                      </li>
-                  </ul>
-            </div>
-        </div>
-        <div class="me-title">
-            <img :src="titleimgTwo" alt="">
-        </div>
-        <div v-for="(item,index) in contentLists" :key="index+'0'">
-            <div class="me-min-title" :class="item.paddingTop" v-if="item.titleName">
-                <div :class="item.titleLineStyle"></div>
-                <p v-html="item.titleName"></p>
-            </div>
-            <div class="me-content-list">
-                  <ul>
-                      <li :class="itemTwo.selectLineStyle" v-for="(itemTwo,indexTwo) in item.selectLists" :key="indexTwo" @click="jumpPage(itemTwo.selectPath)">
-                          <div class="me-content-list-img">
-                              <img :src="itemTwo.selectIcon" alt="">
-                          </div>
-                          <p v-html="itemTwo.selectName"></p>
-                      </li>
-                  </ul>
-            </div>
-        </div>
+  <div class="me-box">
+    <div class="me-title">
+      <img :src="titleimgOne" alt>
     </div>
+    <div v-for="(item,index) in contentListsOne" :key="index">
+      <div class="me-min-title" v-if="item.titleName">
+        <div :class="item.titleLineStyle"></div>
+        <p v-html="item.titleName"></p>
+      </div>
+      <div class="me-content-list">
+        <ul>
+          <li
+            :class="itemTwo.selectLineStyle"
+            v-for="(itemTwo,indexTwo) in item.selectLists"
+            :key="indexTwo"
+            @click="jumpPage(itemTwo.selectPath)"
+          >
+            <div class="me-content-list-img">
+              <img :src="itemTwo.selectIcon" alt>
+            </div>
+            <p v-html="itemTwo.selectName"></p>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="me-title">
+      <img :src="titleimgTwo" alt>
+    </div>
+    <div v-for="(item,index) in contentLists" :key="index+'0'">
+      <div class="me-min-title" :class="item.paddingTop" v-if="item.titleName">
+        <div :class="item.titleLineStyle"></div>
+        <p v-html="item.titleName"></p>
+      </div>
+      <div class="me-content-list">
+        <ul>
+          <li
+            :class="itemTwo.selectLineStyle"
+            v-for="(itemTwo,indexTwo) in item.selectLists"
+            :key="indexTwo"
+            @click="jumpPage(itemTwo.selectPath)"
+          >
+            <div class="me-content-list-img">
+              <img :src="itemTwo.selectIcon" alt>
+            </div>
+            <p v-html="itemTwo.selectName"></p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -86,7 +96,7 @@ export default {
       contentLists: [
         {
           titleName: "保险服务密码",
-          paddingTop:"padding-top-0",
+          paddingTop: "padding-top-0",
           selectLists: [
             {
               selectIcon: require("@/assets/img/kaitong.png"),
@@ -109,7 +119,7 @@ export default {
         },
         {
           titleName: "实时贷",
-          titleLineStyle:"",
+          titleLineStyle: "",
           selectLists: [
             {
               selectIcon: require("@/assets/img/ssd.png"),
@@ -121,7 +131,7 @@ export default {
         },
         {
           titleName: "个人信息变更",
-          titleLineStyle:"",
+          titleLineStyle: "",
           selectLists: [
             {
               selectIcon: require("@/assets/img/shouji.png"),
@@ -157,7 +167,7 @@ export default {
         },
         {
           titleName: "交费信息变更",
-          titleLineStyle:"",
+          titleLineStyle: "",
           selectLists: [
             {
               selectIcon: require("@/assets/img/jifei.png"),
@@ -175,7 +185,7 @@ export default {
         },
         {
           titleName: "保障信息变更",
-          titleLineStyle:"",
+          titleLineStyle: "",
           selectLists: [
             {
               selectIcon: require("@/assets/img/yuyuez.png"),
@@ -193,12 +203,12 @@ export default {
         },
         {
           titleName: "保单权益领取",
-          titleLineStyle:"",
+          titleLineStyle: "",
           selectLists: [
             {
               selectIcon: require("@/assets/img/nianjinb.png"),
               selectName: "年金领取频率<br>及年限变更",
-              selectPath: "",
+              selectPath: "/passwordCheck",
               selectLineStyle: "line-down-me"
             },
             {
@@ -235,7 +245,7 @@ export default {
         },
         {
           titleName: "保障信息变更",
-          titleLineStyle:"",
+          titleLineStyle: "",
           selectLists: [
             {
               selectIcon: require("@/assets/img/yuqi.png"),
@@ -253,7 +263,7 @@ export default {
         },
         {
           titleName: "通知书发送方式变更",
-          titleLineStyle:"",
+          titleLineStyle: "",
           selectLists: [
             {
               selectIcon: require("@/assets/img/xuqiz.png"),
@@ -283,7 +293,7 @@ export default {
         },
         {
           titleName: "万能险专区",
-          titleLineStyle:"",
+          titleLineStyle: "",
           selectLists: [
             {
               selectIcon: require("@/assets/img/wnzhzj.png"),
@@ -307,7 +317,7 @@ export default {
         },
         {
           titleName: "投资连结险专区",
-          titleLineStyle:"",
+          titleLineStyle: "",
           selectLists: [
             {
               selectIcon: require("@/assets/img/touzi.png"),
@@ -350,8 +360,17 @@ export default {
       // if(true){
       //   this.$router.push({ path: '/userInfo',query: {pathAddress: pathAddress} });
       // }else{
-        this.$router.push({ path: pathAddress });
+      // this.$router.push({ path: pathAddress });
       // }
+      let isBinding = JSON.parse(window.localStorage.getItem("isBinding"));
+      if (isBinding == "1") {
+        this.$router.push({ path: pathAddress });
+      } else {
+        this.$router.push({
+          path: "/userInfo",
+          query: { pathAddress: pathAddress }
+        });
+      }
     }
   }
 };
@@ -394,7 +413,7 @@ export default {
     li {
       width: 50%;
       display: flex;
-      color:rgba(102,102,102,1);
+      color: rgba(102, 102, 102, 1);
       font-size: 0.26rem;
       padding: 0.38rem 0.3rem 0.35rem;
       height: 1.14rem;
@@ -456,11 +475,11 @@ export default {
   .red-bg {
     background: #f15d5d;
   }
-  .blue-bg{
+  .blue-bg {
     background: #2ab2ff;
   }
 }
-.padding-top-0{
+.padding-top-0 {
   padding-top: 0;
 }
 </style>

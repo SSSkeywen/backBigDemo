@@ -7,7 +7,7 @@
     </div>
     <sendAlrtContent
       ref="senAlertContent"
-      :codeData="codeData"
+      :pnoneBack="pnoneBack"
       @clolseAlert="clolseAlert"
       @sendCodeFnTwo="sendCodeFnTwo"
       @sendCodeFn="sendCodeFn"
@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       logoImgSrc: require("@/assets/publicImg/1_03.png"),
-      codeData: "",
+      pnoneBack: "",
       alertCount: {
         alertData: "",
         isShowAlert: false
@@ -41,7 +41,7 @@ export default {
     this.getusermobiletailnumber({
       successCallback: res => {
         console.log(res);
-        this.codeData = res.data.mobile;
+        this.pnoneBack = res.data.mobile;
       },
       failCallback: res => {
         if (res.code == 2002) {
@@ -77,6 +77,7 @@ export default {
       this.getverifycationcode({
         successCallback: res => {
           //this.verifyCode = res.data.verifyCode;
+          this.$refs.senAlertContent.inputCode(res.data.verifyCode)
           console.log(res.data);
         },
         failCallback: res => {
@@ -119,7 +120,7 @@ export default {
         successCallback: res => {
           console.log(res.data);
           if (res.data.flag == 0) {
-            launchuntie();
+            this.launchuntie();
           } else if (res.data.flag == 1) {
             this.alertCount.alertData = res.msg;
             this.alertCount.isShowAlert = true;

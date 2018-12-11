@@ -3,7 +3,7 @@
         <headerT :headerContent="headerContent"></headerT>
         <ul v-if="caseMstList">
             <li v-for="(item,index) in caseMstList" :key="index">
-              <caseMsg v-if="item.caseStatus=='强撤'||'撤消'||'不予受理撤件'||'不予立案'" :caseMstList="item"></caseMsg>  
+              <caseMsg v-if="item.caseStatus!='强撤'&&item.caseStatus!='撤消'&&item.caseStatus!='不予受理撤件'&&item.caseStatus!='不予立案'" :caseMstList="item"></caseMsg>  
             </li>
             <!-- #if($rtHtml.caseStatus !="强撤"  && $rtHtml.caseStatus !="撤消" && $rtHtml.caseStatus !="不予受理撤件" && $rtHtml.caseStatus !="不予立案") -->
         </ul>

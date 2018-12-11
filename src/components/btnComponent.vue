@@ -11,6 +11,7 @@
             IKnow() {
                 console.log(111)
                 this.$emit('IKnow')
+                this.$emit('changCount')
             }
         },
     }

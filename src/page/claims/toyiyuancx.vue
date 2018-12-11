@@ -119,7 +119,7 @@ export default {
     queryFn() {
       if (this.hospitalData == "") {
         this.alertCount.isShowAlert = true;
-        this.alertCount.alertData = '输入医院名称不能为空！';
+        this.alertCount.alertData = '医院名称不能为空！';
         return false;
       }
       let hospitalSelectData = {

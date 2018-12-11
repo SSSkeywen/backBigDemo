@@ -67,6 +67,14 @@ import bounce from '@/page/letter/bounce'
 import addressOk from '@/page/letter/addressOk'
 import addressNew from '@/page/letter/addressNew'
 
+// 减额交情
+import passwordCheck from '@/page/reduceAmount/passwordCheck'
+// 年金领取频率及年限变更
+import annuityCollectList from '@/page/annuityCollection/annuityCollectList'
+import annuityCollectDetail from '@/page/annuityCollection/annuityCollectDetail'
+import statusPage from '@/page/publicPage/policyStatus'
+
+
 //保险服务密码
 import open from '@/page/insuranceServicePassword/open'
 import modifyRest from '@/page/insuranceServicePassword/modifyRest'
@@ -427,5 +435,28 @@ export default new Router({
       name: 'unbindSuc',
       component: unbindSuc
     },
+
+    //陈
+    // 减额交清
+    {
+      path: '/passwordCheck',
+      name: 'passwordCheck',
+      component: passwordCheck
+    },
+    {
+      path: '/annuityCollectList',
+      name: 'annuityCollectList',
+      component: annuityCollectList
+    },
+    {
+      path: '/annuityCollectDetail',
+      name: 'annuityCollectDetail',
+      component: annuityCollectDetail
+    },
+    {
+      path: '/statusPage',
+      name: 'statusPage',
+      component: statusPage
+    }
   ]
 })

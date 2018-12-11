@@ -1,20 +1,20 @@
 <template>
   <div class="change-bg">
     <headerT :headerContent="headerContent"></headerT>
-    <div v-if="false">
+    <div v-if="true">
       <ul class="cp-ul">
         <li>
           <p>手机号码</p>
           <div>
-            <input type="tel">
+            <input v-model="telNo" type="tel">
           </div>
         </li>
       </ul>
-      <btnComponent :btnCount="btnCount"></btnComponent>
+      <btnComponent @changCount="changCount" :btnCount="btnCount"></btnComponent>
     </div>
     <div v-else>
-        <notToOpenComponent :tipsContent="tipsContent"></notToOpenComponent>
-        <btnComponent :btnCount="'知道了'" @IKnow="IKnow"></btnComponent>
+      <notToOpenComponent :tipsContent="tipsContent"></notToOpenComponent>
+      <btnComponent :btnCount="'知道了'" @IKnow="IKnow"></btnComponent>
     </div>
   </div>
 </template>
@@ -23,12 +23,16 @@
 import headerT from "../../components/header.vue";
 import btnComponent from "../../components/btnComponent.vue";
 import notToOpenComponent from "../../components/notToOpenComponent.vue";
+import { mapActions } from "vuex";
+import { Toast } from "vant";
 export default {
   data() {
     return {
       headerContent: "联系手机变更",
       btnCount: "确认变更",
-      tipsContent:"为保障服务安全，系统已优化升级，请至公司柜面或微信首页开设保险服务密码"
+      telNo:'',
+      tipsContent:
+        "为保障服务安全，系统已优化升级，请至公司柜面或微信首页开设保险服务密码"
     };
   },
   components: {
@@ -37,11 +41,33 @@ export default {
     notToOpenComponent
   },
   methods: {
-      IKnow() {
-          console.log(11)
-          this.$router.go(-1)
+    ...mapActions({
+      changePhone: "changePhone"
+    }),
+
+    IKnow() {
+      this.$router.go(-1);
+    },
+
+    changCount() {
+      const toast1 = Toast.loading({
+        mask: true,
+        message: "加载中...",
+        duration: 1000
+      });
+      let phoneData = {
+        "celler": this.telNo
       }
-  },
+      this.changePhone({
+        successCallback: result => {
+          toast1.clear();
+        },
+        fCallback: res => {
+          toast1.clear();
+        }
+      });
+    }
+  }
 };
 </script>
 

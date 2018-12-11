@@ -8,26 +8,18 @@
           <div class="mp-min-left-img">
             <img :src="imgSrcTitle" alt>
           </div>
-          <p>保单号:
+          <p>
+            保单号:
             <span>{{item}}</span>
           </p>
         </div>
         <div @click="showMpListPolicyMessage(index)" class="mp-min-right">
-          <img
-            class="ani-down"
-            :class="item.isShowInformation?'add-ani-style':''"
-            :src="imgSrcThree"
-            alt
-          >
+          <img class="ani-down" :class="idShowCodeData?'add-ani-style':''" :src="imgSrcThree" alt>
         </div>
       </div>
       <div></div>
-      <div v-if="itemTwo.policyCode != item.policyCode" v-for="(itemTwo,indexTwo) in productMap"
-          :key="indexTwo">
-        <ul
-          class="mp-list"
-          v-if="itemTwo.isShowInformation"
-        >
+      <div v-for="(itemTwo,indexTwo) in productMap" :key="indexTwo" v-if="idShowCodeData">
+        <ul class="mp-list" v-show="itemTwo.policyCode != item.policyCode">
           <li class="mp-list-li line-down">
             <p>险种名称：</p>
             <p v-text="itemTwo.productName"></p>
@@ -170,10 +162,12 @@ export default {
       // isShowInformationThree: false,
       // isShowInformationFour: false,
       // isShowInformationFive: false,
-      // isShowInformationSix: false,
+      // isShowInformationSix: false,000699645811903 000736903287903 000439450423903
+      idShowCodeData: false,
+      codeData: "",
       totalAmount: "",
       productMap: [],
-      policyCodes:[],
+      policyCodes: [],
       policyMap: [],
       casePremMap: []
     };
@@ -191,18 +185,17 @@ export default {
     this.caseListmessage({
       caseListmessageData,
       successCallback: res => {
-          
         console.log(res.data);
-        this.policyCodes = res.data.policyCodes
+        this.policyCodes = res.data.policyCodes;
         let munMon = 0;
         for (let item of res.data.productMap) {
           munMon += parseFloat(item.payAmount);
         }
         this.totalAmount = munMon;
 
-        for (let item of res.data.productMap) {
-          item.isShowInformation = false;
-        }
+        // for (let item of res.data.productMap) {
+        //   item.isShowInformation = false;
+        // }
         this.productMap = res.data.productMap;
 
         for (let item of res.data.policyMap) {
@@ -228,8 +221,10 @@ export default {
 
     //险种信息的显示
     showMpListPolicyMessage(index) {
-      this.productMap[index].isShowInformation = !this.productMap[index]
-        .isShowInformation;
+      // this.productMap[index].isShowInformation = !this.productMap[index]
+      //   .isShowInformation;
+      // this.codeData = this.policyCodes[index];
+      this.idShowCodeData = !this.idShowCodeData
     },
 
     showMpListPolicyMessageTwo(index) {

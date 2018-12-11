@@ -6,6 +6,7 @@ import classic from './modules/classic.js'
 import userInfo from './modules/userInfo.js'
 import claimsModules from './modules/claimsModules.js'
 import billModules from './modules/billModules.js'
+import informationChange from './modules/informationChange.js'
 
 //刘飞涛
 import universal from './modules/universal.js'
@@ -23,6 +24,9 @@ import changeList from './modules/changeList.js'
 import survival from './modules/survival.js'
 import loanHistory from './modules/credit/loanHistory.js'
 
+//CYL
+import arfandyearchange from './modules/annuityCollect.js'
+
 
 
 Vue.use(Vuex)
@@ -35,6 +39,7 @@ export default new Vuex.Store({
         userInfo,
         claimsModules,
         billModules,
+        informationChange,
 
         account,
         universal,
@@ -47,6 +52,8 @@ export default new Vuex.Store({
 
         changeList,
         survival,
-        loanHistory
+        loanHistory,
+
+        arfandyearchange
     }
 })

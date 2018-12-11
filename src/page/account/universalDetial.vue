@@ -69,22 +69,6 @@
               <div>{{detialDAta.partialSurrender}}</div>
             </div>
           </li>
-          <li v-if="this.productId==1179||this.productId==1182">
-                <div class="v3">
-                    <div>抵缴保费（元）:</div>
-                </div>
-                <div class="v4">
-                    <div>{{detialDAta.renewalAmount}}</div>
-                </div>
-          </li>
-          <li v-if="this.productId==1179&&detialDAta.depositAmount100!=''">
-                <div class="v3">
-                    <div>转入保单余额（元）:</div>
-                </div>
-                <div class="v4">
-                    <div>{{detialDAta.depositAmount100}}</div>
-                </div>
-          </li>
         </ul>
         <!-- 累计 和 近一年 -->
         <ul v-if="this.type=='total'||this.type=='year'">
@@ -133,35 +117,39 @@
         <!-- 总领取 -->
         <ul v-if="this.type=='lqje'">
           <li v-for="(item,index) in list" :key="index">
-            <div class="v3">
-              <div>
-                <!-- <span>{{detialDAta.typeName}}（元）:</span> -->
-                <span>部分领取金额（元）:</span>
-                <span v-if="item.depositDate">{{item.depositDate}}</span>
-              </div>
+            <!-- depositAmountType有值 并且为1179和1182  转入保单余额字段已在数组中删除-->
+            <div v-if="item.depositAmountType!=null&&(productId==1179||productId==1182)">
+                <div class="v3" v-if="item.depositAmountType==1">
+                  <div>
+                    <span>抵缴保费（元）:</span>
+                    <span v-if="item.depositDate">{{item.depositDate}}</span>
+                  </div>
+                </div>
+                <div class="v3" v-if="item.depositAmountType==2">
+                  <div>
+                    <span>转入保单余额（元）:</span>
+                    <span v-if="item.depositDate">{{item.depositDate}}</span>
+                  </div>
+                </div>
+                <div class="v4" v-if="item.depositAmountType==1">
+                  <div>{{item.depositAmount}}</div>
+                </div>
+                <div class="v4" v-if="item.depositAmountType==2">
+                  <div>{{item.depositAmount}}</div>
+                </div>
             </div>
-            <div class="v4">
-              <!-- <div v-if="list!=''&&list!=null">{{item.depositAmount}}</div> -->
-              <!-- 如果无值 显示空 -->
-              <!-- <div v-else class="lineH35"></div> -->
-              <div>{{item.depositAmount}}</div>
-            </div>
-          </li>
-          <li v-if="this.productId==1163||this.productId==1182">
+            <!-- 默认的显示字段 -->
+            <div v-else>
                 <div class="v3">
-                    <div>抵缴保费（元）:</div>
+                  <div>
+                    <span>部分领取金额（元）:</span>
+                    <span v-if="item.depositDate">{{item.depositDate}}</span>
+                  </div>
                 </div>
                 <div class="v4">
-                    <div>{{detialDAta.renewalAmount}}</div>
+                  <div>{{item.depositAmount}}</div>
                 </div>
-          </li>
-          <li v-if="this.productId==1179&&detialDAta.depositAmount100!=''">
-                <div class="v3">
-                    <div>转入保单余额（元）:</div>
-                </div>
-                <div class="v4">
-                    <div>{{detialDAta.depositAmount100}}</div>
-                </div>
+            </div>
           </li>
         </ul>
       </div>
@@ -214,7 +202,12 @@ export default {
         typeData,
         successCallback: res => {
           this.detialDAta = res.data;
-          this.list = res.data.GoldAccountDetailedInfo.reverse();
+          this.list = res.data.GoldAccountDetailedInfo;
+          for(let i=0;i<this.list.length;i++){
+             if(this.list[i].depositAmountType==2&&this.list[i].depositAmount==''){
+               this.list.splice(i,1);
+             }
+           }
           console.log(this.list);
         },
         fCallback: res => {}
@@ -225,7 +218,7 @@ export default {
         typeData,
         successCallback: res => {
           this.detialDAta = res.data;
-          this.list = res.data.GoldAccountDetailedInfo.reverse();
+          this.list = res.data.GoldAccountDetailedInfo;
           console.log(this.list);
         },
         fCallback: res => {}
