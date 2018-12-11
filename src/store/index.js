@@ -23,6 +23,7 @@ import unbindSelf from './modules/unbindSelf.js'
 import changeList from './modules/changeList.js'
 import survival from './modules/survival.js'
 import loanHistory from './modules/credit/loanHistory.js'
+import openInsuranCode from './modules/openInsuranCode.js'
 
 //CYL
 import arfandyearchange from './modules/annuityCollect.js'
@@ -53,6 +54,7 @@ export default new Vuex.Store({
         changeList,
         survival,
         loanHistory,
+        openInsuranCode,
 
         arfandyearchange
     }

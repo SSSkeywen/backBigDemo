@@ -2,7 +2,7 @@
     <div class="new-alert">
         <div class="con_tk" style="display: block;">
         <span style="font-size: 18px;font-weight: bold;margin: 10px 0 10px 0;display: block;">提示信息</span>
-        <p><img :src="tipsIconSrc" id="img" style="height:50px;width:50px"></p>
+        <p><img :src="tipsIconSrc" id="img" style="height:50px;width:50px;margin:0 auto;"></p>
         <p class="tsxx" style="font-size: 16px;margin: 10px auto;text-align: center;">邮件已发送，请注意查收！</p>
         <button @click="closeWindow" id="closeChange" style="width:70%;background-color: #4B9FF0;height: 35px;border: none;border-radius: 7px;color:#fff;font-size:16px;">
         	回到首页
@@ -30,10 +30,9 @@
 .new-alert{
         height: 100%;
     width: 100%;
-    background: #335669;
+    background: rgba(51, 86, 105, 0.8);
     z-index: 108;
     position: fixed;
-    opacity: 0.8;
     top: 0px;
 }
 .con_tk {
@@ -47,6 +46,7 @@
     margin-left: -45%;
     margin-top: -75px;
     border-radius: 7px;
+    text-align: center;
 }
 .con_tk p {
     line-height: 24px;

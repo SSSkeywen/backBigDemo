@@ -60,7 +60,8 @@ export function get(url, params) {
 export function post(url, params) {
     // console.log(testPage())
     return new Promise((resolve, reject) => {
-        axios.post(url, JSON.stringify(params))
+        axios.post(url,
+            JSON.stringify(params))
             .then(res => {
                 resolve(res.data);
             })

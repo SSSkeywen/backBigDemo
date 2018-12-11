@@ -25,6 +25,9 @@ export default {
   data() {
     return {
       logoImgSrc: require("@/assets/publicImg/1_03.png"),
+      lanImgSrc: require("@/assets/bsImg/lan.jpg"),
+      success1: require("@/assets/bsImg/success1.jpg"),
+
       pnoneBack: "",
       alertCount: {
         alertData: "",
@@ -87,10 +90,8 @@ export default {
               query: { pathAddress: "/unbindSelf" }
             });
           }else if (res.code == 2100) {
-            let choose = `<div style="padding-top: 12%;" >
-            <img src="../../assets/bsImg/lan.jpg"> 
-          </div>
-          <div class="tetx-content">
+            let choose = `
+          <div class="tetx-content" style="text-align: center;">
              今日认证次数已达上限，请明天再来！
           </div>`;
             this.$router.push({
@@ -120,7 +121,8 @@ export default {
         successCallback: res => {
           console.log(res.data);
           if (res.data.flag == 0) {
-            this.launchuntie();
+            
+            this.launchuntieFn();
           } else if (res.data.flag == 1) {
             this.alertCount.alertData = res.msg;
             this.alertCount.isShowAlert = true;
@@ -139,18 +141,17 @@ export default {
         }
       });
     },
-    launchuntie() {
+    launchuntieFn() {
       //发起解绑
+      console.log("112312312321312");
       this.launchuntie({
         successCallback: res => {
           console.log(res.data);
           let choose
           if (res.data.flag == 1) {
             //解绑成功
-            choose = `<div style="padding-top: 12%;" >
-            <img src="../../assets/bsImg/success1.jpg"> 
-          </div>
-          <div class="tetx-content">解绑成功
+            choose = `
+          <div class="tetx-content" style="text-align: center;">解绑成功
             <p style="margin-top: 0.2rem;">请退出微信后重新登陆，解绑立马生效。</p>
           </div>`
             this.$router.push({
@@ -159,10 +160,8 @@ export default {
             });
           } else if (res.data.flag == 2) {
             //提交人工审核成功
-            choose = `<div style="padding-top: 12%;" >
-            <img src="../../assets/bsImg/success1.jpg"> 
-          </div>
-          <div class="tetx-content" style=";font-size: 0.32rem; margin-top: 4%;line-height: 0.5rem;">
+            choose = `
+          <div class="tetx-content" style=";font-size: 0.32rem; margin-top: 4%;line-height: 0.5rem;text-align: center;">
              解绑申请已提交，公司专员会尽快为您处理，1-2个工作日后会将处理结果以短信形式通知到您，请等待。
           </div>`;
             this.$router.push({

@@ -14,7 +14,7 @@
             :class="itemTwo.selectLineStyle"
             v-for="(itemTwo,indexTwo) in item.selectLists"
             :key="indexTwo"
-            @click="jumpPage(itemTwo.selectPath)"
+            @click="jumpPage(itemTwo.selectPath,itemTwo.nextPath)"
           >
             <div class="me-content-list-img">
               <img :src="itemTwo.selectIcon" alt>
@@ -38,7 +38,7 @@
             :class="itemTwo.selectLineStyle"
             v-for="(itemTwo,indexTwo) in item.selectLists"
             :key="indexTwo"
-            @click="jumpPage(itemTwo.selectPath)"
+            @click="jumpPage(itemTwo.selectPath,itemTwo.nextPath)"
           >
             <div class="me-content-list-img">
               <img :src="itemTwo.selectIcon" alt>
@@ -99,10 +99,15 @@ export default {
           paddingTop: "padding-top-0",
           selectLists: [
             {
+
               selectIcon: require("@/assets/img/kaitong.png"),
+
               selectName: "开通",
-              selectPath: "/open",
+
+              selectPath: "/insure",
+
               selectLineStyle: "line-down-me"
+
             },
             {
               selectIcon: require("@/assets/img/xiugai.png"),
@@ -209,6 +214,7 @@ export default {
               selectIcon: require("@/assets/img/nianjinb.png"),
               selectName: "年金领取频率<br>及年限变更",
               selectPath: "/passwordCheck",
+              nextPath:"/annuityCollectList",
               selectLineStyle: "line-down-me"
             },
             {
@@ -355,8 +361,8 @@ export default {
     };
   },
   methods: {
-    jumpPage(pathAddress) {
-      console.log(pathAddress);
+    jumpPage(pathAddress,nextPath) {
+      console.log(pathAddress+'-'+nextPath);
       // if(true){
       //   this.$router.push({ path: '/userInfo',query: {pathAddress: pathAddress} });
       // }else{
@@ -364,11 +370,11 @@ export default {
       // }
       let isBinding = JSON.parse(window.localStorage.getItem("isBinding"));
       if (isBinding == "1") {
-        this.$router.push({ path: pathAddress });
+        this.$router.push({ path: pathAddress ,query: { nextPath: nextPath }});
       } else {
         this.$router.push({
           path: "/userInfo",
-          query: { pathAddress: pathAddress }
+          query: { pathAddress: pathAddress,nextPath: nextPath }
         });
       }
     }

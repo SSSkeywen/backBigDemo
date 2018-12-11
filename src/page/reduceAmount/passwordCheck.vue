@@ -51,7 +51,7 @@ export default {
 				} else {
 					this.alertCount.isShowAlert = false
 					//  发送请求 如果通过 跳转到 nextPath
-					this.$router.push({path:'/annuityCollectList'})
+					this.$router.push({path:this.$route.query.nextPath})
 				}
 			}
 		}

@@ -1,9 +1,12 @@
 <template>
     <div class="casemx-box">
         <headerT :headerContent="headerContent"></headerT>
-        <div v-if="contentListData.length!=0" v-for="(item,index) in contentListData" :key="index">
-          <information :contentData="item"  @viewElectronicInvoices="viewElectronicInvoices"></information>
+        <div v-if="isShowSaveData">
+          <div v-for="(item,index) in contentListData" :key="index">
+            <information :contentData="item"  @viewElectronicInvoices="viewElectronicInvoices"></information>
+          </div>
         </div>
+        
         <p v-else>未查询到信息！</p>
     </div>
 </template>
@@ -21,7 +24,8 @@ export default {
   data() {
     return {
       headerContent: "保全账单查询",
-      contentListData:[]
+      contentListData:[],
+      isShowSaveData:false
     };
   },
   created() {
@@ -31,6 +35,9 @@ export default {
       successCallback: result => {
         // console.log(res.result);
         this.contentListData = result;
+        if(this.contentListData.length != 0){
+          this.isShowSaveData = true
+        }
       },
       fCallback: res => {}
     });

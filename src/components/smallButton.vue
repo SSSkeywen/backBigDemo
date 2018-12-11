@@ -24,7 +24,7 @@ export default {
     height: 0.71rem;
     text-align: center;
     background-color: #00ae4d;
-    font-size: 0.16rem;
+    font-size: 0.3rem;
     color: #fff;
     line-height: 0.71rem;
     border-radius: 0.1rem;

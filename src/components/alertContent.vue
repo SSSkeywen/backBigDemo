@@ -63,6 +63,7 @@ export default {
         line-height: 0.8rem;
         background: #0ab308;
         color: #fff;
+        display: block;
       }
     }
   }

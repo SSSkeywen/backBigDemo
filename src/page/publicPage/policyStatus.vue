@@ -19,7 +19,6 @@
 <script>
 import alertContent from "@/components/alertContent.vue";
 import headerT from "@/components/header.vue";
-// import list from "@/components/annuityCollect/annuityCollectListTable.vue";
 import publicButton from '@/components/publicButton.vue'
 import { mapActions } from "vuex";
 export default {
@@ -81,12 +80,10 @@ export default {
         padding-top: 0.82rem;
     }
     .successiCon{
-        width: 2.28rem;
-        height: 2.28rem;
+        width: 1.18rem;
     }
     .falseiCon{
-        width: 2.07rem;
-        height: 2.34rem;
+       width: 1.18rem;
     }
     .firstText{
         color: #020202;
@@ -97,7 +94,7 @@ export default {
     }
     .secondText{
         color: #686868;
-        font-size: 0.156rem;
+        font-size: 0.3rem;
         padding: 0;
     }
     

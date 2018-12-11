@@ -76,7 +76,11 @@ import statusPage from '@/page/publicPage/policyStatus'
 
 
 //保险服务密码
-import open from '@/page/insuranceServicePassword/open'
+//保险服务密码
+
+import insure from '@/page/insuranceServicePassword/insure'
+import toCamera from '@/page/insuranceServicePassword/toCamera'
+import msg from '@/page/insuranceServicePassword/msg'
 import modifyRest from '@/page/insuranceServicePassword/modifyRest'
 
 //个人信息变更
@@ -378,13 +382,25 @@ export default new Router({
     },
 
     //保险服务密码
+    //开通
     {
-      path: '/open',
-      name: 'open',
-      component: open
+      path: '/insure',
+      name: 'insure',
+      component: insure
+    },
+    //开通 拍照
+    {
+      path: '/toCamera',
+      name: 'toCamera',
+      component: toCamera
+    },
+    //开通 错误页面
+    {
+      path: '/msg',
+      name: 'msg',
+      component: msg
     },
     //修改和重置
-
     {
 
       path: '/modifyRest',

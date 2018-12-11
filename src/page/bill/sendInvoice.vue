@@ -79,6 +79,8 @@ export default {
       this.sendEmail({
         emailAddress,
         successCallback: res => {
+          console.log(res)
+          this.sendSuccess = true
           // window.location.href = res
           // this.contentListData = res.result.list;
         },
@@ -87,6 +89,7 @@ export default {
     },
     clsoeTips() {
       this.sendSuccess = false;
+      this.$router.push({ path: "/" });
     }
   }
 };

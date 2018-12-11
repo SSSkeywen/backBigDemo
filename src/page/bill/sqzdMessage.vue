@@ -1,37 +1,51 @@
 <template>
   <div class="casemx-box">
     <headerT :headerContent="headerContent"></headerT>
-    <div v-if="contentListData.length!=0" v-for="(item,index) in contentListData" :key="index">
-      <information :contentData="item" @viewElectronicInvoices="viewElectronicInvoices"></information>
+    <div v-if="isShowSqData">
+      <div v-for="(item,index) in contentListData" :key="index">
+        <information :contentData="item" @viewElectronicInvoices="viewElectronicInvoices"></information>
+      </div>
     </div>
+    
     <p v-else>未查询到信息！</p>
+    <alertContent :alertCount="alertCount"></alertContent>
   </div>
 </template>
 
 <script>
 import headerT from "../../components/header.vue";
+import alertContent from "../../components/alertContent";
 import information from "../../components/billComponent/information.vue";
 import { mapActions } from "vuex";
 import { Toast } from "vant";
 export default {
   components: {
     headerT,
-    information
+    information,
+    alertContent
   },
   data() {
     return {
       headerContent: "首期账单查询",
-      contentListData: []
+      contentListData: [],
+      isShowSqData: false,
+      alertCount: {
+        isShowAlert: false,
+        alertData: "请输入"
+      },
     };
   },
   created() {
-    console.log(111);
+    console.log();
     let typeData = "sqbdlist";
     this.getBillList({
       typeData,
       successCallback: result => {
         console.log(result);
         this.contentListData = result;
+        if(this.contentListData.length != 0){
+          this.isShowSqData = true
+        }
       },
       fCallback: res => {}
     });
@@ -53,7 +67,10 @@ export default {
           successCallback: result => {
             console.log(result);
             // this.$router.push({ path: "/toNewIndexView" });
-            if(result.RETURN_FLAG=='1'){
+            if(result.RETURN_FLAG=='0'){
+              this.alertCount.alertData = result.RETURN_MESSAGE;
+              this.alertCount.isShowAlert = true;
+            }else if(result.RETURN_FLAG=='1'){
               // let billmessage = {
 
               // }
@@ -61,6 +78,16 @@ export default {
               console.log(tipsData)
               this.$router.push({
                 path: "/sqzdList",
+                query: { tipsData: tipsData }
+              });
+            }else if(result.RETURN_FLAG=='2'){
+              // let billmessage = {
+
+              // }
+              let tipsData = JSON.stringify(result.INVOICE_DETAILS)
+              console.log(tipsData)
+              this.$router.push({
+                path: "/successMessage",
                 query: { tipsData: tipsData }
               });
             }

@@ -44,6 +44,7 @@ export default {
     return {
       src1: require("@/assets/bsImg/time.png"),
       src2: require("@/assets/bsImg/waiting.gif"),
+      success1: require("@/assets/bsImg/success1.jpg"),
       loadBtn: false,
       jumpLoading: false,
       myData: [],
@@ -54,12 +55,14 @@ export default {
     // 如果列表数据小于5条  <div class="kongbai" v-if="loadBtn">已加载全部</div> 不显示
     this.querybusoperaionlist({
       successCallback: res => {
-        console.log(res);
+        console.log(res.data.dataList);
         if (res.data.totalNum >= 5) {
-          loadBtn = true;
+          this.loadBtn = true;
         }
         this.totalNum = res.data.totalNum;
+        
         this.myData = res.data.dataList;
+        console.log(this.myData)
       },
       failCallback: res => {
         if (res.code == 2002) {
@@ -91,10 +94,8 @@ export default {
           let choose;
           if (res.data.flag == 1) {
             //解绑成功
-            choose = `<div style="padding-top: 12%;" >
-            <img src="../../assets/bsImg/success1.jpg"> 
-          </div>
-          <div class="tetx-content">解绑成功
+            choose = `
+          <div class="tetx-content" style="text-align: center;">解绑成功
             <p style="margin-top: 0.2rem;">请退出微信后重新登陆，解绑立马生效。</p>
           </div>`;
             this.$router.push({
@@ -103,10 +104,8 @@ export default {
             });
           } else if (res.data.flag == 2) {
             //提交人工审核成功
-            choose = `<div style="padding-top: 12%;" >
-            <img src="../../assets/bsImg/success1.jpg"> 
-          </div>
-          <div class="tetx-content" style=";font-size: 0.32rem; margin-top: 4%;line-height: 0.5rem;">
+            choose = `
+          <div class="tetx-content" style=";font-size: 0.32rem; margin-top: 4%;line-height: 0.5rem;text-align: center;">
              解绑申请已提交，公司专员会尽快为您处理，1-2个工作日后会将处理结果以短信形式通知到您，请等待。
           </div>`;
             this.$router.push({
@@ -171,6 +170,7 @@ export default {
     top: 0;
     left: 0;
     width: 100%;
+    
   }
   .header1 {
     background-color: #fff;

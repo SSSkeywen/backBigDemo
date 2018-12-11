@@ -16,12 +16,14 @@
       <notToOpenComponent :tipsContent="tipsContent"></notToOpenComponent>
       <btnComponent :btnCount="'知道了'" @IKnow="IKnow"></btnComponent>
     </div>
+    <alertContent :alertCount="alertCount"></alertContent>
   </div>
 </template>
 
 <script>
 import headerT from "../../components/header.vue";
 import btnComponent from "../../components/btnComponent.vue";
+import alertContent from "../../components/alertContent";
 import notToOpenComponent from "../../components/notToOpenComponent.vue";
 import { mapActions } from "vuex";
 import { Toast } from "vant";
@@ -30,15 +32,20 @@ export default {
     return {
       headerContent: "联系手机变更",
       btnCount: "确认变更",
-      telNo:'',
+      telNo: "",
       tipsContent:
-        "为保障服务安全，系统已优化升级，请至公司柜面或微信首页开设保险服务密码"
+        "为保障服务安全，系统已优化升级，请至公司柜面或微信首页开设保险服务密码",
+      alertCount: {
+        isShowAlert: false,
+        alertData: "请输入"
+      }
     };
   },
   components: {
     headerT,
     btnComponent,
-    notToOpenComponent
+    notToOpenComponent,
+    alertContent
   },
   methods: {
     ...mapActions({
@@ -50,19 +57,40 @@ export default {
     },
 
     changCount() {
+      if(this.telNo == ''){
+        this.alertCount.alertData = "请输入您的手机号码";
+        this.alertCount.isShowAlert = true;
+        return false
+      }
+      if(!this.$toolsTwo.phoneFn(this.telNo)){
+        this.alertCount.alertData = "手机号码格式不正确";
+        this.alertCount.isShowAlert = true;
+        return false
+      }
+
       const toast1 = Toast.loading({
         mask: true,
         message: "加载中...",
         duration: 1000
       });
       let phoneData = {
-        "celler": this.telNo
-      }
+        celler: this.telNo
+      };
       this.changePhone({
+        phoneData,
         successCallback: result => {
+          console.log(result)
+          if(result.code=='0'){
+
+          }else{
+            this.alertCount.alertData = result.msg;
+            this.alertCount.isShowAlert = true;
+          }
+          // if()
           toast1.clear();
         },
         fCallback: res => {
+          console.log(res)
           toast1.clear();
         }
       });
