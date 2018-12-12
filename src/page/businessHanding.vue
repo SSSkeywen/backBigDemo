@@ -195,7 +195,7 @@ export default {
             {
               selectIcon: require("@/assets/img/yuyuez.png"),
               selectName: "预约终止",
-              selectPath: "/",
+              selectPath: "/terminateCancelList",
               selectLineStyle: ""
             },
             {

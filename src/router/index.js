@@ -94,6 +94,12 @@ import unbindSelf from '@/page/baseService/unbindSelf'
 import unbindHistory from '@/page/baseService/unbindHistory'
 import unbindSuc from '@/page/baseService/unbindSuc'
 
+
+// 赵盼预约终止首页
+import terminateCancelList from "@/page/safeInforChange/terminateCancelList";
+import terminateCancelInfo from "@/page/safeInforChange/terminateCancelInfo";
+import terminateCancelResult from "@/page/safeInforChange/terminateCancelResult";
+
 Vue.use(Router)
 
 export default new Router({
@@ -473,6 +479,25 @@ export default new Router({
       path: '/statusPage',
       name: 'statusPage',
       component: statusPage
-    }
+    },
+
+    //赵盼预约终止terminateCancelList
+    {
+      path: "/terminateCancelList",
+      name: "terminateCancelList",
+      component: terminateCancelList
+    },
+    //赵盼预约终止中间页
+    {
+      path: "/terminateCancelInfo",
+      name: "terminateCancelInfo",
+      component: terminateCancelInfo
+    },
+    //赵盼预约终止结束页面
+    {
+      path: "/terminateCancelResult",
+      name: "terminateCancelResult",
+      component: terminateCancelResult
+    },
   ]
 })

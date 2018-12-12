@@ -117,17 +117,17 @@ import {config} from '@/config/config.js'
                                     pageBg:require('@/assets/classicImg/bg05@zuzhu.png'),
                                     pageName:'自助解绑',
                                     pageIcon:require('@/assets/classicImg/listIcon05@zizhu.png'),
-                                    pagePath:'',
+                                    pagePath:'/unbindSelf',
                                 },{
                                     pageBg:require('@/assets/classicImg/bg06@kaitong.png'),
                                     pageName:'开通保险<br>服务密码',
                                     pageIcon:require('@/assets/classicImg/listIcon06@kaitong.png'),
-                                    pagePath:'',
+                                    pagePath:'/insure',
                                 },{
                                     pageBg:require('@/assets/classicImg/bg07@yuyue.png'),
                                     pageName:'预约终止',
                                     pageIcon:require('@/assets/classicImg/listIcon07@yuyue.png'),
-                                    pagePath:'',
+                                    pagePath:'/terminateCancelList',
                                 },{
                                     pageBg:require('@/assets/classicImg/bg08@hongli.png'),
                                     pageName:'红利领取',
