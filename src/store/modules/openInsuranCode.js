@@ -79,7 +79,7 @@ const actions = {
     //获取腾讯信息
     [wxConifg]({ commit }, { successCallback = () => { }, failCallback = () => { } }) {
         let data = {
-            url: window.location.href,    
+            url: window.location.href.split("#")[0],    
         };
         post(apiConfig.api_base_url + 'common/wxconfig', data).then((res) => {
             console.log(JSON.stringify(res))

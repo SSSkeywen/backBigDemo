@@ -6,7 +6,7 @@
         <information :contentData="item" @viewElectronicInvoices="viewElectronicInvoices"></information>
       </div>
     </div>
-    
+
     <p v-else>未查询到信息！</p>
     <alertContent :alertCount="alertCount"></alertContent>
   </div>
@@ -32,22 +32,29 @@ export default {
       alertCount: {
         isShowAlert: false,
         alertData: "请输入"
-      },
+      }
     };
   },
   created() {
-    console.log();
+    const toast1 = Toast.loading({
+      mask: true,
+      message: "加载中...",
+      duration: 2000
+    });
     let typeData = "sqbdlist";
     this.getBillList({
       typeData,
       successCallback: result => {
-        console.log(result);
+        // console.log(result);
         this.contentListData = result;
-        if(this.contentListData.length != 0){
-          this.isShowSqData = true
+        if (this.contentListData.length != 0) {
+          this.isShowSqData = true;
         }
+        toast1.clear();
       },
-      fCallback: res => {}
+      fCallback: res => {
+        toast1.clear();
+      }
     });
   },
   methods: {
@@ -55,63 +62,49 @@ export default {
       getBillList: "getBillList",
       applyInvoice: "applyInvoice"
     }),
-    viewElectronicInvoices(policyCode, butonFlag) {
+    viewElectronicInvoices(policyCode, feeId, butonFlag) {
       console.log(policyCode + "+" + butonFlag);
-      let typeData={
-        prem:butonFlag,
-        flg:'1'
-      }
+      let typeData = {
+        prem: feeId,
+        flg: "1"
+      };
       // if (butonFlag == "申请电子发票") {
-        this.applyInvoice({
-          typeData,
-          successCallback: result => {
-            console.log(result);
-            // this.$router.push({ path: "/toNewIndexView" });
-            if(result.RETURN_FLAG=='0'){
-              this.alertCount.alertData = result.RETURN_MESSAGE;
-              this.alertCount.isShowAlert = true;
-            }else if(result.RETURN_FLAG=='1'){
-              // let billmessage = {
+      this.applyInvoice({
+        typeData,
+        successCallback: result => {
+          console.log(result);
+          // this.$router.push({ path: "/toNewIndexView" });
+          if (result.RETURN_FLAG == "0") {
+            this.alertCount.alertData = result.RETURN_MESSAGE;
+            this.alertCount.isShowAlert = true;
+          } else if (result.RETURN_FLAG == "1") {
+            // let billmessage = {
 
-              // }
-              let tipsData = JSON.stringify(result.INVOICE_DETAILS)
-              console.log(tipsData)
-              this.$router.push({
-                path: "/sqzdList",
-                query: { tipsData: tipsData }
-              });
-            }else if(result.RETURN_FLAG=='2'){
-              // let billmessage = {
+            // }
+            let tipsData = JSON.stringify(result.INVOICE_DETAILS);
+            console.log(tipsData);
+            this.$router.push({
+              path: "/sqzdList",
+              query: { tipsData: tipsData }
+            });
+          } else if (result.RETURN_FLAG == "2") {
+            // let billmessage = {
 
-              // }
-              let tipsData = JSON.stringify(result.INVOICE_DETAILS)
-              console.log(tipsData)
-              this.$router.push({
-                path: "/successMessage",
-                query: { tipsData: tipsData }
-              });
+            // }
+            let tipsData = {
+              pathAddress:'/sqzdList',
+              titleName:'首期账单查询'
+              
             }
-          },
-          fCallback: res => {}
-        });
-      // } else {
-      //   this.applyInvoice({
-      //     typeData,
-      //     successCallback: result => {
-      //       console.log(result);
-      //       // this.$router.push({ path: "/toNewIndexView" });
-      //       if(result.RETURN_FLAG=='1'){
-      //         let tipsData = result.RETURN_MESSAGE;
-      //         this.$router.push({
-      //           path: "/userFailPage",
-      //           query: { tipsData: tipsData }
-      //         });
-      //       }
-      //     },
-      //     fCallback: res => {}
-      //   });
-      //   // this.$router.push({ path: "/sqzdList" });
-      // }
+            console.log(tipsData);
+            this.$router.push({
+              path: "/successMessage",
+              query: { tipsData: tipsData }
+            });
+          }
+        },
+        fCallback: res => {}
+      });
     }
   }
 };

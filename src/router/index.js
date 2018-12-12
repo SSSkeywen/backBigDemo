@@ -100,6 +100,20 @@ import terminateCancelList from "@/page/safeInforChange/terminateCancelList";
 import terminateCancelInfo from "@/page/safeInforChange/terminateCancelInfo";
 import terminateCancelResult from "@/page/safeInforChange/terminateCancelResult";
 
+// 赵盼理赔报案claimReport
+
+import claimReport from "@/page/baseService/claimReport";
+
+// 赵盼理赔报案的第二页
+
+import xzyiyuan from "@/page/baseService/xzyiyuan";
+
+
+
+// 赵盼医院查询列表
+
+import yiyuanlb from "@/page/baseService/yiyuanlb";
+
 Vue.use(Router)
 
 export default new Router({
@@ -499,5 +513,41 @@ export default new Router({
       name: "terminateCancelResult",
       component: terminateCancelResult
     },
+
+    //赵盼理赔报案
+
+    {
+
+      path: "/claimReport",
+
+      name: "claimReport",
+
+      component: claimReport
+
+    },
+
+    //赵盼理赔报案下一页yiyuanlb
+
+    {
+
+      path: "/xzyiyuan",
+
+      name: "xzyiyuan",
+
+      component: xzyiyuan
+
+    },
+
+    //医院查询列表
+
+    {
+
+      path: "/yiyuanlb",
+
+      name: "yiyuanlb",
+
+      component: yiyuanlb
+
+    }
   ]
 })

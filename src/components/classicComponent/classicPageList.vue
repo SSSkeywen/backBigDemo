@@ -42,9 +42,9 @@
                 let isBinding = JSON.parse(window.localStorage.getItem('isBinding'))
                 console.log(this.pageListData)
                 if(isBinding == '1'){
-                    this.$router.push({ path: pathAddress });
+                    this.$router.push({ path: pageAddress });
                 }else{
-                    this.$router.push({ path: '/userInfo',query: {pathAddress: pathAddress} });
+                    this.$router.push({ path: '/userInfo',query: {pathAddress: pageAddress} });
                 }
                 // console.log(pageAddress)
                 // this.$router.push({ path: pageAddress });

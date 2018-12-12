@@ -8,31 +8,31 @@
             <ul>
                 <li>
                     <p>保单号：</p>
-                    <p>003158178991008</p>
+                    <p>{{policyCode}}</p>
                 </li>
                 <li>
-                    <p>保单号：</p>
-                    <p>003158178991008</p>
+                    <p>应交日期：</p>
+                    <p>{{recordInfoSub.DUE_TIME}}</p>
                 </li>
                 <li>
-                    <p>保单号：</p>
-                    <p>003158178991008</p>
+                    <p>实际扣款日期：</p>
+                    <p>{{recordInfoSub.FINISH_TIME}}</p>
                 </li>
                 <li>
-                    <p>保单号：</p>
-                    <p>003158178991008</p>
+                    <p>实际扣款金额：</p>
+                    <p>{{recordInfoSub.FEE_AMOUNT}}</p>
                 </li>
                 <li>
-                    <p>保单号：</p>
-                    <p>003158178991008</p>
+                    <p>缴别：</p>
+                    <p>{{CHARGE_NAME}}</p>
                 </li>
                 <li>
-                    <p>保单号：</p>
-                    <p>003158178991008</p>
+                    <p>保费交至日期：</p>
+                    <p>{{PAIDUP_DATE}}</p>
                 </li>
                 <li>
-                    <p>保单号：</p>
-                    <p>003158178991008</p>
+                    <p>交费期数：</p>
+                    <p>{{recordInfoSub.POLICY_PERIOD}}</p>
                 </li>
             </ul>
             <div class="sa-btn">
@@ -49,6 +49,7 @@ export default {
       logo: require("@/assets/publicImg/logo.png")
     };
   },
+  props:['recordInfoSub','policyCode','PAIDUP_DATE','CHARGE_NAME'],
   methods: {
       closeWindow() {
           this.$emit('clolseWindow')

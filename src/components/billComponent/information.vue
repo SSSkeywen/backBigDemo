@@ -26,7 +26,7 @@
             </li>
         </ul>
         <div class="im-btn">
-            <button @click="viewElectronicInvoices(contentData.policyCode,contentData.butonFlag)">{{contentData.butonFlag}}</button>
+            <button @click="viewElectronicInvoices(contentData.policyCode,contentData.feeId,contentData.butonFlag)">{{contentData.butonFlag}}</button>
         </div>
     </div>
 </template>
@@ -35,9 +35,9 @@
     export default {
         props:['contentData'],
         methods: {
-            viewElectronicInvoices(policyCode,butonFlag) {
+            viewElectronicInvoices(policyCode,feeId,butonFlag) {
                 console.log(policyCode+'-'+butonFlag)
-                this.$emit('viewElectronicInvoices',policyCode,butonFlag)
+                this.$emit('viewElectronicInvoices',policyCode,feeId,butonFlag)
             }
         },
     }

@@ -75,7 +75,7 @@ export default {
             {
               selectIcon: require("@/assets/img/lipei.png"),
               selectName: "理赔报案",
-              selectPath: "",
+              selectPath: "/claimReport",
               selectLineStyle: "line-down-me"
             },
             {

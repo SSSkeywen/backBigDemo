@@ -54,7 +54,7 @@ import {config} from '@/config/config.js'
                             {
                                 navIcon:require('@/assets/classicImg/icon05@lipei.png'),
                                 navTitle: '理赔报案',
-                                navPath:'',
+                                navPath:'/claimReport',
                             },
                             {
                                 navIcon:require('@/assets/classicImg/icon06@shishi.png'),

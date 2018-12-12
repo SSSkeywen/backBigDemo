@@ -106,11 +106,11 @@ export default {
       });
     },
     sendCodeFnTwo(code) {
-      if (code == null || code == "") {
-        this.alertCount.alertData = "验证码不能为空";
-        this.alertCount.isShowAlert = true;
-        return false;
-      }
+      // if (code == null || code == "") {
+      //   this.alertCount.alertData = "验证码不能为空";
+      //   this.alertCount.isShowAlert = true;
+      //   return false;
+      // }
       let verifyCode = {
         verifyCode: code
       };
@@ -124,8 +124,7 @@ export default {
             
             this.launchuntieFn();
           } else if (res.data.flag == 1) {
-            this.alertCount.alertData = res.msg;
-            this.alertCount.isShowAlert = true;
+            this.$refs.senAlertContent.isCodeWrongFn()
           }
         },
         failCallback: res => {

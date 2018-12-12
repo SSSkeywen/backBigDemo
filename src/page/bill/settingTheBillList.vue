@@ -2,20 +2,25 @@
     <div class="casemx-box">
         <headerT :headerContent="headerContent"></headerT>
         <section class="casemx-section">
+            <div style="    width: 20%;
+    margin: 0rem auto;
+    padding: 0.5rem 0 0.3rem;">
+        <img :src="toDownIcon" width="100%">
+      </div>
             <hgroup>发票已开具</hgroup>
-            <p class="xu-line">····························································································································</p>
-            <ul class="case-list">
-                <li>
+            <!-- <p class="xu-line">····························································································································</p> -->
+            <ul class="case-list" style="padding-bottom:0.2rem;">
+                <li v-for="(item,index) in sqzdList" :key="index">
                     <p>电子发票</p>
                     <div>
-                        <button class="style-click" @click="lookMsg">查看详情</button>
+                        <button class="style-click" @click="lookMsg(index)">查看详情</button>
                     </div>
                 </li>
             </ul>
         </section>
         <p class="cm-tips">注：电子发票格式为JPG，请查看或点击图片保存</p>
         <section class="cm-btn">
-            <button class="style-click">关闭</button>
+            <button class="style-click" @click="back">上一页</button>
         </section>
     </div>
 </template>
@@ -30,14 +35,58 @@ import { Toast } from "vant";
         },
         data() {
             return {
-                headerContent: '理赔账单查询'
+                headerContent: '理赔账单查询',
+                sqzdList: [],
+                toDownIcon: require("@/assets/publicImg/icon_2.jpg"),
             }
         },
-        methods: {
-            lookMsg() {
-                
-            }
+       created() {
+    console.log();
+    const toast1 = Toast.loading({
+      mask: true,
+      message: "加载中...",
+      duration: 1000
+    });
+    this.sqzdList = JSON.parse(this.$route.query.tipsData);
+  },
+  methods: {
+    ...mapActions({
+      getBillList: "getBillList",
+      LookApplyInvoice: "LookApplyInvoice"
+    }),
+    lookMsg(index) {
+      // let typeData = this.sqzdList[index]
+      let typeData = {
+        invoice_code: this.sqzdList[index].INVOICE_CODE,
+        invoice_no: this.sqzdList[index].INVOICE_NO,
+        taxpayer_id: this.sqzdList[index].TAXPAYER_ID
+      };
+      let toast1 = Toast.loading({
+      mask: true,
+      message: "加载中...",
+      duration: 1000
+    });
+      console.log(typeData);
+      this.LookApplyInvoice({
+        typeData,
+        successCallback: res => {
+            toast1.clear()
+          // window.location.href = res
+          this.$router.push({
+            path: "/sendInvoice",
+            query: { tipsData: res }
+          });
+          // this.contentListData = res.result.list;
         },
+        fCallback: res => {
+            toast1.clear()
+        }
+      });
+    },
+     back(){
+      this.$router.go(-1);//返回上一层
+    }
+  }
     }
 </script>
 

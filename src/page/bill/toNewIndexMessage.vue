@@ -1,12 +1,12 @@
 <template>
     <div class="casemx-box">
         <headerT :headerContent="headerContent"></headerT>
-        <hgroup class="mp-hgroup">合计金额：111<span class="tn-look">查看详情</span></hgroup>
+        <hgroup class="mp-hgroup">保单号：{{xqListData.POLICY_CODE}}<span class="tn-look">查看详情</span></hgroup>
         <div class="tn-title">
-          <p class="tn-name">太平爱爸妈骨折综合意外伤害保险</p>
+          <p class="tn-name">{{xqListData.PRODUCT_NAME}}</p>
           <div class="tn-state">
-            <p>被保人：张亚芳</p>
-            <p class="green">状态：有效 </p>
+            <p>被保人：{{xqListData.ACCO_NAME}}</p>
+            <p class="green">状态：{{xqListData.LIABILITY_STATUS_NAME}} </p>
           </div>
         </div>
         <section class="tn-lists">
@@ -23,18 +23,19 @@
                   <p>应交金额</p>
                   <p>交费状态</p>
                 </li>
-                <li>
+                <li v-for="(item,index) in xqListData.recordInfoSub" :key="index">
                   <div class="tn-list-top">
-                    <p>2004-03-29</p>
-                    <p>2008.5</p>
-                    <p @click="openContent">已交费<i><img :class="isOpenContent?'open-style':''" :src="toDownIcon"></i></p>
+                    <p>{{item.DUE_TIME}}</p>
+                    <p>{{item.FEE_AMOUNT}}</p>
+                    <p @click="openContent(index)">{{item.MODE_NAME}}<i><img :class="indexKey==index?'open-style':''" :src="toDownIcon"></i></p>
                   </div>
-                  <div v-if="isOpenContent" class="tn-list-bottom">
-                    <button>查看账单</button>
-                    <button>查看电子发票</button>
+                  <div v-if="indexKey==index" class="tn-list-bottom">
+                    <button @click="seeTheBillMessage(index)">查看账单</button>
+                    <button v-if="item.ELEFLAG == 1" @click="viewElectronicInvoices(index)">查看电子发票</button>
+                    <button v-else @click="viewElectronicInvoices(index)">申请电子发票</button>
                   </div>
                 </li>
-                <li>
+                <!-- <li>
                   <div class="tn-list-top">
                     <p>2004-03-29</p>
                     <p>2008.5</p>
@@ -44,11 +45,11 @@
                     <button @click="seeTheBillMessage">查看账单</button>
                     <button @click="viewElectronicInvoices">查看电子发票</button>
                   </div>
-                </li>
+                </li> -->
               </ul>
             </div>
         </section>
-        <seeAtTheBill v-if="isOpenWindow" @clolseWindow="clolseWindow"></seeAtTheBill>
+        <seeAtTheBill :recordInfoSub="recordInfoSub" :PAIDUP_DATE="xqListData.PAIDUP_DATE" :CHARGE_NAME="xqListData.CHARGE_NAME" :policyCode="xqListData.POLICY_CODE" v-if="isOpenWindow" @clolseWindow="clolseWindow"></seeAtTheBill>
     </div>
 </template>
 
@@ -71,6 +72,14 @@ export default {
       imgSrcTitle: require('@/assets/mgImg/xq_icon_xx.png'),
       isOpenContent: false,
       isOpenWindow: false,
+      indexKey:0,
+      xqListData:{
+        ACCO_NAME:'',
+        PRODUCT_NAME:'',
+        LIABILITY_STATUS_NAME:'',
+        recordInfoSub:[]
+      },
+      recordInfoSub:[]
     };
   },
   created(){
@@ -80,8 +89,9 @@ export default {
     //     xqPolicyCode.append("policyCode", this.$route.query.policyCode);
     this.getToNewIndexListMsg({
       xqPolicyCode,
-      successCallback: res => {
-        console.log(res.result);
+      successCallback: result => {
+        console.log(result);
+        this.xqListData = result.data
       },
       fCallback: res => {}
     });
@@ -97,12 +107,13 @@ export default {
     policyMessage(policyCode) {
       // this.$router.push({ path: '/mgPlicyInfo',query: {policyCode: policyCode} });
     },
-    openContent(){
-      this.isOpenContent = !this.isOpenContent
+    openContent(index){
+      this.indexKey = index
     },
 
     //打开查看账单
-    seeTheBillMessage(){
+    seeTheBillMessage(index){
+      this.recordInfoSub = this.xqListData.recordInfoSub[index]
       this.isOpenWindow = true
     },
 
@@ -198,7 +209,7 @@ export default {
               i{
                 img{
                   position: absolute;
-                  right: 0;
+                  right: -0.1rem;
                   width: 0.32rem;
                   top: 0.2rem;
                   transition: all 0.1s;

@@ -29,6 +29,10 @@ import openInsuranCode from './modules/openInsuranCode.js'
 import arfandyearchange from './modules/annuityCollect.js'
 
 
+//zyl
+import claimReport from './modules/claimReport.js'
+
+
 
 Vue.use(Vuex)
 
@@ -56,6 +60,8 @@ export default new Vuex.Store({
         loanHistory,
         openInsuranCode,
 
-        arfandyearchange
+        arfandyearchange,
+
+        claimReport
     }
 })

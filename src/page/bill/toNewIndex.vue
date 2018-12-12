@@ -1,56 +1,78 @@
 <template>
     <div class="casemx-box">
         <headerT :headerContent="headerContent"></headerT>
-        <ul class="casemx-ul">
-            <li v-for="(item,index) in contentListData" :key="index" @click="policyMessage(item.POLICY_CODE)">
-                <toNewComponent :contentListData="item"></toNewComponent>
+        <ul  v-if="isShowSqData" class="casemx-ul">
+            <li v-for="(item,index) in contentListData" :key="index" @click="viewElectronicInvoices(item.POLICY_CODE)">
+                <toNewComponent :contentListData="item" ></toNewComponent>
             </li>
         </ul>
+        <p v-else>未查询到信息！</p>
+        <alertContent :alertCount="alertCount"></alertContent>
     </div>
+    
 </template>
 
 <script>
 import headerT from "../../components/header.vue";
+import alertContent from "../../components/alertContent";
 import toNewComponent from "../../components/billComponent/toNewComponent.vue";
 import { mapActions } from "vuex";
 import { Toast } from "vant";
 export default {
   components: {
     headerT,
-    toNewComponent
+    toNewComponent,
+    alertContent
   },
   data() {
     return {
       headerContent: "续期账单查询",
       contentListData: [
-        // {
-        //   policyCode: "003158178991008",
-        //   productName:'太平爱爸妈骨折综合意外伤害保险',
-        //   policyMoney: "5000",
-        //   insuredName: "",
-        //   validateDate: null,
-        //   statusName: "有效"
-        // }
-      ]
+      ],
+      isShowSqData: false,
+      alertCount: {
+        isShowAlert: false,
+        alertData: "请输入"
+      }
     };
   },
   created() {
-    this.getToNewIndexList({
+    const toast1 = Toast.loading({
+      mask: true,
+      message: "加载中...",
+      duration: 2000
+    });
+    let typeData = "xqlist";
+    this.getBillList({
+      typeData,
       successCallback: res => {
-        console.log(res.result);
-        this.contentListData = res.result.list
+        console.log(res);
+        // this.contentListData = res.result.list
+
+        this.contentListData = res.list;
+        if (this.contentListData.length != 0) {
+          this.isShowSqData = true;
+        }
+        toast1.clear();
       },
-      fCallback: res => {}
+      fCallback: res => {
+        toast1.clear();
+      }
     });
   },
   methods: {
     ...mapActions({
-      getToNewIndexList: "getToNewIndexList"
+      getBillList: "getBillList",
+      applyInvoice: "applyInvoice"
     }),
-      policyMessage(policyCode) {
-            this.$router.push({ path: '/toNewIndexMessage',query: {policyCode: policyCode} });
-        },
-  },
+      viewElectronicInvoices(policyCode) {
+      console.log(policyCode)
+      this.$router.push({
+              path: "/toNewIndexMessage",
+              query: { policyCode: policyCode }
+            });
+    }
+  }
 };
 </script>
 

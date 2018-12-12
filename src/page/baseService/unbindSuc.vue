@@ -96,6 +96,7 @@ export default {
           height: 0.8rem;
           display: flex;
           text-align: center;
+          margin-top: 0.2rem;
           // position: absolute;
           bottom: 0;
           left: 0;

@@ -111,10 +111,10 @@ const actions = {
 
     //获取续期账单的列表的详细信息
     [getToNewIndexListMsg]({ commit }, { xqPolicyCode, successCallback = () => { }, failCallback = () => { } }) {
-        post(apiConfig.api_base_url + 'xufeibill/toXufeiAccountDetails/' + xqPolicyCode, '')
+        post(apiConfig.api_base_url + 'dzfp/toXufeiAccountDetails/' + xqPolicyCode, '')
             .then((res) => {
                 let result = res
-                if (result.responseCode == '0') {
+                if (result.code == '0') {
                     successCallback(result)
                 } else {
                     failCallback()

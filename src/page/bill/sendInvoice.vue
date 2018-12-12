@@ -47,7 +47,8 @@ export default {
   },
   data() {
     return {
-      billImgSrc: require("@/assets/billImg/1544256576263.png"),
+      // billImgSrc: require("@/assets/billImg/1544256576263.png"),
+      billImgSrc: '',
       isShowAlert: false,
       mailAddress: "",
       testMail: false,
@@ -55,7 +56,7 @@ export default {
     };
   },
   created() {
-    //   this.billImgSrc=JSON.parse(this.$route.query.tipsData)
+      this.billImgSrc=this.$route.query.tipsData
     // this.billImgSrc = this.$route.query.tipsData;
   },
   methods: {

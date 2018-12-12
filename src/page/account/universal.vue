@@ -6,11 +6,11 @@
     	<section class="sq clearfix" v-for="(item,index) in universalList" :key="index">
     	  <div class="sq_xz">
     			<ul>
-    				<li>
+    				<li  @click="jumpUrl(index)">
     					<div class="sq_mc">
     						<span>{{item.productNameAbb}}</span>
     					</div>
-    					<div class="sq_nr" @click="jumpUrl(index)">
+    					<div class="sq_nr">
     						<div id="" style="width: 100%;">
     						<i><img :src="imgSrc" style="width: 50%;"></i>
     						</div>

@@ -3,7 +3,12 @@
     <headerT :headerContent="headerContent"></headerT>
     <div class="sm-box">
       <div class="sm-hgroup">
-        <div class="sm-img">
+        <!-- <div class="sm-img">
+          <img :src="toDownIcon" width="100%">
+        </div>-->
+        <div style="    width: 20%;
+    margin: 0rem auto;
+    padding: 0.5rem 0 0.3rem;">
           <img :src="toDownIcon" width="100%">
         </div>
         <br>
@@ -15,9 +20,9 @@
       <p class="sm-p">开具成功后您将收到消息通知。</p>
       <p class="sm-p">您可以随时在“中国太平95589”微信服务号中点击“信息查询-首期账单查询”查看您的发票</p>
     </div>
-    <div>
-            <button>查看发票状态</button>
-    </div>
+    <section class="cm-btn">
+      <button class="style-click" @click="jump">查看发票状态</button>
+    </section>
   </div>
 </template>
 
@@ -31,11 +36,22 @@ export default {
   },
   data() {
     return {
-      headerContent: "续期账单查询",
-      toDownIcon: require("@/assets/billImg/xq_icon_xia.png")
+      headerContent: "",
+      toDownIcon: require("@/assets/publicImg/icon_2.jpg"),
+      sqzdList: ""
     };
   },
-  created() {}
+  created() {
+    this.sqzdList = this.$route.query.tipsData;
+    this.headerContent = this.titleName;
+  },
+  methods: {
+    jump() {
+      this.$router.push({
+        path: this.sqzdList.pathAddress
+      });
+    }
+  }
 };
 </script>
 
@@ -70,6 +86,19 @@ export default {
     width: 90%;
     margin: 5% auto;
     color: #666;
+  }
+}
+.cm-btn {
+  width: auto;
+  margin: 1.17647059em 15px 0.3em;
+  button {
+    width: 100%;
+    height: 46px;
+    background-color: #00ae4d;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 0.36rem;
+    border: none;
   }
 }
 </style>

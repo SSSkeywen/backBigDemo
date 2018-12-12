@@ -57,14 +57,14 @@ import { Toast } from 'vant';
 		mounted(){
 			this.wxConifg({
 				successCallback: (res) => {
-					let wxInformation = res;
+					this.wxInformation = res;
 					//alert("signature:" + wxInformation.signature)
 					wx.config({
 						debug: false, 
-						appId: wxInformation.appid, 
-						timestamp: wxInformation.timestamp, 
-						nonceStr: wxInformation.nonce_Str, 
-						signature: wxInformation.signature,
+						appId: this.wxInformation.appid, 
+						timestamp: this.wxInformation.timestamp, 
+						nonceStr: this.wxInformation.nonce_Str, 
+						signature: this.wxInformation.signature,
 						jsApiList: [
 							'chooseImage',
 							'uploadImage'
@@ -111,7 +111,7 @@ import { Toast } from 'vant';
 				});
 			},
 			clickUploadImage(){
-				alert("上传")
+				//alert("上传")
 				//this.test();
 				wx.ready(()=> {
 					
@@ -207,7 +207,8 @@ import { Toast } from 'vant';
 							//TOOD 红色字提示
 							// this.alertCount.isShowAlert = true;
 							// this.alertCount.alertData = res.msg;
-							Toast(res.msg);
+							// Toast(res.msg);
+							this.$refs.senAlertContent.isCodeWrongFn(res.msg)
 						}
 					}
 				});
@@ -262,7 +263,8 @@ import { Toast } from 'vant';
 
 						}else if(res.resultCode == '3'){//在页面上进行错误提示
 							//TODO
-							
+							// Toast(res.msg);
+							this.$refs.senAlertContent.isCodeWrongFn(res.msg)
 						}	
 					},
 					failCallback:(res) =>{

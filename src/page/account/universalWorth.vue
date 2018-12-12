@@ -6,8 +6,10 @@
                 <span class="title">现有账户价值</span>
                 <span style="font-size:1.0em;color:#ffffff">（含贷款本息）（元）：</span>
                 <br>
-                <span v-if="worthData.universalValue!=''" class="title_detail">{{worthData.universalValue}}</span> 
-                <span v-if="worthData.universalValue==''||worthData.universalValue==null" class="title_detail">客官莫急</span> 
+                <span v-if="worthData.universalValue!=null" class="title_detail">{{worthData.universalValue}}
+                    <!-- <numScroll :value="worthData.universalValue"></numScroll> -->
+                </span> 
+                <span v-if="worthData.universalValue==null" class="title_detail">客官莫急</span> 
             </a> 
         </div>
         <div class="content_now">
@@ -15,8 +17,10 @@
                 <span class="title1">累计收益（元）：</span>
                 <br>
                 <br>
-                <span v-if="worthData.totalDepositAmount!=''" class="title_detail1">{{worthData.totalDepositAmount}}</span> 
-                <span v-if="worthData.totalDepositAmount==''||worthData.totalDepositAmount==null" class="title_detail1">客官莫急</span> 
+                <span v-if="worthData.totalDepositAmount!=null" class="title_detail1">{{worthData.totalDepositAmount}}
+                     <!-- <numScroll :value="worthData.totalDepositAmount"></numScroll> -->
+                </span> 
+                <span v-if="worthData.totalDepositAmount==null" class="title_detail1">客官莫急</span> 
                 <span style="float: right;margin-top:0px;"><img :src="imgSrc1" width="100%" height="80%">
                 </span> 
             </a>
@@ -63,7 +67,7 @@
     </div>
     <br>
     <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-    <span class="font2">近六月金账户结算利率(%):</span>
+    <span class="font2">近六月 {{chartTitle}} 结算利率(%):</span>
     <br>
     <div id="main" style="height: 310px;" class="main">
     </div>
@@ -76,14 +80,19 @@
 
 
 <script>
+// import numScroll from '../../components/numScroll.vue';
 import { mapActions } from "vuex";
 export default {
+    components:{
+        // numScroll
+    },
     data() {
         return {
             imgSrc1: require('@/assets/mgImg/zfb.png'),
             worthData:{},
             // rates:[],
             // months:[],
+            chartTitle:'',
             myChart:'',
             option:{
                 tooltip : {
@@ -136,6 +145,40 @@ export default {
         }
     },
     created(){
+        let pid = this.$route.query.productId;
+        switch(pid){
+            case (1133):
+            this.chartTitle='金账户';
+            break;
+            
+            case (1192):
+            this.chartTitle='财富金账户';
+            break;
+            
+            case (1193):
+            this.chartTitle='财富钻账户';
+            break;
+            
+            case (3487):
+            this.chartTitle='幸福金账户';
+            break;
+            
+            case (3611):
+            this.chartTitle='财富金账户';
+            break;
+            
+            case (1163):
+            this.chartTitle='钻石账户';
+            break;
+
+            case (1182):
+            this.chartTitle='云账户';
+            break;
+
+            case (1179):
+            this.chartTitle='盈账户';
+            break;  
+        }
         let typeData = {
             productId:this.$route.query.productId,
             policyId:this.$route.query.policyId,
@@ -177,6 +220,17 @@ export default {
         ...mapActions({
           getUniversalWorth: "getUniversalWorth"
         }),
+        toNum(newNum){
+            var num = 0;
+            var t = setInterval(function(){
+                num++;
+                let span =decument;
+                span.innerText=num;
+                if(num=newNum){
+                    clearInterval(t)
+                }
+            })
+        },
         toDetial(type){
             console.log(type)
             this.$router.push({ 

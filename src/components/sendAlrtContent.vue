@@ -1,21 +1,25 @@
 <template>
     <div class="alert-box">
         <div class="alert-content">
-            <p class="alert-font">短信验证码将发送至您尾号为<span>{{pnoneBack}}</span>的手机，5分钟内有效，请点击获取，请查收！（每日最多五次）</p>
-            <div class="alert-input line-down">
+            <p class="alert-font">短信验证码将发送至您尾号为<span style="color:blue">{{pnoneBack}}</span>的手机，5分钟内有效，请点击获取，请查收！（每日最多五次）</p>
+            <div class="alert-input">
                 <div class="alert-left">
-                    <input v-model="codeData" type="text" placeholder="请输入验证码">
+                    <input v-model="codeData" style="text-align:center;" type="text" placeholder="请输入验证码">
                 </div>
                 <div class="alert-send">
-                    <button class="style-click" :disabled="isSendBtn" @click="getCodeFn">{{btnContent}}</button>
+                    <button class="style-click" :class="isSendBtn?'send-click':''" :disabled="isSendBtn" @click="getCodeFn">{{btnContent}}</button>
                 </div>
             </div>
+            <div class="line-down" style="height:0.4rem;">
+              <p v-if="isWorngData" style="line-height:0.4rem;color:red;font-size:12px;padding:0 5%;">{{worngData}}</p>
+            </div>
+            
             <div class="alert-btn">
                 <div class="line-right">
                     <button class="style-click" @click="colseAlertFn">取消</button>
                 </div>
                 <div>
-                    <button class="style-click" @click="sureSend">确定</button>
+                    <button style="    color: #54ce55;" class="style-click" @click="sureSend">确认</button>
                 </div>
             </div>
         </div>
@@ -30,6 +34,8 @@ export default {
       btnContent:'获取验证码',
       isSendBtn: false,
       codeData:'',
+      worngData:'',
+      isWorngData:false,
       // pnoneBack:''
     };
   },
@@ -37,20 +43,30 @@ export default {
   methods: {
     getCodeFn() {
       this.isSendBtn = true;
-      this.miuFnOne(60);
+      this.miuFnOne(120);
 
       setTimeout(() => {
-        this.btnContent = "重新发送";
+        this.btnContent = "获取验证码";
         this.isSendBtn = false;
-      }, 60000);
+      }, 120000);
       this.$emit('sendCodeFn')
     },
     inputCode(code){
       this.codeData = code
     },
 
+    isCodeWrongFn(msg){
+      // console.log(1111)
+      this.worngData = msg||'验证码输入错误！'
+      this.isWorngData = true
+    },
+
     sureSend() {
-      
+      if(this.codeData == ''){
+        this.worngData = '验证码不能为空！'
+        this.isWorngData = true
+        return false
+      }
       this.$emit('sendCodeFnTwo',this.codeData)
     },
 
@@ -61,7 +77,7 @@ export default {
     miuFnOne(miu) {
       let miuFn = setTimeout(() => {
         miu--;
-        this.btnContent = "消息发送中(" + miu + ")";
+        this.btnContent = "" + miu + "s后重发";
         if (miu == 1) {
           return false;
         }
@@ -100,7 +116,7 @@ export default {
     .alert-input {
       display: flex;
       justify-content: space-between;
-      padding: 0 5% 0.4rem;
+      padding: 0 5% 0rem;
       .alert-left {
         width: 45%;
         input {
@@ -123,6 +139,9 @@ export default {
           background: #54ce55;
           color: #fff;
           font-size: 0.3rem;
+        }
+        .send-click{
+          background-color: #bebebe;
         }
       }
     }

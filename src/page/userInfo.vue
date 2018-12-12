@@ -52,7 +52,7 @@
     </div>
     <bgComponent></bgComponent>
     <alertContent :alertCount="alertCount"></alertContent>
-    <sendAlrtContent ref="senAlertContent" :codeData="codeData" v-if="sendCode" @clolseAlert="clolseAlert" @sendCodeFnTwo="sendCodeFnTwo" @sendCodeFn="sendCodeFn"></sendAlrtContent>
+    <sendAlrtContent ref="senAlertContent" :pnoneBack="phoneNo" v-if="sendCode" @clolseAlert="clolseAlert" @sendCodeFnTwo="sendCodeFnTwo" @sendCodeFn="sendCodeFn"></sendAlrtContent>
   </div>
 </template>
 
@@ -70,6 +70,7 @@ export default {
       commName: "",
       certtype: "",
       phoneNo: "",
+      phoneNoTwo:"",
       sendCode: false,
       codeData: "",
       logoImgSrc: require("@/assets/publicImg/1_03.png"),
@@ -225,7 +226,9 @@ export default {
           var tipsData;
           switch (result.responsecode) {
             case "0":
-              this.phoneNo = result.celler;
+              this.phoneNoTwo = result.celler
+              this.phoneNo = result.celler.substring(7, 11)
+              
               this.sendCode = true;
               break;
             case "1":
@@ -293,7 +296,7 @@ export default {
     sendCodeFn() {
       // this.$refs.senAlertContent.inputCode(111)
       let phoneNoData = {
-        userHandphone: this.phoneNo
+        userHandphone: this.phoneNoTwo
       };
       this.loginverificationcode({
         phoneNoData,
@@ -337,6 +340,7 @@ export default {
       let phoneCodeNoData = {
         verificationCode: codeData
       };
+      console.log(phoneCodeNoData)
       this.phonewsercode({
         phoneCodeNoData,
         successCallback: result => {
@@ -370,8 +374,7 @@ export default {
               });
               break;
             default:
-              this.alertCount.alertData = result.responsemsg;
-              this.alertCount.isShowAlert = true;
+              this.$refs.senAlertContent.isCodeWrongFn()
               break;
           }
         },

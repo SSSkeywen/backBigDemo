@@ -20,7 +20,7 @@
     <div id="wrapper" :class="{top0:this.type==0}">
       <div id="scroller">
         <!-- 现有账户价值 -->
-        <ul  v-if="this.type==0">
+        <ul class="nowWorth"  v-if="this.type==0">
           <li>
             <div class="v3">
               <div>开户所交保费（元）:</div>
@@ -69,6 +69,22 @@
               <div>{{detialDAta.partialSurrender}}</div>
             </div>
           </li>
+          <!-- <li v-if="productId==1179||productId==1182">
+            <div class="v3">
+              <div>抵缴保费（元）:</div>
+            </div>
+            <div class="v4">
+              <div>{{detialDAta.renewalAmount}}</div>
+            </div>
+          </li>
+          <li v-if="productId==1179&&detialDAta.balanceAmount!=0&&detialDAta.balanceAmount!=''">
+            <div class="v3">
+              <div>转入保单余额（元）:</div>
+            </div>
+            <div class="v4">
+              <div>{{detialDAta.balanceAmount}}</div>
+            </div>
+          </li> -->
         </ul>
         <!-- 累计 和 近一年 -->
         <ul v-if="this.type=='total'||this.type=='year'">
@@ -82,22 +98,22 @@
             </div>
             <div class="v4">
               <div v-if="list!=''&&list!=null">{{item.depositAmount}}</div>
-              <div v-else class="lineH35">+0</div>
+              <div v-else>+0</div>
             </div>
           </li>
         </ul>
         <!-- 近一月 -->
         <ul v-if="this.type=='month'">
-          <li>
+          <li v-for="(item,index) in list" :key="index">
             <div class="v3">
               <div>
                 <span>近一月收益（元）:</span>
-                <span v-if="list[0].depositDate">{{list[0].depositDate}}</span>
+                <span v-if="item.depositDate">{{item.depositDate}}</span>
               </div>
             </div>
             <div class="v4">
-              <div v-if="list!=''&&list!=null">{{list[0].depositAmount}}</div>
-              <div v-else class="lineH35">+0</div>
+              <div v-if="list!=''&&list!=null">{{item.depositAmount}}</div>
+              <div v-else>+0</div>
             </div>
           </li>
         </ul>
@@ -217,9 +233,22 @@ export default {
       this.getUniversalDetial({
         typeData,
         successCallback: res => {
-          this.detialDAta = res.data;
-          this.list = res.data.GoldAccountDetailedInfo;
-          console.log(this.list);
+          if(this.type=='trje'){
+            this.detialDAta = res.data.detailInfo;
+          }else if(this.type=='year'||this.type=='month'){
+            console.log('-------year---------')
+            this.detialDAta = res.data;
+            this.list = res.data.GoldAccountDetailedInfo;
+            console.log(this.list)
+          }else if(this.type=='total'){
+            console.log('-------total---------')
+            this.detialDAta = res.data.data;
+            this.list = res.data.data.GoldAccountDetailedInfo;
+            console.log(this.list)
+          }
+          
+          // this.list = res.data.GoldAccountDetailedInfo;
+          // console.log(this.list);
         },
         fCallback: res => {}
       });
@@ -261,6 +290,8 @@ ul,li {  padding: 0;  margin: 0;  border: 0;}
 #wrapper li div.v4 div {line-height: 70px;font-weight: 800;}
 #wrapper li div.v3 span{line-height: 35px; display: block}
 #wrapper li div.v4 .lineH35{line-height: 35px;}
+
+.nowWorth{line-height: 35px;}
 /** 下拉样式 Pull down styles**/
 #footer {
   position: fixed;

@@ -11,8 +11,8 @@
             <input type="checkbox" name="checkbox" id="duihao" v-model="checked">
             <label for="duihao" :class="{'show':checked}">&nbsp;&nbsp;本人已阅读并同意以上约定</label>
             <div class="foot">
-                <button class="cancol" onclick="history.back()">取&nbsp;消</button>
-                <button class="sure" @click="toNext">确&nbsp;定</button>
+                <button  onclick="history.back()">取&nbsp;消</button>
+                <button  @click="toNext">确&nbsp;定</button>
             </div>
         </div>
     </div>
