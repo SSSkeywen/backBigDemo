@@ -83,7 +83,7 @@ const actions = {
         };
         post(apiConfig.api_base_url + 'common/wxconfig', data).then((res) => {
             console.log(JSON.stringify(res))
-            alert("wxConifg:" + JSON.stringify(res))
+           // alert("wxConifg:" + JSON.stringify(res))
             //let result = res.data
             if (res.code == '0') {
                 successCallback(res.data)

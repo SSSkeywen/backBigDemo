@@ -58,9 +58,9 @@ import { Toast } from 'vant';
 			this.wxConifg({
 				successCallback: (res) => {
 					let wxInformation = res;
-					alert("signature:" + wxInformation.signature)
+					//alert("signature:" + wxInformation.signature)
 					wx.config({
-						debug: true, 
+						debug: false, 
 						appId: wxInformation.appid, 
 						timestamp: wxInformation.timestamp, 
 						nonceStr: wxInformation.nonce_Str, 
@@ -212,10 +212,10 @@ import { Toast } from 'vant';
 					}
 				});
 			},
-			sendCodeFnTwo(){
+			sendCodeFnTwo(codeData){
 			// 子组件调用 校验验证码
 				let data = {
-					verificationCode: this.codeData,
+					verificationCode: codeData,
 				}
 				this.validatephonecode({
 					data,
