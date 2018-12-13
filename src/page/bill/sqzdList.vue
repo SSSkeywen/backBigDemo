@@ -10,7 +10,7 @@
       <hgroup>发票已开具</hgroup>
       <!-- <p
         class="xu-line"
-      >····························································································································</p> -->
+      >····························································································································</p>-->
       <ul class="case-list" style="padding-bottom:0.2rem;">
         <li v-for="(item,index) in sqzdList" :key="index">
           <p>电子发票</p>
@@ -39,7 +39,7 @@ export default {
     return {
       headerContent: "首期账单查询",
       sqzdList: [],
-      toDownIcon: require("@/assets/publicImg/icon_2.jpg"),
+      toDownIcon: require("@/assets/publicImg/icon_2.jpg")
     };
   },
   created() {
@@ -64,29 +64,39 @@ export default {
         taxpayer_id: this.sqzdList[index].TAXPAYER_ID
       };
       let toast1 = Toast.loading({
-      mask: true,
-      message: "加载中...",
-      duration: 1000
-    });
+        mask: true,
+        message: "加载中...",
+        duration: 5000
+      });
       console.log(typeData);
       this.LookApplyInvoice({
         typeData,
         successCallback: res => {
-          toast1.clear()
-          // window.location.href = res
-          this.$router.push({
-            path: "/sendInvoice",
-            query: { tipsData: res }
-          });
+          toast1.clear();
+          if (res.code == "1") {
+           let tipsData = `<nav class="nav_content" style=" width: 80%;margin: 0 auto;line-height: 30px;padding: 0.5rem 0rem;">
+                        电子发票未开具完成，请耐心等待！
+                      </nav>`;
+            this.$router.push({
+              path: "/userFailPage",
+              query: { tipsData: tipsData }
+            });
+          } else {
+            this.$router.push({
+              path: "/sendInvoice",
+              query: { tipsData: res.fileurl }
+            });
+          }
+
           // this.contentListData = res.result.list;
         },
         fCallback: res => {
-          toast1.clear()
+          toast1.clear();
         }
       });
     },
-    back(){
-      this.$router.go(-1);//返回上一层
+    back() {
+      this.$router.go(-1); //返回上一层
     }
   }
 };

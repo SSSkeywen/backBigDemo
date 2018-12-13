@@ -1,51 +1,56 @@
 <template>
 <div class="mg-box">
 	<div class="annuityCollectDetail-box">
-        <headerT :headerContent="headerContent" style="
-                margin-bottom: 0.22rem;
-            "></headerT>
-        <div class="annuityCollectDetail-content" v-for="(item, index) in annuityCollectDetail" :key ="index">
-           <div class="annuityCollectDetail-content-title">
-                <div class="annuityCollectDetail-content-left"> 保单号：{{item.policyCode}}
-                </div>
-                 <div class="annuityCollectDetail-content-right" @click="selectAnnuity(index)" :class="{active: item.active}">
-                </div>
-           </div>
-           <div class="annuityCollectDetail-content-box">
-                <div class="annuityCollectDetail-content-center" v-if="item.productInfo[0].productNumber">险种序号： {{item.productInfo[0].productNumber}}</div>
-                <div class="annuityCollectDetail-content-center" v-if="item.productInfo[0].productName">险种名称： {{item.productInfo[0].productName}}
-                </div>
-                <div class="annuityCollectDetail-content-center">保额/档次/份数： {{item.productInfo[0].amount ? item.productInfo[0].amount : 0}}&nbsp;/&nbsp;{{item.productInfo[0].benefitLevel ? item.productInfo[0].benefitLevel : 0}}&nbsp;/&nbsp;{{item.productInfo[0].unit ? item.productInfo[0].unit : 0}}
-                </div>
-                <div class="annuityCollectDetail-content-center" v-if="item.productInfo[0].initialType">缴费期限： {{setinitialType(item.productInfo[0].initialType)}} 
-                </div>
-                <div class="annuityCollectDetail-content-center">开始领取年龄： {{item.productInfo[0].startPayDate === null ? 0 : item.productInfo[0].startPayDate}}
-                </div>
-                <div class="annuityCollectDetail-content-center" v-if="item.productInfo[0].payEnsure">领取年限：
-                </div>
-                <select v-model="item.productInfo[0].payEnsure" v-if="item.productInfo[0].payEnsure">
-                    <option value="0">0</option>
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="15">15</option>
-                    <option value="20">20</option>
-                    <option value="25">25</option>
-                </select>
-                <div class="annuityCollectDetail-content-center" v-if="item.productInfo[0].payType">领取方式：
-                </div>
-                <select  style="
-                    margin-bottom: 0.18rem;"
-                    v-model="item.productInfo[0].payType"
-                    v-if="item.productInfo[0].payType">
-                    <option value="1" >年领</option>
-                    <option value="4" >月领</option>
-                    <option value="5" >趸领</option>
-                </select>
+        <headerT :headerContent="headerContent" ></headerT>
+        <div v-if="annuityCollectDetail && annuityCollectDetail.length > 0" style="
+                margin-top: 0.22rem;
+            ">
+            <div class="annuityCollectDetail-content" v-for="(item, index) in annuityCollectDetail" :key ="index">
+            <div class="annuityCollectDetail-content-title">
+                    <div class="annuityCollectDetail-content-left"> 保单号：{{item.policyCode}}
+                    </div>
+                    <div class="annuityCollectDetail-content-right" @click="selectAnnuity(index)" :class="{active: item.active}">
+                    </div>
+            </div>
+            <div class="annuityCollectDetail-content-box">
+                    <div class="annuityCollectDetail-content-center" v-if="item.productInfo[0].productNumber">险种序号： {{item.productInfo[0].productNumber}}</div>
+                    <div class="annuityCollectDetail-content-center" v-if="item.productInfo[0].productName">险种名称： {{item.productInfo[0].productName}}
+                    </div>
+                    <div class="annuityCollectDetail-content-center">保额/档次/份数： {{item.productInfo[0].amount ? item.productInfo[0].amount : 0}}&nbsp;/&nbsp;{{item.productInfo[0].benefitLevel ? item.productInfo[0].benefitLevel : 0}}&nbsp;/&nbsp;{{item.productInfo[0].unit ? item.productInfo[0].unit : 0}}
+                    </div>
+                    <div class="annuityCollectDetail-content-center" v-if="item.productInfo[0].initialType">缴费期限： {{setinitialType(item.productInfo[0].initialType)}} 
+                    </div>
+                    <div class="annuityCollectDetail-content-center">开始领取年龄： {{item.productInfo[0].startPayDate === null ? 0 : item.productInfo[0].startPayDate}}
+                    </div>
+                    <div class="annuityCollectDetail-content-center" v-if="item.productInfo[0].payEnsure">领取年限：
+                    </div>
+                    <select v-model="item.productInfo[0].payEnsure" v-if="item.productInfo[0].payEnsure">
+                        <option value="0">0</option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                        <option value="25">25</option>
+                    </select>
+                    <div class="annuityCollectDetail-content-center" v-if="item.productInfo[0].payType">领取方式：
+                    </div>
+                    <select  style="
+                        margin-bottom: 0.18rem;"
+                        v-model="item.productInfo[0].payType"
+                        v-if="item.productInfo[0].payType">
+                        <option value="1" >年领</option>
+                        <option value="4" >月领</option>
+                        <option value="5" >趸领</option>
+                    </select>
 
-           </div>
+            </div>
+            </div>
+            <div>
+                <smallButton :btnText="btnTexts" @btnControls="surenBtn" style="margin: 0.4rem auto;"></smallButton>
+            </div>
         </div>
-        <div>
-		    <smallButton :btnText="btnTexts" @btnControls="surenBtn" style="margin: 0.4rem auto;"></smallButton>
+        <div v-else>
+            没有符合红利领取方式变更的保单
         </div>
 	</div>
 	<alertContent :alertCount="alertCount"></alertContent>

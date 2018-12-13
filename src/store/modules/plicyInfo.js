@@ -70,7 +70,7 @@ const actions = {
             if (result.code == '0') {
                 successCallback(result)
             } else {
-                failCallback()
+                failCallback(result)
             }
 
         }).catch((err) => {

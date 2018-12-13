@@ -68,43 +68,47 @@ export default {
         prem: feeId,
         flg: "1"
       };
-      // if (butonFlag == "申请电子发票") {
-      this.applyInvoice({
-        typeData,
-        successCallback: result => {
-          console.log(result);
-          // this.$router.push({ path: "/toNewIndexView" });
-          if (result.RETURN_FLAG == "0") {
-            this.alertCount.alertData = result.RETURN_MESSAGE;
-            this.alertCount.isShowAlert = true;
-          } else if (result.RETURN_FLAG == "1") {
-            // let billmessage = {
-
-            // }
-            let tipsData = JSON.stringify(result.INVOICE_DETAILS);
-            console.log(tipsData);
-            this.$router.push({
-              path: "/sqzdList",
-              query: { tipsData: tipsData }
-            });
-          } else if (result.RETURN_FLAG == "2") {
-            // let billmessage = {
-
-            // }
-            let tipsData = {
-              pathAddress:'/sqzdList',
-              titleName:'首期账单查询'
-              
+      if (butonFlag == "申请电子发票") {
+        let tipsData = {
+          pathAddress: "/sqzdList",
+          titleName: "首期账单查询",
+          prem: feeId,
+          flg: "1"
+        };
+        console.log(tipsData);
+        this.$router.push({
+          path: "/successMessage",
+          query: { tipsData: tipsData }
+        });
+      } else {
+        this.applyInvoice({
+          typeData,
+          successCallback: result => {
+            if (result.RETURN_FLAG == "0") {
+              this.alertCount.alertData = result.RETURN_MESSAGE;
+              this.alertCount.isShowAlert = true;
+            } else if (result.RETURN_FLAG == "1") {
+              let tipsData = JSON.stringify(result.INVOICE_DETAILS);
+              console.log(tipsData);
+              this.$router.push({
+                path: "/sqzdList",
+                query: { tipsData: tipsData }
+              });
+            } else if (result.RETURN_FLAG == "2") {
+              let tipsData = {
+                pathAddress: "/sqzdList",
+                titleName: "首期账单查询"
+              };
+              console.log(tipsData);
+              this.$router.push({
+                path: "/successMessage",
+                query: { tipsData: tipsData }
+              });
             }
-            console.log(tipsData);
-            this.$router.push({
-              path: "/successMessage",
-              query: { tipsData: tipsData }
-            });
-          }
-        },
-        fCallback: res => {}
-      });
+          },
+          fCallback: res => {}
+        });
+      }
     }
   }
 };

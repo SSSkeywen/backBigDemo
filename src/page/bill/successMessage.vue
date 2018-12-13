@@ -20,35 +20,67 @@
       <p class="sm-p">开具成功后您将收到消息通知。</p>
       <p class="sm-p">您可以随时在“中国太平95589”微信服务号中点击“信息查询-首期账单查询”查看您的发票</p>
     </div>
-    <section class="cm-btn">
+    <section class="cm-btn" v-if="isLookStatus">
       <button class="style-click" @click="jump">查看发票状态</button>
     </section>
+    <alertContent :alertCount="alertCount"></alertContent>
   </div>
 </template>
 
 <script>
 import headerT from "../../components/header.vue";
+import alertContent from "../../components/alertContent";
 import { mapActions } from "vuex";
 import { Toast } from "vant";
 export default {
   components: {
-    headerT
+    headerT,
+    alertContent
   },
   data() {
     return {
       headerContent: "",
       toDownIcon: require("@/assets/publicImg/icon_2.jpg"),
-      sqzdList: ""
+      sqzdList: "",
+      tipsDataTwo:"",
+      isLookStatus:false,
+      alertCount: {
+        isShowAlert: false,
+        alertData: "请输入"
+      }
     };
   },
   created() {
     this.sqzdList = this.$route.query.tipsData;
-    this.headerContent = this.titleName;
+    this.headerContent = this.sqzdList.titleName;
+    let typeData = {
+        prem: this.sqzdList.feeId,
+        flg: this.sqzdList.flg
+      };
+    this.applyInvoice({
+          typeData,
+          successCallback: result => {
+            if (result.RETURN_FLAG == "0") {
+              this.alertCount.alertData = '电子发票未开具完成，请耐心等待！';
+              this.alertCount.isShowAlert = true;
+            } else if (result.RETURN_FLAG == "1") {
+              this.tipsDataTwo = JSON.stringify(result.INVOICE_DETAILS);
+              this.isLookStatus = true
+            } else if (result.RETURN_FLAG == "2") {
+              this.alertCount.alertData = result.RETURN_MESSAGE;
+              this.alertCount.isShowAlert = true;
+            }
+          },
+          fCallback: res => {}
+        });
   },
   methods: {
+    ...mapActions({
+      applyInvoice: "applyInvoice"
+    }),
     jump() {
       this.$router.push({
-        path: this.sqzdList.pathAddress
+        path: this.sqzdList.pathAddress,query: { tipsData: this.tipsDataTwo }
       });
     }
   }

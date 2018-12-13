@@ -26,6 +26,7 @@ import sqzdList from '@/page/bill/sqzdList'
 import sqzdMessage from '@/page/bill/sqzdMessage'
 import toNewIndex from '@/page/bill/toNewIndex'
 import toNewIndexMessage from '@/page/bill/toNewIndexMessage'
+import toNewList from '@/page/bill/toNewList'
 import toNewIndexView from '@/page/bill/toNewIndexView'
 import saveTheBill from '@/page/bill/saveTheBill'
 import saveTheBillList from '@/page/bill/saveTheBillList'
@@ -199,8 +200,12 @@ export default new Router({
       component: toNewIndex
     }, {
       path: '/toNewIndexMessage',
-      name: 'toNewIndexMessage',
+      name: 'toNewIndexMessage', 
       component: toNewIndexMessage
+    },{
+      path: '/toNewList',
+      name: 'toNewList', 
+      component: toNewList
     }, {
       path: '/toNewIndexView',
       name: 'toNewIndexView',

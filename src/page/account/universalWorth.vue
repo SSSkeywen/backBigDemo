@@ -71,7 +71,7 @@
     <br>
     <div id="main" style="height: 310px;" class="main">
     </div>
-    <div style="padding:0 10 0 10">
+    <div style="padding-left:10px; padding-right:10px">
     <span color="black">*特别提醒：未来日期的结算利率可能会有所变化，最终以我司官网公布的结算利率为准，收益计算系截止到保单最新账户结算日数据。</span>
     </div>
     <span size="" color="red"></span>

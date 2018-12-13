@@ -16,7 +16,7 @@ export default {
   data() {
     return {
       tipsIconSrc: require("@/assets/publicImg/icon_2.jpg"),
-      tipsContent: ""
+      tipsContent: "" 
     };
   },
   mounted() {

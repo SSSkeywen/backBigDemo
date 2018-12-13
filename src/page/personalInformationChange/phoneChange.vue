@@ -10,13 +10,14 @@
           </div>
         </li>
       </ul>
-      <btnComponent @changCount="changCount" :btnCount="btnCount"></btnComponent>
+      <btnComponent @changCount="changCountNew" :btnCount="btnCount"></btnComponent>
     </div>
     <div v-else>
       <notToOpenComponent :tipsContent="tipsContent"></notToOpenComponent>
       <btnComponent :btnCount="'知道了'" @IKnow="IKnow"></btnComponent>
     </div>
     <alertContent :alertCount="alertCount"></alertContent>
+    <yesAndNoAlert :alertCountTwo="alertCountTwo" :telNo="telNo" @changCount="changCount"></yesAndNoAlert>
   </div>
 </template>
 
@@ -24,6 +25,7 @@
 import headerT from "../../components/header.vue";
 import btnComponent from "../../components/btnComponent.vue";
 import alertContent from "../../components/alertContent";
+import yesAndNoAlert from "../../components/yesAndNoAlert";
 import notToOpenComponent from "../../components/notToOpenComponent.vue";
 import { mapActions } from "vuex";
 import { Toast } from "vant";
@@ -38,6 +40,9 @@ export default {
       alertCount: {
         isShowAlert: false,
         alertData: "请输入"
+      },
+      alertCountTwo:{
+        isShowyesOrNo:false,
       }
     };
   },
@@ -45,7 +50,8 @@ export default {
     headerT,
     btnComponent,
     notToOpenComponent,
-    alertContent
+    alertContent,
+    yesAndNoAlert
   },
   methods: {
     ...mapActions({
@@ -56,7 +62,7 @@ export default {
       this.$router.go(-1);
     },
 
-    changCount() {
+    changCountNew(){
       if(this.telNo == ''){
         this.alertCount.alertData = "请输入您的手机号码";
         this.alertCount.isShowAlert = true;
@@ -67,6 +73,11 @@ export default {
         this.alertCount.isShowAlert = true;
         return false
       }
+      this.alertCountTwo.isShowyesOrNo = true
+    },
+
+    changCount() {
+      
 
       const toast1 = Toast.loading({
         mask: true,
@@ -83,8 +94,13 @@ export default {
           if(result.code=='0'){
 
           }else{
-            this.alertCount.alertData = result.msg;
-            this.alertCount.isShowAlert = true;
+            // this.alertCount.alertData = result.msg;
+            // this.alertCount.isShowAlert = true;
+            let tipsData = `<p>${result.msg}</p>`;
+              this.$router.push({
+                path: "/userFailPage",
+                query: { tipsData: tipsData }
+              });
           }
           // if()
           toast1.clear();

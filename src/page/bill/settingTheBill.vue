@@ -69,9 +69,21 @@ export default {
       console.log(policyCode + "+" + butonFlag);
       let typeData = {
         prem: feeId,
-        flg: "1"
+        flg: "3"
       };
-      // if (butonFlag == "申请电子发票") {
+      if (butonFlag == "申请电子发票") {
+        let tipsData = {
+          pathAddress: "/settingTheBillList",
+          titleName: "理赔账单查询",
+          prem: feeId,
+          flg: "3"
+        };
+        console.log(tipsData);
+        this.$router.push({
+          path: "/successMessage",
+          query: { tipsData: tipsData }
+        });
+      } else {
       this.applyInvoice({
         typeData,
         successCallback: result => {
@@ -104,6 +116,7 @@ export default {
         },
         fCallback: res => {}
       });
+    }
     }
   }
 };

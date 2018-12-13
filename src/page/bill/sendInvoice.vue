@@ -24,7 +24,7 @@
         <li class="Two_row">
           <input type="text" id="mailPath" v-model="mailAddress">
         </li>
-        <li class="Send_error" style="padding-top: 1%; color: red;" v-if="testMail">邮箱地址不能为空！</li>
+        <li class="Send_error" style="padding-top: 1%; color: red;" v-if="testMail">{{tipsDataTwo}}</li>
         <li class="Three_row" style=" padding-bottom: 7%;padding-top: 3%;">
           <button id="invoice_Cancel" @click="cancelSend">取消</button>
           <button name="btn_down" @click="sendClick">发送</button>
@@ -52,7 +52,8 @@ export default {
       isShowAlert: false,
       mailAddress: "",
       testMail: false,
-      sendSuccess: false
+      sendSuccess: false,
+      tipsDataTwo:''
     };
   },
   created() {
@@ -71,8 +72,14 @@ export default {
     },
     sendClick() {
       if (this.mailAddress == "") {
+        this.tipsDataTwo = '邮箱地址不能为空！'
         this.testMail = true;
         return false;
+      }
+      if(!this.$toolsTwo.emailFn(this.mailAddress)){
+        this.tipsDataTwo = '邮箱格式输入错误！'
+        this.testMail = true;
+        return false
       }
         let emailAddress = {
             email:this.mailAddress

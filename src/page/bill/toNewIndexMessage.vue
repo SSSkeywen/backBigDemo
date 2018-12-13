@@ -1,7 +1,7 @@
 <template>
     <div class="casemx-box">
         <headerT :headerContent="headerContent"></headerT>
-        <hgroup class="mp-hgroup">保单号：{{xqListData.POLICY_CODE}}<span class="tn-look">查看详情</span></hgroup>
+        <hgroup class="mp-hgroup">保单号：{{xqListData.POLICY_CODE}}<span class="tn-look" @click="jumpMyPolicy(xqListData.POLICY_CODE)">查看详情</span></hgroup>
         <div class="tn-title">
           <p class="tn-name">{{xqListData.PRODUCT_NAME}}</p>
           <div class="tn-state">
@@ -31,8 +31,8 @@
                   </div>
                   <div v-if="indexKey==index" class="tn-list-bottom">
                     <button @click="seeTheBillMessage(index)">查看账单</button>
-                    <button v-if="item.ELEFLAG == 1" @click="viewElectronicInvoices(index)">查看电子发票</button>
-                    <button v-else @click="viewElectronicInvoices(index)">申请电子发票</button>
+                    <button v-if="item.ELEFLAG == 1" @click="viewElectronicInvoices(item.FEE_ID,'查看电子发票')">查看电子发票</button>
+                    <button v-else @click="viewElectronicInvoices(item.FEE_ID,'申请电子发票')">申请电子发票</button>
                   </div>
                 </li>
                 <!-- <li>
@@ -50,11 +50,13 @@
             </div>
         </section>
         <seeAtTheBill :recordInfoSub="recordInfoSub" :PAIDUP_DATE="xqListData.PAIDUP_DATE" :CHARGE_NAME="xqListData.CHARGE_NAME" :policyCode="xqListData.POLICY_CODE" v-if="isOpenWindow" @clolseWindow="clolseWindow"></seeAtTheBill>
+        <alertContent :alertCount="alertCount"></alertContent>
     </div>
 </template>
 
 <script>
 import headerT from "../../components/header.vue";
+import alertContent from "../../components/alertContent";
 import toNewComponent from "../../components/billComponent/toNewComponent.vue";
 import seeAtTheBill from "../../components/billComponent/seeAtTheBill.vue";
 import { mapActions } from "vuex";
@@ -63,7 +65,8 @@ export default {
   components: {
     headerT,
     toNewComponent,
-    seeAtTheBill
+    seeAtTheBill,
+    alertContent
   },
   data() {
     return {
@@ -79,7 +82,11 @@ export default {
         LIABILITY_STATUS_NAME:'',
         recordInfoSub:[]
       },
-      recordInfoSub:[]
+      recordInfoSub:[],
+      alertCount: {
+        isShowAlert: false,
+        alertData: "请输入"
+      }
     };
   },
   created(){
@@ -102,7 +109,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      getToNewIndexListMsg: "getToNewIndexListMsg"
+      getToNewIndexListMsg: "getToNewIndexListMsg",
+      applyInvoice:"applyInvoice"
     }),
     policyMessage(policyCode) {
       // this.$router.push({ path: '/mgPlicyInfo',query: {policyCode: policyCode} });
@@ -123,9 +131,71 @@ export default {
     },
 
     //跳转到查看电子发票页面
-    viewElectronicInvoices(){
+    viewElectronicInvoices(feeId,butonFlag){
       // this.$router.push({ path: '/mgPlicyInfo',query: {policyCode: policyCode} });
-      this.$router.push({ path: '/toNewIndexView' });
+      // this.$router.push({ path: '/toNewIndexView' });
+      // console.log(policyCode + "+" + butonFlag);
+      let typeData = {
+        prem: feeId,
+        flg: "4"
+      };
+      if (butonFlag == "申请电子发票") {
+        let tipsData = {
+          pathAddress: "/toNewList",
+          titleName: "续期账单查询",
+          prem: feeId,
+          flg: "4"
+        };
+        console.log(tipsData);
+        this.$router.push({
+          path: "/successMessage",
+          query: { tipsData: tipsData }
+        });
+      } else {
+      this.applyInvoice({
+        typeData,
+        successCallback: result => {
+          console.log(result);
+          // this.$router.push({ path: "/toNewIndexView" });
+          if (result.RETURN_FLAG == "0") {
+            this.alertCount.alertData = result.RETURN_MESSAGE;
+            this.alertCount.isShowAlert = true;
+          } else if (result.RETURN_FLAG == "1") {
+            // let billmessage = {
+
+            // }
+            let tipsData = JSON.stringify(result.INVOICE_DETAILS);
+            console.log(tipsData);
+            this.$router.push({
+              path: "/sqzdList",
+              query: { tipsData: tipsData }
+            });
+          } else if (result.RETURN_FLAG == "2") {
+            // let billmessage = {
+
+            // }
+            // let tipsData = {
+            //   pathAddress:'/sqzdList',
+            //   titleName:'首期账单查询'
+              
+            // }
+            // console.log(tipsData);
+            // this.$router.push({
+            //   path: "/successMessage",
+            //   query: { tipsData: tipsData }
+            // });
+          }
+        },
+        fCallback: res => {}
+      });
+    }
+    },
+
+    jumpMyPolicy(policyCode){
+      this.$router.push({
+        path: "/mgPlicyInfo",
+        query: { policyCode: policyCode }
+      });
     }
   }
 };

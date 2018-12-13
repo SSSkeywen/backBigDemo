@@ -238,7 +238,7 @@ export default {
           }else if(this.type=='year'||this.type=='month'){
             console.log('-------year---------')
             this.detialDAta = res.data;
-            this.list = res.data.GoldAccountDetailedInfo;
+            this.list = res.data.data.GoldAccountDetailedInfo;
             console.log(this.list)
           }else if(this.type=='total'){
             console.log('-------total---------')

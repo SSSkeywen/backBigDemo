@@ -11,8 +11,9 @@ import { Toast } from 'vant';
 // import store from '../store/index.js';
 
 // 环境的切换
+// console.log(process.env.NODE_ENV)
 // if (process.env.NODE_ENV == 'development') { 
-//  axios.defaults.baseURL = '/api';
+//  axios.defaults.baseURL = 'http://localhost.cntaiping.com:8080/nwxqhb';
 // } else if (process.env.NODE_ENV == 'debug') { 
 //  axios.defaults.baseURL = '';
 // } else if (process.env.NODE_ENV == 'production') { 

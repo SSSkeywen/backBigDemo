@@ -1,29 +1,34 @@
 <template>
 <div class="mg-box">
 	<div class="annuityCollectList-box">
-	    <headerT :headerContent="headerContent" ></headerT>
-		<div class="annuityCollectList-content">
-			 <div v-for="(item, index) in contentListData"  :key="index">
-				<div class="head-x" style="
-					margin-top: 0.22rem;
-				">
-					<p>保单号：{{item.policyCode}}</p>
-					<div class="annuityCollectDetail-content-right" @click="selectAnnuity(index)" :class="{active: item.active}">
+		<headerT :headerContent="headerContent" ></headerT>
+		<div v-if="contentListData && contentListData.length > 0">
+			<div class="annuityCollectList-content">
+				<div v-for="(item, index) in contentListData"  :key="index">
+					<div class="head-x" style="
+						margin-top: 0.22rem;
+					">
+						<p>保单号：{{item.policyCode}}</p>
+						<div class="annuityCollectDetail-content-right" @click="selectAnnuity(index)" :class="{active: item.active}">
+						</div>
 					</div>
+					<ul class="mg-ul-x">
+						<li>
+							<p>第一主险名称：{{item.productName}}</p>
+						</li>
+					</ul>
 				</div>
-				<ul class="mg-ul-x">
-					<li>
-						<p>第一主险名称：{{item.productName}}</p>
-					</li>
-				</ul>
+			</div>
+			<div style="
+				display:  flex;
+				justify-content:  center;
+				margin-top: 0.4rem;
+			">
+				<smallButton :btnText="btnTexts" @btnControls="surenBtn"></smallButton>
 			</div>
 		</div>
-		<div style="
-			display:  flex;
-			justify-content:  center;
-			margin-top: 0.4rem;
-		">
-			<smallButton :btnText="btnTexts" @btnControls="surenBtn"></smallButton>
+		<div v-else>
+			您没有可做年金领取的保单！
 		</div>
 	</div>
 	<alertContent :alertCount="alertCount"></alertContent>
