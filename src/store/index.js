@@ -7,6 +7,10 @@ import userInfo from './modules/userInfo.js'
 import claimsModules from './modules/claimsModules.js'
 import billModules from './modules/billModules.js'
 import informationChange from './modules/informationChange.js'
+import toBindUserUpdate from './modules/toBindUserUpdate.js'
+import payInfoChang from './modules/payInfoChang.js'
+import billSendStyleChange from './modules/billSendStyleChange.js'
+import safeInforChange from './modules/safeInforChange.js'
 
 //刘飞涛
 import universal from './modules/universal.js'
@@ -27,10 +31,14 @@ import openInsuranCode from './modules/openInsuranCode.js'
 
 //CYL
 import arfandyearchange from './modules/annuityCollect.js'
+import reduceAmount from './modules/reduceAmount.js'
 
 
 //zyl
 import claimReport from './modules/claimReport.js'
+import receiveList from './modules/receiveList.js'
+
+import accpuntInf from './modules/accpuntInf.js'
 
 
 
@@ -45,6 +53,9 @@ export default new Vuex.Store({
         claimsModules,
         billModules,
         informationChange,
+        toBindUserUpdate,
+        payInfoChang,
+        safeInforChange,
 
         account,
         universal,
@@ -61,7 +72,11 @@ export default new Vuex.Store({
         openInsuranCode,
 
         arfandyearchange,
+        reduceAmount,
 
-        claimReport
+        claimReport,
+        receiveList,
+        accpuntInf,
+        billSendStyleChange
     }
 })

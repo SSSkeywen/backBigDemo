@@ -9,7 +9,7 @@
               <div class="bdhf_cont_left" v-text="hospitalItem.hospitalName">上海第十医院</div>
               <div class="bdhf_cont_right">
                 <label>
-                  <input class="green_botton" type="submit" name="button_sh" id="sub_sc" value="删除">
+                  <input class="green_botton" type="submit" name="button_sh"  value="删除" @click="del($event)">
                 </label>
               </div>
             </li>
@@ -50,6 +50,7 @@
                 value="三甲"
                 class="yzxxlr_input"
                 style="color:#999;"
+                id="hospName"
               >
             </div>
             <div style="clear:both"></div>
@@ -97,6 +98,7 @@
 
 <script>
 import alertContent from '@/components/alertContent.vue'
+import { Toast } from "vant";
 export default {
       components: {
         alertContent
@@ -172,6 +174,11 @@ export default {
   methods: {
     //跳转到下一页
     yiyuanlbFn() {
+      let hospName =document.querySelector('#hospName').value;
+      if( hospName == "" || hospName == "请输入2-15个字符"){
+          Toast('您输入医院名称有误');
+          return ;
+      }
       this.$router.push({ path: "/yiyuanlb" });
     },
     //完成报案弹窗
@@ -179,6 +186,16 @@ export default {
       this.alertCount.isShowAlert=true;
       this.$router.push({ path: "../businessHanding" });
       console.log("完成报案");
+    },
+    del(e){
+      let self= e.target.parentNode.parentNode.parentNode;
+      if(self.parentNode.children.length > 1){
+         self.remove();
+      }else{
+        self.parentNode.parentNode.parentNode.remove();
+      }
+      //
+      //alert(e.target.parentNode.parentNode.parentNode.parentNode.children.length)
     }
   }
 };
@@ -307,6 +324,13 @@ export default {
   -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2) /*firefox*/;
   -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2) /*webkit*/;
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+  background: url("../../../src/assets/images/Group1.png") no-repeat scroll 98% center transparent !important;
+  background-size: 8px 8px !important;
+  padding-left:10px;
 }
 .reget_btn {
   font-family: "微软雅黑";

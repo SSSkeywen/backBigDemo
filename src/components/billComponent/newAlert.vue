@@ -1,6 +1,6 @@
 <template>
     <div class="new-alert">
-        <div class="con_tk" style="display: block;    padding-bottom: 10px;">
+        <div class="con_tk" style="display: block;    padding: 10px 0;">
         <span style="font-size: 18px;font-weight: bold;margin: 0px 0 10px 0;display: block;">提示信息</span>
         <p><img :src="tipsIconSrc" id="img" style="height:50px;width:50px;margin:0 auto;"></p>
         <p class="tsxx" style="font-size: 16px;margin: 0px auto;text-align: center;">邮件已发送，请注意查收！</p>

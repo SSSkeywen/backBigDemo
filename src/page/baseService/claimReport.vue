@@ -16,16 +16,16 @@
         >
           <div class="form_nrtop" v-text="dangerousCustomerItem.dangerousCustomerTitle">出险客户姓名：</div>
           <div class="form_nrbottom" v-if="dangerousCustomerItem.isSElect">
-            <select name="accidentName" class="select_lei" disabled>
+            <select id="customerName" name="accidentName" class="select_lei" @change="getInf">
               <!-- <option value accidentId accidentSex certcode certtype></option> -->
-              <option value accidentId accidentSex certcode certtype
+              <option 
                 v-for="(item,index) in customerName"
                 v-text="item"
               ></option>
             </select>
           </div>
           <div class="form_nrbottom" v-if="dangerousCustomerItem.isSElect1">
-            <select name="certtype" class="select_lei" ref="idType" id="idType">
+            <select name="certtype" disabled class="select_lei" ref="idType" id="idType" >
               <option
                 v-for="(certtypeItem,certtypeIndex) in certtypeList"
                 :key="certtypeIndex"
@@ -36,10 +36,10 @@
           </div>
 
           <div class="form_nrbottom" v-if="dangerousCustomerItem.isSElect3">
-            <input type="text" id="idTypeNum" class="yzxxlr_input" style="color:#999;" name="accidentMobile">
+            <input type="text" disabled id="idTypeNum" class="yzxxlr_input" style="color:#999;" name="accidentMobile">
           </div>
           <div class="form_nrbottom" v-if="dangerousCustomerItem.isSElect4">
-            <input type="text" id="tel" class="yzxxlr_input" style="color:#999;" name="accidentMobile">
+            <input type="text" disabled id="tel" class="yzxxlr_input" style="color:#999;" name="accidentMobile">
           </div>
           <div style="clear:both"></div>
         </div>
@@ -58,7 +58,7 @@
         >
           <div class="form_nrtop" v-text="dangerousCustomer2Item.dangerousCustomerTitle"></div>
           <div class="form_nrbottom" v-if="dangerousCustomer2Item.isSElect">
-            <input type="text" class="yzxxlr_input" id="InfName" style="color:#999;" placeholder="请输入" name="callerName" >
+            <input type="text" class="yzxxlr_input" id="InfName" style="color:#999;" placeholder="请输入" name="callerName" disabled >
           </div>
           <div class="form_nrbottom" v-if="dangerousCustomer2Item.isSElect6">
             <input type="text" class="yzxxlr_input" id="accidentPlace" placeholder="请输入" style="color:#999;" name="callerName">
@@ -78,6 +78,7 @@
           </div>
           <div class="form_nrbottom" v-if="dangerousCustomer2Item.isSElect5">
             <input
+            id="accidentDate"
               type="text"
               class="yzxxlr_input"
               style="color:#999;"
@@ -100,7 +101,7 @@
             </div>
           </div>
           <div class="form_nrbottom" v-if="dangerousCustomer2Item.isSElect2">
-            <select name="accidentNature" class="select_lei">
+            <select name="accidentNature" class="select_lei" id="InfNrelationame">
               <option
                 v-for="(accidentNatureItem,accidentNatureIndex) in accidentNatureList"
                 :key="accidentNatureIndex"
@@ -111,21 +112,49 @@
           </div>
           <div class="form_nrbottom" v-if="dangerousCustomer2Item.isSElect3">
             <ul>
-              <li
-                v-for="(incidentOutcomeItem,incidentOutcomeIndex) in incidentOutcomeList"
-                :key="incidentOutcomeIndex"
-              >
-                <label>
-                  <input
+              <li>
+                <input
                     type="checkbox"
-                    name="CheckboxGroup1"
-                    value="19"
-                    :id="incidentOutcomeItem.CheckboxGroup1_0"
+                    name="CheckboxGroup0"
+                    value="0"
                     autocomplete="off"
                     style=" -webkit-appearance: checkbox; "
+                    v-model="accidentResults"
                   >
-                  {{incidentOutcomeItem.incidentOutcomeName}}
-                </label>
+                <label>门诊</label>
+              </li>
+              <li>
+                <input
+                    type="checkbox"
+                    name="CheckboxGroup1"
+                    value="1"
+                    autocomplete="off"
+                    style=" -webkit-appearance: checkbox; "
+                    v-model="accidentResults"
+                  >
+                <label>住院</label>
+              </li>
+             <li>
+                <input
+                    type="checkbox"
+                    name="CheckboxGroup2"
+                    value="2"
+                    autocomplete="off"
+                    style=" -webkit-appearance: checkbox; "
+                    v-model="accidentResults"
+                  >
+                <label>残疾</label>
+              </li>
+              <li>
+                <input
+                    type="checkbox"
+                    name="CheckboxGroup3"
+                    value="3"
+                    autocomplete="off"
+                    style=" -webkit-appearance: checkbox; "
+                    v-model="accidentResults"
+                  >
+                <label>重疾</label>
               </li>
             </ul>
             <br>
@@ -136,7 +165,7 @@
             </ul>
           </div>
           <div class="form_nrbottom" v-if="dangerousCustomer2Item.isSElect4">
-            <textarea name="accidentContent" class="longw_input" style="color:#999;"></textarea>
+            <textarea name="accidentContent" id="detailsAccident" class="longw_input" style="color:#999;"></textarea>
           </div>
           <div style="clear:both"></div>
         </div>
@@ -167,8 +196,8 @@ export default {
   data() {
     return {
       minDate: new Date(),
-      currentDate: new Date(),
-      startDate: this.$route.query.startDate,
+      currentDate:'',
+      startDate:'',
       endDate: this.$route.query.endDate,
       date1: this.$route.query.startDate,
       agoShow: false,
@@ -227,8 +256,10 @@ export default {
         { incidentOutcomeName: "残疾", incidentOutcomeID: "CheckboxGroup1_1" },
         { incidentOutcomeName: "重疾", incidentOutcomeID: "CheckboxGroup1_2" }
       ],
-      customerName:[],
+      customerName:["请选择"],
+      customerName2:[],
       idType:[],
+      accidentResults:[]
     };
   },
   created(){
@@ -239,6 +270,7 @@ export default {
 
                 for (let i=0;i<list.length;i++){
                   //存储客户姓名
+                  // this.customerName.splice(0,this.customerName.length)
                   this.customerName.push(list[i].real_NAME);
                 }
 
@@ -258,114 +290,7 @@ export default {
         })
   },
   mounted() {
-           this.getebaoaninfo({
-            successCallback: (res) => {
-              console.log("mounted获取成功")
-                let list=res.data.list;
 
-              //证件类型
-              this.idType = document.querySelector('#idType');
-              //证件类型号码
-              this.idTypeNum = document.querySelector('#idTypeNum');
-              //客户手机号
-              this.tel = document.querySelector('#tel');
-               //报案人姓名
-              this.InfName = document.querySelector('#InfName');
-              //报案人关系
-              this.relation = document.querySelector('#relation');
-              //事故日期
-              this.accidentDate = document.querySelector('#accidentDate');
-              //事故地点
-              this.accidentPlace = document.querySelector('#accidentPlace');
-              //报案人手机号
-              this.infTel = document.querySelector('#infTel');
-              // //事故性质
-              // this.relation = document.querySelector('#InfNrelationame');
-
-                for (let i=0;i<list.length;i++){
-                  let l=list[i].certi_TYPE; 
-                  //针对客户姓名，调整证件类型
-                  /*switch (l){
-                          case 1:                      
-                              this.idType.selectedIndex =l;
-                              break;
-                          
-                          case 2:
-                              this.idType.selectedIndex =l;
-                              break;
-                          case 3:
-                              this.idType.selectedIndex =l;
-                              break;
-                          case 4:
-                              this.idType.selectedIndex =l;
-                              break;
-                          case 5:
-                               this.idType.selectedIndex =l;
-                              break;
-                          case 6:
-                              this.idType.selectedIndex =l;
-                              break;
-                          case 7:
-                              this.idType.selectedIndex =l;
-                              break;
-                          case 8:
-                              this.idType.selectedIndex =l;
-                              break;
-                          case 9:
-                              this.idType.selectedIndex =l;
-                              break;
-
-                          default:
-                              this.idType.selectedIndex =8;
-                              
-                  }*/
-                  this.idType.selectedIndex =l;
-                  //针对客户姓名，调整证件类型号码
-                  this.idTypeNum.value=list[i].certi_CODE;
-                  this.tel.value=list[i].celler;
-                  //针对客户姓名，调整证件类型号码
-                  //this.InfName.value=list[i].real_NAME;
-                  //this.relation.value=list[i].celler;
-                  //this.accidentDate.value=list[i].celler;
-                  //this.accidentPlace.value=list[i].celler;
-                  //this.infTel.value=list[i].celler;
-
-                  // console.log("list[i].certi_CODE"+list[i].certi_CODE);
-                }
-            },
-            failCallback:(res) => {
-              console.log("mounted获取失败")
-            },
-            fCallback:(res) => {
-                if(res.code==2002){
-                    this.$router.push({  
-                        path: '/userInfo',
-                        query:{pathAddress: '/unitLinked'} 
-                    });
-                }
-                 console.log("mounted2002")
-            }
-        })
-  },
-  state:{
-        //客户姓名
-        customerName:"张三",
-        //证件类型
-        idType:"5",
-        //证件类型号码
-        idTypeNum:"411402199803145610",
-        //客户手机号
-        tel:"13103861564",
-        //报案人姓名
-        InfName:"李四",
-        //与客户关系
-        relation:"2",
-        //事故日期
-        accidentDate:"2018-12-01",
-        //事故地点
-        accidentPlace:"浦东大道",
-        //报案人手机号
-        infTel:"12345678915"
   },
   mutations:{
     //向state里设置数据
@@ -381,26 +306,88 @@ export default {
     }),
     //跳转到下一页
     nextPage() {
-      //客户手机号
-      let tel =document.querySelector('#tel').value;
-      //客户证件号码
-      let idTypeNum =document.querySelector('#idTypeNum').value;
-      //报案人手机号
-      let infTel =document.querySelector('#infTel').value;
-       
-      if( idTypeNum == ""){
-          Toast('您输入出险客户证件号码有误，请重新输入');
-          return ;
-      }
-      if(this.$toolsTwo.phoneFn(tel) == false){
-          Toast('您输入出险客户手机号有误，请重新输入');
-          return ;
-      }
-       if(this.$toolsTwo.phoneFn(infTel) == false){
-          Toast('您输入报案人手机号有误，请重新输入');
-          return ;
-      }
-      this.$router.push({ path: "/xzyiyuan" });
+      console.log(this.accidentResults)
+        //       //出险客户信息
+        let customerName = document.querySelector('#customerName').selectedIndex;
+      //事故日期
+        let accidentDatevalue = document.querySelector('#accidentDate').value;
+
+        //事故地点
+        let accidentPlacevalue = document.querySelector('#accidentPlace').value;
+
+        //报案人姓名
+        let InfNamevalue = document.querySelector('#InfName').value;
+        
+        //报案人关系
+        let relationvalue = document.querySelector('#relation').selectedIndex;
+
+        //客户手机号
+        let tel =document.querySelector('#tel').value;
+
+        //客户证件号码
+        let idTypeNum =document.querySelector('#idTypeNum').value;
+
+        //报案人手机号
+        let infTel =document.querySelector('#infTel').value;
+
+        //事故性质
+        let  InfNrelationame = document.querySelector('#InfNrelationame').selectedIndex;
+        let  detailsAccident = document.querySelector('#detailsAccident').value;
+        
+        if( customerName == 0){
+            Toast('出险客户姓名不能为空!');
+            return ;
+        }
+        // if( idTypeNum == ""){
+        //     Toast('出险客户证件号码不能为空!');
+        //     return ;
+        // }
+        // if(this.$toolsTwo.phoneFn(tel) == false){
+        //     Toast('出险客户手机号不能为空!');
+        //     return ;
+        // }
+        if( InfNamevalue == ""){
+            Toast('与出险报案人姓名不能为空!');
+            return ;
+        }
+        if( relationvalue == 0 ){
+            Toast('与出险客户关系不能为空!');
+            return ;
+            
+        }
+      if( accidentDatevalue == "" ){
+            Toast('事故日期不能为空!');
+            return ;
+        }
+        if( accidentPlacevalue == "" ){
+            Toast('事故地点不能为空!');
+            return ;
+        }
+       if( infTel == ""){
+            Toast('报案人手机号不能为空!');
+            return ;
+        }
+        if(this.$toolsTwo.phoneFn(infTel) == false){
+            Toast('报案人手机号格式有误!');
+            return ;
+        }
+        if( InfNrelationame == 0 ){
+            Toast('事故性质不能为空!');
+            return ;
+            
+        }
+        if( detailsAccident== ""){
+            Toast('事故经过不能为空!');
+            return ;
+            
+        }
+        if( this.accidentResults == ""){
+            Toast('请选择事故结果。');
+            return ;
+            
+        }
+
+        this.$router.push({ path: "/xzyiyuan" });
       
       
     },
@@ -427,13 +414,75 @@ export default {
         this.date2 = new Date(this.date2);
       }
     },
-    ok() {
+      ok() {
       this.agoShow = false;
+
+      if (this.startDate == undefined || this.startDate == "") {
+        this.startDate =
+          new Date().getFullYear() +
+          "-" +
+          (new Date().getMonth() + 1) +
+          "-" +
+          new Date().getDate();
+      } else {
+      }
     },
     cancelBtn() {
       this.agoShow = false;
+
+      if (this.startDate != undefined) {
+        this.startDate = "";
+      } else {
+      }
     },
-    
+
+    getInf(){
+        this.getebaoaninfo({
+            successCallback: (res) => {
+              
+              this.customer= document.querySelector('#customerName');
+              let ind =document.querySelector('#customerName').selectedIndex;
+              console.log("mounted获取成功")
+              
+
+              //证件类型
+              this.idType = document.querySelector('#idType');
+              //证件类型号码
+              this.idTypeNum = document.querySelector('#idTypeNum');
+              //客户手机号
+              this.tel = document.querySelector('#tel');
+               //报案人姓名
+              this.InfName = document.querySelector('#InfName');
+              //报案人关系
+              this.relation = document.querySelector('#relation');
+              //事故日期
+              this.accidentDate = document.querySelector('#accidentDate');
+              //事故地点
+              this.accidentPlace = document.querySelector('#accidentPlace');
+              //报案人手机号
+              this.infTel = document.querySelector('#infTel');
+              // //事故性质
+              // this.relation = document.querySelector('#InfNrelationame');
+              let list=res.data.list;
+
+              this.idTypeNum.value=list[ind].certi_CODE;
+
+              this.tel.value=list[ind].celler;
+
+              this.idType.selectedIndex = list[ind].certi_TYPE;
+
+              this.InfName.value= list[ind].real_NAME;
+              
+              this.infTel.value= list[ind].celler;
+
+                for (let i=0;i<list.length;i++){
+                  //存储客户姓名
+                 
+                  //this.customerName2.push(list[i].real_NAME);
+                }
+            },
+        })
+    },
   },
   
   

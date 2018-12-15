@@ -17,7 +17,7 @@
       <btnComponent :btnCount="'知道了'" @IKnow="IKnow"></btnComponent>
     </div>
     <alertContent :alertCount="alertCount"></alertContent>
-    <yesAndNoAlert :alertCountTwo="alertCountTwo" :telNo="telNo" @changCount="changCount"></yesAndNoAlert>
+    <yesAndNoAlert :tipsData="'手机号码'" :alertCountTwo="alertCountTwo" :telNo="telNo" @changCount="changCount"></yesAndNoAlert>
   </div>
 </template>
 
@@ -92,6 +92,11 @@ export default {
         successCallback: result => {
           console.log(result)
           if(result.code=='0'){
+            let tipsData = result.msg;
+              this.$router.push({
+                path: "/successPage",
+                query: { tipsData:tipsData }
+              });
 
           }else{
             // this.alertCount.alertData = result.msg;

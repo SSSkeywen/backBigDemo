@@ -4,7 +4,7 @@
             <div class="tips-content">
                 <div class="tips-font line-down">
                     <!-- <p class="p-one">保单：006762144694003</p> -->
-                    <p class="p-two">请确认您的手机号码{{telNo}}是否正确！</p>
+                    <p class="p-two">请确认您的{{tipsData}}{{telNo}}是否正确！</p>
                 </div>
                 <div class="tips-btn">
                     <div class="line-right">
@@ -26,7 +26,7 @@
                 isShowyesOrNo: false
             }
         },
-        props:['alertCountTwo','telNo'],
+        props:['alertCountTwo','telNo','tipsData'],
         methods: {
             closeTipsFn() {
                 this.alertCountTwo.isShowyesOrNo = false

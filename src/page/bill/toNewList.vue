@@ -7,7 +7,7 @@
     padding: 0.5rem 0 0.3rem;">
         <img :src="toDownIcon" width="100%">
       </div>
-      <hgroup>发票已开具</hgroup>
+      <hgroup>您的发票已开具成功</hgroup>
       <!-- <p
         class="xu-line"
       >····························································································································</p> -->
@@ -20,7 +20,7 @@
         </li>
       </ul>
     </section>
-    <p class="cm-tips">注：电子发票格式为JPG，请查看或点击图片保存</p>
+    <!-- <p class="cm-tips">注：电子发票格式为JPG，请查看或点击图片保存</p> -->
     <section class="cm-btn">
       <button class="style-click" @click="back">上一页</button>
     </section>

@@ -15,7 +15,7 @@
 <script>
 import headerT from "../../components/header.vue";
 import alertContent from "../../components/alertContent";
-import information from "../../components/billComponent/information.vue";
+import information from "../../components/billComponent/informationTwo.vue";
 import { mapActions } from "vuex";
 import { Toast } from "vant";
 export default {

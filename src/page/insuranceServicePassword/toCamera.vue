@@ -230,10 +230,10 @@ import { Toast } from 'vant';
 									let url = '',flag=0;
 									if(res.resultCode == '3'){
 										this.$router.push({ path: '/msg'});
-									}else if(res.resultCode == '2'){
-										url = 'jumppage/insurecode/ bindbank';
-										flag = 1;
 									}else if(res.resultCode == '1'){
+										url = 'jumppage/insurecode/bindbank';
+										flag = 1;
+									}else if(res.resultCode == '2'){
 										url = 'jumppage/insurecode/addinsuredcodeiclower';
 										flag = 1;
 									}	

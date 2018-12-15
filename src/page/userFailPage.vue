@@ -25,7 +25,15 @@ export default {
   },
   methods: {
     IKnowClose() {
-      WeixinJSBridge.call("closeWindow");
+      console.log(this.$route.query.tipsDataTwo)
+      if(this.$route.query.tipsDataTwo == 1){
+        this.$router.push({
+                path: "/"
+              });
+      }else{
+        WeixinJSBridge.call("closeWindow");
+      }
+      
     }
   }
 };

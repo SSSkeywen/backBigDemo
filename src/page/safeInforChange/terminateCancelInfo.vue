@@ -60,35 +60,17 @@
           <p v-text="tipsContent"></p>
         </div>
       </transition>
-      <section class="tips-two" v-if="isShowtipsThree">
-        <div class="tips-phone">
-          <header class="line-down">短信验证</header>
-          <div class="tips-number line-down">
-            <div class="tips-phone-top">
-              <div>
-                <input v-model="sendCodeCount" type="text" placeholder="请输入验证码">
-              </div>
-              <div>
-                <button
-                  class="style-click"
-                  :class="isDisabledSend? 'disable-style' : ''"
-                  @click="sendCode"
-                  :disabled="isDisabledSend"
-                >{{ sendCodeData }}</button>
-              </div>
-            </div>
-            <p class="tips-phone-down">请在300秒内输入您收到的短信验证码，若未收到短信，请点击“重新发送验证码”。</p>
-          </div>
-          <div class="tips-btn">
-            <div class="line-right">
-              <button class="style-click" @click="closeTipsFn">取消</button>
-            </div>
-            <div>
-              <button id="sendCode_btn" class="style-click" @click="submitContent">确认</button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <!-- <bgComponent></bgComponent> -->
+      <alertContent :alertCount="alertCount"></alertContent>
+      <sendAlrtContent
+        ref="senAlertContent"
+        :pnoneBack="phoneNo"
+        v-if="sendCode"
+        @clolseAlert="clolseAlert"
+        @sendCodeFnTwo="sendCodeFnTwo"
+        @sendCodeFn="sendCodeFn"
+      ></sendAlrtContent>
+
       <section class="error-style" v-show="isShowError">
         <div class="error-content">
           <img :src="xitongyichangImg" width="100%">
@@ -116,6 +98,12 @@
 </template>
 
 <script>
+import alertContent from "../../components/alertContent";
+import sendAlrtContent from "../../components/sendAlrtContent";
+import { mapActions } from "vuex";
+import { Toast } from "vant";
+// import { mapActions } from "vuex";
+import { List } from "vant";
 export default {
   data() {
     return {
@@ -126,15 +114,20 @@ export default {
       isShowTips: false,
       isShowError: false,
       isShowTips1: false,
+      phoneNo: "",
+      codeData: "",
+      sendCode: false,
       tipsContent1: "",
-      sendCodeCount: "", //验证码
-      sendCodeData: "获取短信验证码",
-      isDisabledSend: false,
+      alertCount: {
+        isShowAlert: false,
+        alertData: "请输入"
+      },
+
       selectAll: false,
       tipsContent: "",
       isShowyesOrNo: false, //提交显示
       newAddZhList: false, //新增账户是否显示
-      isShowtipsThree: false,
+      // isShowtipsThree: false,
       numOne: "",
       numTwo: "",
       selectListData: [
@@ -154,38 +147,66 @@ export default {
       contentLists: [
         {
           isSelect: false,
-          POLICY_CODE: "006762144694003",
-          INTERNAL_ID: "7289",
-          PRODUCT_NAME: "太平福禄康瑞终身重大疾病保险",
-          LIA_STATE_NAME: "有效",
-          PAY_DUE_DATE: "2017-09-10",
-          END_DATE_BEFORE: "2018-09-10",
-          END_DATE_AFTER: "2019-09-10"
-        },
-        {
-          isSelect: false,
-          POLICY_CODE: "006762144694003",
-          INTERNAL_ID: "7289",
-          PRODUCT_NAME: "太平福禄康瑞终身重大疾病保险",
-          LIA_STATE_NAME: "有效",
-          PAY_DUE_DATE: "2017-09-10",
-          END_DATE_BEFORE: "2018-09-10",
-          END_DATE_AFTER: "2019-09-10"
-        },
-        {
-          isSelect: false,
-          POLICY_CODE: "006762144694003",
-          INTERNAL_ID: "7289",
-          PRODUCT_NAME: "太平福禄康瑞终身重大疾病保险",
-          LIA_STATE_NAME: "有效",
-          PAY_DUE_DATE: "2017-09-10",
-          END_DATE_BEFORE: "2018-09-10",
-          END_DATE_AFTER: "2019-09-10"
+          POLICY_CODE: "",
+          INTERNAL_ID: "",
+          ITEM_ID: "",
+          PRODUCT_NAME: "",
+          LIA_STATE_NAME: "",
+          PAY_DUE_DATE: "",
+          END_DATE_BEFORE: "",
+          END_DATE_AFTER: ""
         }
       ]
     };
   },
+  components: {
+    // bgComponent,
+    alertContent,
+    sendAlrtContent
+  },
+  created() {
+    var contentPlocly = this.$route.query.contentPlocly;
+    console.log(contentPlocly);
+    this.terminaTecancelInfo({
+      contentPlocly,
+      successCallback: res => {
+        // console.log("panpan" + res.data);
+        // console.log(res.data.resultList);
+        // this.InformationMap = res.data.InformationMap
+        for (let item of res.data.resultList) {
+          item.selectTrue = false;
+        }
+        this.contentLists = res.data.resultList;
+        // console.log(this.ITEM_ID);
+        this.ITEM_ID = this.contentLists[0].ITEM_ID;
+        console.log(this.ITEM_ID);
+        // 赵盼
+        // switch (this.contentLists) {
+        //   case 0:
+        //     this.$refs.senAlertContent.inputCode(result.data);
+        //     break;
+        //   case 1:
+        //     let tipsData = `今日认证次数已达上限，请明天再来！`;
+        //     this.$router.push({
+        //       path: "/userFailPage",
+        //       query: { tipsData: tipsData }
+        //     });
+        //     break;
+        //   default:
+        //     this.alertCount.alertData = result.msg;
+        //     this.alertCount.isShowAlert = true;
+        //     break;
+        // }
+      },
+      fCallback: res => {}
+    });
+  },
   methods: {
+    ...mapActions({
+      terminaTecancelInfo: "terminaTecancelInfo",
+      terminatecancelsendcode: "terminatecancelsendcode",
+      terminatecancelvalidatecode: "terminatecancelvalidatecode"
+    }),
     //Toast方法
     showTipsFn() {
       this.isShowTips = true;
@@ -193,43 +214,129 @@ export default {
         this.isShowTips = false;
       }, 1000);
     },
-    //发送验证码
-    sendCode() {
-      this.isDisabledSend = true;
-      this.sendCodeData = "300秒后重新发送";
-      this.miuFnOne(300);
+    clolseAlert() {
+      this.sendCode = false;
+    },
 
-      setTimeout(() => {
-        this.sendCodeData = "重新发送";
-        this.isDisabledSend = false;
-      }, 300000);
-    },
-    //验证码倒计时函数
-    miuFnOne(miu) {
-      let miuFn = setTimeout(() => {
-        miu--;
-        this.sendCodeData = miu + "秒后重新发送";
-        if (miu == 1) {
-          return false;
+    //发送验证码
+    sendCodeFn() {
+      // this.$refs.senAlertContent.inputCode(111)
+      let phoneNoData = {
+        userHandphone: this.phoneNoTwo
+      };
+
+      this.terminatecancelsendcode({
+        // code,
+        // phoneNoData,
+        successCallback: result => {
+          switch (result.code) {
+            case 0:
+              this.$refs.senAlertContent.inputCode(result.data);
+              break;
+            case 1:
+              let tipsData = `今日认证次数已达上限，请明天再来！`;
+              this.$router.push({
+                path: "/userFailPage",
+                query: { tipsData: tipsData }
+              });
+              break;
+            default:
+              this.alertCount.alertData = result.msg;
+              this.alertCount.isShowAlert = true;
+              break;
+          }
+        },
+        failCallback: res => {
+          this.alertCount.alertData = res.msg;
+          this.alertCount.isShowAlert = true;
+          // toast1.clear();
         }
-        this.miuFnOne(miu);
-      }, 1000);
+      });
     },
-    //提交方法
-    submitContent() {
-      console.log(this.sendCodeCount);
-      if (this.sendCodeCount == "") {
-        this.tipsContent = "验证码不能为空！！！";
-        this.showTipsFn();
+
+    //进行验证
+    sendCodeFnTwo(codeData) {
+      this.sendCode = false;
+      if (codeData == "") {
+        this.alertCount.alertData = "请输入验证码！";
+        this.alertCount.isShowAlert = true;
         return false;
       }
-      this.$router.push({ path: "/terminateCancelResult" });
+
+      var policyList = [];
+      var zp;
+
+      var v = false;
+      for (let item of this.contentLists) {
+        console.log(item.isSelect);
+        if (item.isSelect == true) {
+          zp = {};
+          zp.policyCode = item.POLICY_CODE;
+          zp.itemId = this.ITEM_ID;
+          policyList.push(zp);
+
+          // console.log(policyList);
+          // console.log(9999999);
+          v = true;
+          // break;
+        }
+      }
+      var code = codeData;
+
+      this.terminatecancelvalidatecode({
+        code,
+        // phoneCodeNoData,
+        successCallback: result => {
+          console.log(result.code);
+          switch (result.code) {
+            case 0:
+              window.localStorage.setItem("isBinding", "1");
+              // var policyList = [];
+              policyList = JSON.stringify(policyList);
+              // return false;
+              this.$router.push({
+                path: "/terminateCancelResult",
+                query: {
+                  policyList: policyList
+                }
+              });
+              break;
+            case "1":
+              this.alertCount.alertData = result.msg;
+              this.alertCount.isShowAlert = true;
+              break;
+            case "2":
+              this.alertCount.alertData = result.msg;
+              this.alertCount.isShowAlert = true;
+              break;
+            case "3":
+              this.alertCount.alertData = result.msg;
+              this.alertCount.isShowAlert = true;
+              break;
+            case "9":
+              tipsData = result.msg;
+              this.$router.push({
+                path: "/userFailPage",
+                query: { tipsData: tipsData }
+              });
+              break;
+            default:
+              this.$refs.senAlertContent.isCodeWrongFn();
+              break;
+          }
+        },
+        failCallback: res => {
+          this.alertCount.alertData = res.msg;
+          this.alertCount.isShowAlert = true;
+        }
+      });
     },
+
     submitFn() {
       var v = false;
       for (let item of this.contentLists) {
         if (item.isSelect == true) {
-          this.isShowtipsThree = true;
+          this.sendCode = true;
           v = true;
           break;
         }

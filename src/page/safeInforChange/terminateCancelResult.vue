@@ -7,11 +7,11 @@
       <section class="success-list">
         <ul v-for="(item,index) in successData" :key="index">
           <li class="line-down-two" :class="item.successStyle">
-            <p class="title-p">{{item.successTips}}</p>
+            <p class="title-p">{{item.isShowPwContent?'变更失败':'变更成功'}}</p>
           </li>
           <li class="success-li-content">
             <div class="success-li-number" @click="isShowPwFn(index)">
-              <p>保单号：{{item.bdNoCount}}</p>
+              <p>保单号：{{item.POLICY_CODE}}</p>
               <div
                 class="toup-icon"
                 :class="item.isShowPwContent? '':'to-down-icon'"
@@ -21,7 +21,7 @@
               </div>
             </div>
 
-            <p v-if="item.isShowPwContent" class="success-pw-countent" v-text="item.hxCountright"></p>
+            <p v-if="item.RETURN_MESSAGE" class="success-pw-countent" v-text="item.RETURN_MESSAGE"></p>
           </li>
         </ul>
       </section>
@@ -42,6 +42,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+import { List } from "vant";
 export default {
   data() {
     return {
@@ -78,10 +80,34 @@ export default {
       ]
     };
   },
+  created() {
+    //var policyList = "[{POLICY_CODE:'',ITEM_ID:''}]";
+    var policyListOne = JSON.parse(this.$route.query.policyList);
+
+    let policyList = {
+      policyList: policyListOne
+    };
+
+    this.toterminatecancelapply({
+      policyList,
+      successCallback: res => {
+        this.successData = res.data.resultList;
+      },
+      fCallback: res => {}
+    });
+  },
   methods: {
+    ...mapActions({
+      toterminatecancelapply: "toterminatecancelapply"
+    }),
     isShowPwFn(index) {
       this.successData[index].isShowPwContent = !this.successData[index]
         .isShowPwContent;
+    },
+    clickSure() {
+      this.$router.push({
+        path: "/businessHanding"
+      });
     }
   }
 };

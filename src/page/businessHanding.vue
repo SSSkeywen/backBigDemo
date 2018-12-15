@@ -14,7 +14,7 @@
             :class="itemTwo.selectLineStyle"
             v-for="(itemTwo,indexTwo) in item.selectLists"
             :key="indexTwo"
-            @click="jumpPage(itemTwo.selectPath,itemTwo.nextPath)"
+            @click="jumpPage(itemTwo.selectPath)"
           >
             <div class="me-content-list-img">
               <img :src="itemTwo.selectIcon" alt>
@@ -38,7 +38,7 @@
             :class="itemTwo.selectLineStyle"
             v-for="(itemTwo,indexTwo) in item.selectLists"
             :key="indexTwo"
-            @click="jumpPage(itemTwo.selectPath,itemTwo.nextPath)"
+            @click="jumpPage(itemTwo.selectPath)"
           >
             <div class="me-content-list-img">
               <img :src="itemTwo.selectIcon" alt>
@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -118,7 +119,7 @@ export default {
             {
               selectIcon: require("@/assets/img/bangding.png"),
               selectName: "绑定账号变更",
-              selectPath: ""
+              selectPath: "binding"
             }
           ]
         },
@@ -183,7 +184,7 @@ export default {
             {
               selectIcon: require("@/assets/img/dizhi.png"),
               selectName: "联系地址",
-              selectPath: "/",
+              selectPath: "/contactAddress",
               selectLineStyle: ""
             }
           ]
@@ -201,7 +202,7 @@ export default {
             {
               selectIcon: require("@/assets/img/jiane.png"),
               selectName: "减额交清",
-              selectPath: "/",
+              selectPath: "/reduceAmountList",
               selectLineStyle: ""
             }
           ]
@@ -213,14 +214,13 @@ export default {
             {
               selectIcon: require("@/assets/img/nianjinb.png"),
               selectName: "年金领取频率<br>及年限变更",
-              selectPath: "/passwordCheck",
-              nextPath:"/annuityCollectList",
+              selectPath: "/annuityCollectList",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/img/hongli.png"),
               selectName: "红利领取",
-              selectPath: "",
+              selectPath: "/receiveList",
               selectLineStyle: "line-down-me"
             },
             {
@@ -274,7 +274,7 @@ export default {
             {
               selectIcon: require("@/assets/img/xuqiz.png"),
               selectName: "续期缴费成功<br>通知书",
-              selectPath: "",
+              selectPath: "/billChangeSuccess",
               selectLineStyle: "line-down-me"
             },
             {
@@ -361,22 +361,43 @@ export default {
     };
   },
   methods: {
-    jumpPage(pathAddress,nextPath) {
-      console.log(pathAddress+'-'+nextPath);
-      // if(true){
-      //   this.$router.push({ path: '/userInfo',query: {pathAddress: pathAddress} });
-      // }else{
-      // this.$router.push({ path: pathAddress });
-      // }
+    ...mapActions({
+                toBindUserUpdate: "toBindUserUpdate"
+            }),
+    jumpPage(pathAddress) {
+      console.log(pathAddress);
+      if(pathAddress =='binding'){
+        this.toBindUserUpdateFn()
+        return false
+      }
       let isBinding = JSON.parse(window.localStorage.getItem("isBinding"));
       if (isBinding == "1") {
-        this.$router.push({ path: pathAddress ,query: { nextPath: nextPath }});
+        this.$router.push({ path: pathAddress });
       } else {
         this.$router.push({
           path: "/userInfo",
-          query: { pathAddress: pathAddress,nextPath: nextPath }
+          query: { pathAddress: pathAddress }
         });
-      }
+        }
+      },
+      toBindUserUpdateFn() {
+      // 绑定账号变更跳转
+      this.toBindUserUpdate({
+        successCallback: res => {
+          console.log(res.data);
+          var link = res.data
+          window.location.href = link
+          
+        },
+        failCallback: res => {
+          if (res.code == 2002) {
+            this.$route.push({
+              path: "/userInfo",
+              query: { pathAddress: "/unbindSelf" }
+            });
+          }
+        }
+      });
     }
   }
 };

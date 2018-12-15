@@ -348,10 +348,10 @@ export default {
           switch (result.responsecode) {
             case "0":
             window.localStorage.setItem('isBinding', '1')
-              // let tipsData = `认证成功`;
+              let tipsData = `认证成功`;
               this.$router.push({
                 path: "/successPage",
-                query: { pathAddress: this.$route.query.pathAddress,nextPath: this.$route.query.nextPath }
+                query: { pathAddress: this.$route.query.pathAddress,tipsData:tipsData }
               });
               break;
             case "1":

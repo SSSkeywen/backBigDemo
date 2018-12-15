@@ -6,8 +6,8 @@
                 <span class="title">现有账户价值</span>
                 <span style="font-size:1.0em;color:#ffffff">（含贷款本息）（元）：</span>
                 <br>
-                <span v-if="worthData.universalValue!=null" class="title_detail">{{worthData.universalValue}}
-                    <!-- <numScroll :value="worthData.universalValue"></numScroll> -->
+                <span v-if="worthData.universalValue!=null" class="title_detail">
+                    <numScroll :value="worthData.universalValue" :id="'num1'"></numScroll>
                 </span> 
                 <span v-if="worthData.universalValue==null" class="title_detail">客官莫急</span> 
             </a> 
@@ -17,8 +17,8 @@
                 <span class="title1">累计收益（元）：</span>
                 <br>
                 <br>
-                <span v-if="worthData.totalDepositAmount!=null" class="title_detail1">{{worthData.totalDepositAmount}}
-                     <!-- <numScroll :value="worthData.totalDepositAmount"></numScroll> -->
+                <span v-if="worthData.totalDepositAmount!=null" class="title_detail1">
+                     <numScroll :value="worthData.totalDepositAmount"></numScroll>
                 </span> 
                 <span v-if="worthData.totalDepositAmount==null" class="title_detail1">客官莫急</span> 
                 <span style="float: right;margin-top:0px;"><img :src="imgSrc1" width="100%" height="80%">
@@ -80,18 +80,16 @@
 
 
 <script>
-// import numScroll from '../../components/numScroll.vue';
+import numScroll from '../../components/numScroll.vue';
 import { mapActions } from "vuex";
 export default {
     components:{
-        // numScroll
+        numScroll
     },
     data() {
         return {
             imgSrc1: require('@/assets/mgImg/zfb.png'),
             worthData:{},
-            // rates:[],
-            // months:[],
             chartTitle:'',
             myChart:'',
             option:{
@@ -242,7 +240,8 @@ export default {
                     itemId: this.worthData.itemId
                 } 
             });
-        }
+        },
+        
     }
 }
 </script>

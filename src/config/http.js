@@ -17,14 +17,14 @@ import { Toast } from 'vant';
 // } else if (process.env.NODE_ENV == 'debug') { 
 //  axios.defaults.baseURL = '';
 // } else if (process.env.NODE_ENV == 'production') { 
-axios.defaults.baseURL = 'http://localhost.cntaiping.com:8080/nwxqhb';
-// axios.defaults.baseURL = config.api_address_url;
+// axios.defaults.baseURL = 'http://localhost.cntaiping.com:8080/nwxqhb';
+axios.defaults.baseURL = config.api_address_url;
 
 // }
 // alert(1)
 
 // 请求超时时间
-axios.defaults.timeout = 10000;
+axios.defaults.timeout = 60000;
 // post请求头
 axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
 // response.header("Access-Control-Allow-Origin", "*");

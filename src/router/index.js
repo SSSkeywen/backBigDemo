@@ -70,6 +70,9 @@ import addressNew from '@/page/letter/addressNew'
 
 // 减额交情
 import passwordCheck from '@/page/reduceAmount/passwordCheck'
+import reduceAmountList from '@/page/reduceAmount/reduceAmountList'
+import reduceAmountDetail from '@/page/reduceAmount/reduceAmountDetail'
+import reduceAmountResult from '@/page/reduceAmount/reduceResult'
 // 年金领取频率及年限变更
 import annuityCollectList from '@/page/annuityCollection/annuityCollectList'
 import annuityCollectDetail from '@/page/annuityCollection/annuityCollectDetail'
@@ -89,6 +92,10 @@ import phoneChange from '@/page/personalInformationChange/phoneChange'
 import emilChange from '@/page/personalInformationChange/emilChange'
 import homeAdressChange from '@/page/personalInformationChange/homeAdressChange'
 import companyAdressChange from '@/page/personalInformationChange/companyAdressChange'
+
+//交费信息变更
+import contactAddress from '@/page/payInfoChange/contactAddress'
+import contactAddressChange from '@/page/payInfoChange/contactAddressChange'
 
 //基本服务
 import unbindSelf from '@/page/baseService/unbindSelf'
@@ -114,6 +121,18 @@ import xzyiyuan from "@/page/baseService/xzyiyuan";
 // 赵盼医院查询列表
 
 import yiyuanlb from "@/page/baseService/yiyuanlb";
+
+//红利领取
+
+import receiveList from "@/page/divdendsReceive/receiveList";
+
+import accpuntInf from "@/page/divdendsReceive/accpuntInf";
+
+import changeSuccess from "@/page/divdendsReceive/changeSuccess";
+
+//通知书方式变更
+import billChangeSuccess from "@/page/notificationSendingModeChanges/billChangeSuccess"
+
 
 Vue.use(Router)
 
@@ -200,11 +219,11 @@ export default new Router({
       component: toNewIndex
     }, {
       path: '/toNewIndexMessage',
-      name: 'toNewIndexMessage', 
+      name: 'toNewIndexMessage',
       component: toNewIndexMessage
-    },{
+    }, {
       path: '/toNewList',
-      name: 'toNewList', 
+      name: 'toNewList',
       component: toNewList
     }, {
       path: '/toNewIndexView',
@@ -458,6 +477,18 @@ export default new Router({
       component: companyAdressChange
     },
 
+    //交费信息变更
+    {
+      path: '/contactAddress',
+      name: 'contactAddress',
+      component: contactAddress
+    },
+    {
+      path: '/contactAddressChange',
+      name: 'contactAddressChange',
+      component: contactAddressChange
+    },
+
     //基本服务
     {
       path: '/unbindSelf',
@@ -483,7 +514,20 @@ export default new Router({
       path: '/passwordCheck',
       name: 'passwordCheck',
       component: passwordCheck
+    }, {
+      path: '/reduceAmountList',
+      name: 'reduceAmountList',
+      component: reduceAmountList
+    }, {
+      path: '/reduceAmountDetail',
+      name: 'reduceAmountDetail',
+      component: reduceAmountDetail
+    }, {
+      path: '/reduceAmountResult',
+      name: 'reduceAmountResult',
+      component: reduceAmountResult
     },
+
     {
       path: '/annuityCollectList',
       name: 'annuityCollectList',
@@ -553,6 +597,36 @@ export default new Router({
 
       component: yiyuanlb
 
-    }
+    }, {
+
+      path: '/receiveList',
+
+      name: 'receiveList',
+
+      component: receiveList
+
+    }, {
+
+      path: '/accpuntInf',
+
+      name: 'accpuntInf',
+
+      component: accpuntInf
+
+    },
+
+    {
+
+      path: '/changeSuccess',
+
+      name: 'changeSuccess',
+
+      component: changeSuccess
+
+    },
+
+
+    //通知书方式变更
+    {path: '/billChangeSuccess',name: 'billChangeSuccess',component: billChangeSuccess},
   ]
 })

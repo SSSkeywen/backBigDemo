@@ -3,7 +3,7 @@
     <div class="tips-img">
       <img :src="tipsIconSrc" alt>
     </div>
-    <div class="tips-font" >认证成功</div>
+    <div class="tips-font" v-html="tipsData"></div>
     <nav class="nav_btn">
       <button @click="IKnowClose" name="image">知道了</button>
     </nav>
@@ -16,7 +16,8 @@ export default {
   data() {
     return {
       tipsIconSrc: require("@/assets/publicImg/icon_2.jpg"),
-      tipsContent: "" 
+      tipsContent: "" ,
+      tipsData:this.$route.query.tipsData
     };
   },
   mounted() {

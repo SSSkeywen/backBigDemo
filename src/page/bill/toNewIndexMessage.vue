@@ -5,7 +5,7 @@
         <div class="tn-title">
           <p class="tn-name">{{xqListData.PRODUCT_NAME}}</p>
           <div class="tn-state">
-            <p>被保人：{{xqListData.ACCO_NAME}}</p>
+            <p>被保人：{{xqListData.BBR_NAME}}</p>
             <p class="green">状态：{{xqListData.LIABILITY_STATUS_NAME}} </p>
           </div>
         </div>
@@ -27,9 +27,9 @@
                   <div class="tn-list-top">
                     <p>{{item.DUE_TIME}}</p>
                     <p>{{item.FEE_AMOUNT}}</p>
-                    <p @click="openContent(index)">{{item.MODE_NAME}}<i><img :class="indexKey==index?'open-style':''" :src="toDownIcon"></i></p>
+                    <p @click="openContent(index)">已交费<i><img :class="item.isShow?'open-style':''" :src="toDownIcon"></i></p>
                   </div>
-                  <div v-if="indexKey==index" class="tn-list-bottom">
+                  <div v-if="item.isShow" class="tn-list-bottom">
                     <button @click="seeTheBillMessage(index)">查看账单</button>
                     <button v-if="item.ELEFLAG == 1" @click="viewElectronicInvoices(item.FEE_ID,'查看电子发票')">查看电子发票</button>
                     <button v-else @click="viewElectronicInvoices(item.FEE_ID,'申请电子发票')">申请电子发票</button>
@@ -92,12 +92,13 @@ export default {
   created(){
     console.log(this.$route.query.policyCode)
     let xqPolicyCode = this.$route.query.policyCode
-    // let xqPolicyCode = new FormData()
-    //     xqPolicyCode.append("policyCode", this.$route.query.policyCode);
     this.getToNewIndexListMsg({
       xqPolicyCode,
       successCallback: result => {
         console.log(result);
+        for(let item of result.data.recordInfoSub){
+          item.isShow = false
+        }
         this.xqListData = result.data
       },
       fCallback: res => {}
@@ -116,7 +117,7 @@ export default {
       // this.$router.push({ path: '/mgPlicyInfo',query: {policyCode: policyCode} });
     },
     openContent(index){
-      this.indexKey = index
+      this.xqListData.recordInfoSub[index].isShow = !this.xqListData.recordInfoSub[index].isShow
     },
 
     //打开查看账单
@@ -217,7 +218,7 @@ export default {
     box-sizing: border-box;
     .tn-look {
       margin-right: 4%;
-      color: #fba41c;
+      color: #006CB7;
       text-decoration: underline;
       font-weight: 600;
       float: right;
