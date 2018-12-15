@@ -1,11 +1,11 @@
 <template>
 <div class="mg-box">
-	<div class="reduceAmountList-box" v-if="showConten">
-	    <headerT :headerContent="headerContent" style="
-		"></headerT>
+        <div class="reduceAmountList-box" v-if="showConten">
+            <headerT :headerContent="headerContent" style="
+                "></headerT>
         <div class="reduceAmountList-list">
             <div class="reduceAmountList-list-box"  v-for="(item, index) in contentList" :key="index">
-            	<div class="bq-img" @click="selectFn(index)" :class="{active: item.selectTrue}">
+                    <div class="bq-img" @click="selectFn(index)" :class="{active: item.selectTrue}">
                 </div>
                 <div class="reduceAmountList-list-right">
                     <div style="
@@ -21,7 +21,11 @@
                     </div>
                     <div class="setfont">
                         <p>第一主险名称:</p>
-                        <p v-text="item.PRODUCT_NAME"></p>
+                        <p v-text="item.PRODUCT_NAME" 
+                        style="
+                            width: 65%;
+                        "
+                        ></p>
                     </div>
                     <div class="setfont">
                         <p>下期缴费日:</p>
@@ -35,12 +39,12 @@
             </div>
         </div>
         <amountbtn @changeBtn="changeBtn" @allSelect="allSelect" :controlchangeBtn="selectAll"></amountbtn>
-	</div>
+        </div>
     <alertContent :alertCount="alertCount"></alertContent>
     <section class="error-style" v-show="isShowError">
         <div class="error-content">
             <img src="@/assets/reduceAmount/xitongyichang.png" width="100%">
-            <p class="error-font"v-text="tipsContent"></p>
+            <p class="error-font" v-text="tipsContent"></p>
             <div class="error-btn">
                 <button class="style-click" @click="selectClickHere">知道了</button>
             </div>
@@ -56,8 +60,8 @@ import headerT from "@/components/header.vue"
 import { mapActions } from "vuex";
 import { Toast } from "vant";
 export default {
-	data(){
-		return{
+        data(){
+                return{
             showConten: false,
             selectAll: false,
             isShowError: false,
@@ -65,14 +69,14 @@ export default {
             contentList:  [
                 
             ],
-			password: '',
-			alertCount: {
-				isShowAlert: false,
-				alertData: ''
-			},
-			headerContent: '您名下支持减额交情的保单列表',
-		}
-	},
+                        password: '',
+                        alertCount: {
+                                isShowAlert: false,
+                                alertData: ''
+                        },
+                        headerContent: '您名下支持减额交情的保单列表',
+                }
+        },
     mounted(){
          this.getReduceAmountList({
             successCallback: res => {
@@ -100,7 +104,7 @@ export default {
         });
         
     },
-	methods: {
+        methods: {
          ...mapActions({
              getReduceAmountList: 'getReduceAmountList'
         }),
@@ -166,10 +170,10 @@ export default {
             }
             this.selectAll= true
         }
-	
-	},
-	components: {
-	 headerT,
+        
+        },
+        components: {
+         headerT,
      amountbtn,
      alertContent
   },
@@ -205,10 +209,15 @@ export default {
             .setfont{
                 color: #9a9a9a;
                 padding-top: 0.4rem;
-                font-size: 0.15rem;
+                font-size: 0.3rem;
                 display: flex;
-                p{
+                p:first-child{
                     padding-right: 0.22rem;
+                }
+                p:last-child{
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
                 }
             }
 

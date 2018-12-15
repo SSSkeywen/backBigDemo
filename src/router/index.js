@@ -97,6 +97,7 @@ import companyAdressChange from '@/page/personalInformationChange/companyAdressC
 import contactAddress from '@/page/payInfoChange/contactAddress'
 import contactAddressChange from '@/page/payInfoChange/contactAddressChange'
 
+
 //基本服务
 import unbindSelf from '@/page/baseService/unbindSelf'
 import unbindHistory from '@/page/baseService/unbindHistory'
@@ -132,6 +133,10 @@ import changeSuccess from "@/page/divdendsReceive/changeSuccess";
 
 //通知书方式变更
 import billChangeSuccess from "@/page/notificationSendingModeChanges/billChangeSuccess"
+import billLoseEfficacy from "@/page/notificationSendingModeChanges/billLoseEfficacy"
+import billYearReport from "@/page/notificationSendingModeChanges/billYearReport"
+import billLoseEfficacyEver from "@/page/notificationSendingModeChanges/billLoseEfficacyEver"
+import infoChangeResult from '@/page/notificationSendingModeChanges/infoChangeResult'
 
 
 Vue.use(Router)
@@ -487,7 +492,8 @@ export default new Router({
       path: '/contactAddressChange',
       name: 'contactAddressChange',
       component: contactAddressChange
-    },
+    }, 
+     
 
     //基本服务
     {
@@ -627,6 +633,10 @@ export default new Router({
 
 
     //通知书方式变更
-    {path: '/billChangeSuccess',name: 'billChangeSuccess',component: billChangeSuccess},
+    { path: '/billChangeSuccess', name: 'billChangeSuccess', component: billChangeSuccess },
+    { path: '/billLoseEfficacy', name: 'billLoseEfficacy', component: billLoseEfficacy },
+    { path: '/billYearReport', name: 'billYearReport', component: billYearReport },
+    { path: '/billLoseEfficacyEver', name: 'billLoseEfficacyEver', component: billLoseEfficacyEver},
+    {path: '/infoChangeResult',name: 'infoChangeResult',component: infoChangeResult},
   ]
 })

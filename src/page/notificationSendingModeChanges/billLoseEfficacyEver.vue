@@ -17,7 +17,7 @@
 import headerT from "../../components/header.vue";
 import alertContent from "../../components/alertContent";
 import yesAndNoAlert from "../../components/yesAndNoAlertTwo";
-import information from "../../components/billChangeComponent/information.vue";
+import information from "../../components/billChangeComponent/informationTwo.vue";
 import { mapActions } from "vuex";
 import { Toast } from "vant";
 export default {
@@ -29,7 +29,7 @@ export default {
   },
   data() {
     return {
-      headerContent: "转账成功通知书发送方式变更",
+      headerContent: "永久失效通知书发送方式变更",
       contentListData: [],
       isShowSqData: false,
       alertCount: {
@@ -49,9 +49,7 @@ export default {
       message: "加载中...",
       duration: 2000
     });
-    let postId = "3";
-    this.billChangeFn({
-      postId,
+    this.billChangeEverFn({
       successCallback: result => {
         console.log(result);
         this.contentListData = result.list;
@@ -67,7 +65,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      billChangeFn: "billChangeFn",
+      billChangeEverFn: "billChangeEverFn",
       billChangeInformation: "billChangeInformation"
     }),
     viewElectronicInvoices(num, policyCode,noticeType) {
@@ -86,6 +84,7 @@ export default {
         noticeWay: tellTheWay,
         noticeType: noticeType
       };
+      console.log(this.typeData)
       },
 
 
@@ -115,3 +114,5 @@ export default {
   box-sizing: border-box;
 }
 </style>
+    
+     

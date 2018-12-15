@@ -10,6 +10,7 @@ import { apiConfig } from '../api.js'
 
 const billChangeFn = 'billChangeFn'
 const billChangeInformation = 'billChangeInformation'
+const billChangeEverFn = 'billChangeEverFn'
 
 
 const state = {
@@ -21,7 +22,21 @@ const mutations = {
 
 const actions = {
     [billChangeFn]({ commit }, { postId, successCallback = () => { }, failCallback = () => { } }) {
-        post(apiConfig.api_base_url + 'reportNotice/query/' + postId,'' ).then((res) => {
+        post(apiConfig.api_base_url + 'reportnotice/query/' + postId,'' ).then((res) => {
+            let result = res.data
+            if (res.code == '0') {
+                successCallback(result)
+            } else {
+                failCallback(res.msg)
+            }
+        }).catch((err) => {
+            failCallback(err)
+        })
+    },
+
+    //永久
+    [billChangeEverFn]({ commit }, { successCallback = () => { }, failCallback = () => { } }) {
+        post(apiConfig.api_base_url + 'reportnotice/querylosenote', '').then((res) => {
             let result = res.data
             if (res.code == '0') {
                 successCallback(result)
@@ -35,7 +50,7 @@ const actions = {
 
     //信息变更
     [billChangeInformation]({ commit }, { typeData, successCallback = () => { }, failCallback = () => { } }) {
-        post(apiConfig.api_base_url + 'reportNotice/update', typeData).then((res) => {
+        post(apiConfig.api_base_url + 'reportnotice/update', typeData).then((res) => {
             console.log(res)
             let result = res.data
             if (res.code == '0') {

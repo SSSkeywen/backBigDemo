@@ -26,19 +26,16 @@
             },
             allSelect(){
                 this.isactive = !this.isactive
-                console.log("this.isactive", this.isactive)
                 this.$emit('allSelect', this.isactive)
             }
         },
         watch:{
           controlchangeBtn(val){
             this.isactive = val
-             console.log("val", val)
           }
         },
         created(){
             this.isactive = this.controlchangeBtn
-            console.log(1)
         },
         props:['controlchangeBtn']
     }
@@ -65,6 +62,10 @@
             border-radius: 0.1rem;
             margin-right: 0.3rem;
         }
+        .amountButton-font{
+            font-size: 0.3rem;
+            color: #606060;
+        }
        .amountButton-left{
             display: flex;
             align-items: center;
@@ -75,7 +76,7 @@
             color: #fff;
             width: 60%;
             text-align: center;
-
+            font-size: 0.34rem;
         }
     }
 </style>

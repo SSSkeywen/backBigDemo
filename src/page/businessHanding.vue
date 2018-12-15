@@ -280,19 +280,19 @@ export default {
             {
               selectIcon: require("@/assets/img/shixiao.png"),
               selectName: "失效通知书",
-              selectPath: "",
+              selectPath: "/billLoseEfficacy",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/img/baodan.png"),
               selectName: "保单年度报告",
-              selectPath: "",
+              selectPath: "/billYearReport",
               selectLineStyle: ""
             },
             {
               selectIcon: require("@/assets/img/yomgjiu.png"),
               selectName: "永久失效通知书",
-              selectPath: "",
+              selectPath: "/billLoseEfficacyEver",
               selectLineStyle: ""
             }
           ]

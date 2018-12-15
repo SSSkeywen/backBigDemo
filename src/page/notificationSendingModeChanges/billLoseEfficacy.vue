@@ -29,7 +29,7 @@ export default {
   },
   data() {
     return {
-      headerContent: "转账成功通知书发送方式变更",
+      headerContent: "失效通知书发送方式变更",
       contentListData: [],
       isShowSqData: false,
       alertCount: {
@@ -49,7 +49,7 @@ export default {
       message: "加载中...",
       duration: 2000
     });
-    let postId = "3";
+    let postId = "4";
     this.billChangeFn({
       postId,
       successCallback: result => {
@@ -115,3 +115,4 @@ export default {
   box-sizing: border-box;
 }
 </style>
+    
