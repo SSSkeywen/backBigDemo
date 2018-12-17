@@ -35,14 +35,14 @@
                         <a href="#" @click="toDetial('month')">
                             <span class="titleFont">近一月收益（元）：</span>
                             <br> 
-                            <span class="font1"><label>{{worthData.oneMonthProfit}}</label></span> 
+                            <span class="font1"><label>{{worthData.oneMonthProfit | keepTwoNum}}</label></span> 
                         </a>
                     </td>
                     <td class="border">
                         <a href="#" @click="toDetial('year')">
                             <span class="titleFont">近一年收益（元）：</span>
                             <br>
-                            <span class="font1">{{worthData.oneYearProfit}}</span>
+                            <span class="font1">{{worthData.oneYearProfit | keepTwoNum}}</span>
                         </a>
                     </td>
                 </tr>
@@ -51,14 +51,14 @@
                         <a href="#" @click="toDetial('lqje')">
                             <span class="titleFont">总领取金额（元）：</span>
                             <br> 
-                            <span class="font1">{{worthData.totalPayAmount}}</span> 
+                            <span class="font1">{{worthData.totalPayAmount | keepTwoNum}}</span> 
                         </a>
                     </td>
                     <td class="border">
                         <a href="#" @click="toDetial('trje')">
                             <span class="titleFont">总投入金额（元）：</span>
                             <br> 
-                            <span class="font1">{{worthData.totalReceiveAmount}}</span> 
+                            <span class="font1">{{worthData.totalReceiveAmount | keepTwoNum}}</span> 
                         </a>
                     </td>
                 </tr>
@@ -82,9 +82,16 @@
 <script>
 import numScroll from '../../components/numScroll.vue';
 import { mapActions } from "vuex";
+import { keepTwoNum } from '@/filter/keepTwoNum.js'
+import { Toast } from "vant";
 export default {
     components:{
         numScroll
+    },
+    filters:{
+        keepTwoNum(value) {
+        return keepTwoNum(value);
+        },
     },
     data() {
         return {
@@ -143,39 +150,64 @@ export default {
         }
     },
     created(){
+        const toast1 = Toast.loading({
+            mask: true,
+            message: "加载中...",
+            duration: 1000
+        });
         let pid = this.$route.query.productId;
         switch(pid){
             case (1133):
             this.chartTitle='金账户';
             break;
-            
-            case (1192):
-            this.chartTitle='财富金账户';
-            break;
-            
-            case (1193):
-            this.chartTitle='财富钻账户';
-            break;
-            
-            case (3487):
-            this.chartTitle='幸福金账户';
-            break;
-            
-            case (3611):
-            this.chartTitle='财富金账户';
-            break;
-            
             case (1163):
             this.chartTitle='钻石账户';
             break;
-
-            case (1182):
-            this.chartTitle='云账户';
-            break;
-
             case (1179):
             this.chartTitle='盈账户';
             break;  
+            case (1182):
+            this.chartTitle='云账户';
+            break;
+            case (1192):
+            this.chartTitle='财富金账户';
+            break;
+            case (1193):
+            this.chartTitle='财富钻账户';
+            break;
+            case (1232):
+            this.chartTitle='金账户';
+            break;
+            case (1233):
+            this.chartTitle='金账户';
+            break;
+            case (1253):
+            this.chartTitle='金账户';
+            break;
+            case (1256):
+            this.chartTitle='金账户';
+            break;
+            case (1267):
+            this.chartTitle='金账户';
+            break;
+            case (3487):
+            this.chartTitle='幸福金账户';
+            break;
+            case (3611):
+            this.chartTitle='财富金账户';
+            break;
+            case (3618):
+            this.chartTitle='金账户';
+            break;
+            case (3623):
+            this.chartTitle='金账户';
+            break;
+            case (3638):
+            this.chartTitle='金账户';
+            break;
+            case (3639):
+            this.chartTitle='金账户';
+            break;
         }
         let typeData = {
             productId:this.$route.query.productId,
@@ -188,6 +220,7 @@ export default {
             successCallback: (res) => {
                 console.log(typeData);
                 this.worthData = res.data;
+                toast1.clear();
                 let mont = this.worthData.month.split(',')
                 let rates =  this.worthData.rate.split(',')
                 this.option.xAxis[0].data =this.worthData.month.split(','); 
@@ -197,8 +230,10 @@ export default {
                 this.option.series[0].markPoint.data[2].yAxis =this.worthData.nearlyrate;
                 // this.option.series[0].data =this.worthData.rate.split(',');
                 this.myChart.setOption(this.option);
+                
             },
             fCallback:(res) => {
+                toast1.clear();
                 if(res.code==2002){
                     this.$router.push({  
                         path: '/userInfo',

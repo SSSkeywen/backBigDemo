@@ -178,7 +178,7 @@ export default {
             {
               selectIcon: require("@/assets/img/jifei.png"),
               selectName: "缴费账号",
-              selectPath: "/",
+              selectPath: "/paymentAccount",
               selectLineStyle: ""
             },
             {

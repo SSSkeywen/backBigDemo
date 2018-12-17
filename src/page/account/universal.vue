@@ -29,6 +29,7 @@
 import headerT from '../../components/header.vue';
 import nothing from '../../components/nothing.vue';
 import { mapActions } from "vuex";
+import { Toast } from "vant";
 export default {
 data() {
         return {
@@ -39,13 +40,20 @@ data() {
         }
     },
     created() {
-		console.log('Ajax 开始');
+		// const toast1 = Toast.loading({
+        //     mask: true,
+        //     message: "加载中...",
+        //     duration: 1000
+        // });
         this.getUniversalList({
           successCallback: res => {
 			console.log(res.data);
 			this.universalList=res.data;
+			// toast1.clear()
           },
-          fCallback: res => {}
+          fCallback: res => {
+			// toast1.clear()
+		  }
         });
     },
     components:{
@@ -72,9 +80,9 @@ data() {
 						this.$router.push({ 
 							path: '/universalWorth',
 							query:{
-								productId: res.data[index].productId,
-								policyId: res.data[index].policyId,
-								itemId: res.data[index].itemId
+								productId: res.data[0].productId,
+								policyId: res.data[0].policyId,
+								itemId: res.data[0].itemId
 							}
 						});
 					}

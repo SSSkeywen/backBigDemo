@@ -25,7 +25,7 @@
               <div>开户所交保费（元）:</div>
             </div>
             <div class="v4">
-              <div v-if="detialDAta.openAccPremium!=''||detialDAta.openAccPremium!=0">{{detialDAta.openAccPremium}}</div>
+              <div v-if="detialDAta.openAccPremium!=''||detialDAta.openAccPremium!=0">{{detialDAta.openAccPremium | keepOneNum}}</div>
               <div v-else>0.0</div>
             </div>
           </li>
@@ -34,7 +34,7 @@
               <div>追加净保费（元）:</div>
             </div>
             <div class="v4">
-              <div v-if="detialDAta.additionalPremium!=''||detialDAta.additionalPremium!=0">{{detialDAta.additionalPremium}}</div>
+              <div v-if="detialDAta.additionalPremium!=''||detialDAta.additionalPremium!=0">{{detialDAta.additionalPremium | keepOneNum}}</div>
               <div v-else>0.0</div>
             </div>
           </li>
@@ -44,7 +44,7 @@
               <div>初始费用（元）:</div>
             </div>
             <div class="v4">
-              <div v-if="detialDAta.initialAmount!=''||detialDAta.initialAmount!=0">{{detialDAta.initialAmount}}</div>
+              <div v-if="detialDAta.initialAmount!=''||detialDAta.initialAmount!=0">{{detialDAta.initialAmount | keepOneNum}}</div>
               <div v-else>0.0</div>
             </div>
           </li>
@@ -53,7 +53,7 @@
               <div>总领取金额（元）:</div>
             </div>
             <div class="v4">
-              <div v-if="detialDAta.totalPayAmount!=''||detialDAta.totalPayAmount!=0">{{detialDAta.totalPayAmount}}</div>
+              <div v-if="detialDAta.totalPayAmount!=''||detialDAta.totalPayAmount!=0">{{detialDAta.totalPayAmount | keepOneNum}}</div>
               <div v-else>0.0</div>
             </div>
           </li>
@@ -62,26 +62,10 @@
               <div>部分领取费用（元）:</div>
             </div>
             <div class="v4">
-              <div v-if="detialDAta.partialSurrender!=''||detialDAta.partialSurrender!=0">{{detialDAta.partialSurrender}}</div>
+              <div v-if="detialDAta.partialSurrender!=''||detialDAta.partialSurrender!=0">{{detialDAta.partialSurrender | keepOneNum}}</div>
               <div v-else>0.0</div>
             </div>
           </li>
-          <!-- <li v-if="productId==1179||productId==1182">
-            <div class="v3">
-              <div>抵缴保费（元）:</div>
-            </div>
-            <div class="v4">
-              <div>{{detialDAta.renewalAmount}}</div>
-            </div>
-          </li>
-          <li v-if="productId==1179&&detialDAta.balanceAmount!=0&&detialDAta.balanceAmount!=''">
-            <div class="v3">
-              <div>转入保单余额（元）:</div>
-            </div>
-            <div class="v4">
-              <div>{{detialDAta.balanceAmount}}</div>
-            </div>
-          </li> -->
         </ul>
         
         <ul class="loadmore" v-if="this.type=='total'||this.type=='year'||this.type=='month'" ref="downUl">
@@ -94,7 +78,7 @@
                 </div>
               </div>
               <div class="v2">
-                <div>{{item.depositAmount}}</div>
+                <div>{{item.depositAmount | keepTwoNum}}</div>
               </div>
             </li>
             <li v-if="list==''||list==null||list.length<=0">
@@ -120,7 +104,7 @@
                 </div>
               </div>
               <div class="v2">
-                <div v-if="detialDAta.openAccPremium!=0||detialDAta.openAccPremium!=''">{{detialDAta.openAccPremium}}</div>
+                <div v-if="detialDAta.openAccPremium!=0||detialDAta.openAccPremium!=''">{{detialDAta.openAccPremium | keepOneNum}}</div>
                 <div v-else>+0.00</div>  
               </div>
           </li>
@@ -153,10 +137,10 @@
                   </div>
                 </div>
                 <div class="v2" v-if="item.depositAmountType==1">
-                  <div>{{item.depositAmount}}</div>
+                  <div>{{item.depositAmount | keepTwoNum}}</div>
                 </div>
                 <div class="v2" v-if="item.depositAmountType==2">
-                  <div>{{item.depositAmount}}</div>
+                  <div>{{item.depositAmount | keepTwoNum}}</div>
                 </div>
             </div>
             <!-- 默认的显示字段 -->
@@ -168,7 +152,7 @@
                   </div>
                 </div>
                 <div class="v2">
-                  <div>{{item.depositAmount}}</div>
+                  <div>{{item.depositAmount | keepTwoNum}}</div>
                 </div>
             </div>
           </li>
@@ -207,7 +191,7 @@
             </div>
             <div class="v4">
               <div class="zp_div">{{item.insertDate}}</div>
-              <div class="zp_div1">{{item.depositAmount}}</div>
+              <div class="zp_div1">{{item.depositAmount | keepOneNum}}</div>
             </div>
           </li>
         </ul>
@@ -222,8 +206,8 @@
 
 <script>
 import { mapActions } from "vuex";
-import { List } from "vant";
-// import { interestRate } from "@/filter/interestRate.js";
+import { Toast } from "vant";
+import { keepTwoNum,keepOneNum} from '@/filter/keepTwoNum.js'
 export default {
   data() {
     return {
@@ -239,7 +223,20 @@ export default {
       newList:[]
     };
   },
+  filters:{
+      keepTwoNum(value) {
+        return keepTwoNum(value);
+      },
+      keepOneNum(value) {
+        return keepOneNum(value);
+      },
+  },
   mounted() {
+    const toast1 = Toast.loading({
+        mask: true,
+        message: "加载中...",
+        duration: 1000
+    });
     this.type = this.$route.query.type;
     this.productId = this.$route.query.productId;
     let typeData = {
@@ -306,8 +303,11 @@ export default {
             }
   
           }
+          toast1.clear();
         },
-        fCallback: res => {}
+        fCallback: res => {
+          toast1.clear();
+        }
       });
     }
   },
@@ -330,14 +330,14 @@ export default {
 
           this.scroll.on('scroll',(pos)=>{
             
-            if(this.scroll.maxScrollY>pos.y+100){
+            if(this.scroll.maxScrollY>pos.y+50){
               console.log('scroll')
               this.loadText.value = '松手开始更新'
             }
           })
             
           this.scroll.on('touchEnd',(pos)=>{
-            if(this.scroll.maxScrollY>pos.y+99){
+            if(this.scroll.maxScrollY>pos.y+49){
               this.$delete(this.loadText,'value')
               this.loadText.value='加载中'
             }

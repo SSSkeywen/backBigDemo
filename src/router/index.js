@@ -150,7 +150,9 @@ import bonusGetWayChange from '@/page/customerService/protectRightGet/bonusGetWa
 import bonusGetWayChangeInfo from '@/page/customerService/protectRightGet/bonusGetWayChangeInfo'
 import bonusGetWayChangeApproval from '@/page/customerService/protectRightGet/bonusGetWayChangeApproval'
 
-
+// 续费账号
+import paymentAccount from '@/page/paymentInformationChange/paymentAccount'
+import paymentAccountInfo from '@/page/paymentInformationChange/paymentAccountInfo'
 
 
 Vue.use(Router)
@@ -699,5 +701,16 @@ export default new Router({
       name: "ybtScjlqffzhxxResult",
       component: ybtScjlqffzhxxResult
     },
+
+    {
+      path: "/paymentAccount",
+      name: "paymentAccount",
+      component: paymentAccount
+    },
+    {
+      path: "/paymentAccountInfo",
+      name: "paymentAccountInfo",
+      component: paymentAccountInfo
+    }
   ]
 })
