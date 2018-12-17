@@ -39,6 +39,10 @@ import claimReport from './modules/claimReport.js'
 import receiveList from './modules/receiveList.js'
 
 import accpuntInf from './modules/accpuntInf.js'
+import bonusGetWayChange from './modules/customerService/bonusGetWayChange.js'
+
+//zp
+import accountLink from './modules/accountLink.js'
 
 
 
@@ -70,6 +74,7 @@ export default new Vuex.Store({
         survival,
         loanHistory,
         openInsuranCode,
+        bonusGetWayChange,
 
         arfandyearchange,
         reduceAmount,
@@ -77,6 +82,9 @@ export default new Vuex.Store({
         claimReport,
         receiveList,
         accpuntInf,
-        billSendStyleChange
+        billSendStyleChange,
+
+        accountLink
+
     }
 })

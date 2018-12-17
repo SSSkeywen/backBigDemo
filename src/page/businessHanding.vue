@@ -166,7 +166,7 @@ export default {
             {
               selectIcon: require("@/assets/img/zjyxqbg.png"),
               selectName: "客户身份证有效期<br>变更",
-              selectPath: "/toyiyuancx",
+              selectPath: "/clientCardEntTiemChange",
               selectLineStyle: ""
             }
           ]
@@ -224,15 +224,20 @@ export default {
               selectLineStyle: "line-down-me"
             },
             {
+
               selectIcon: require("@/assets/img/honglib.png"),
+
               selectName: "红利领取方式<br>变更",
-              selectPath: "",
+
+              selectPath: "/bonusGetWayChange",
+
               selectLineStyle: "line-down-me"
+
             },
             {
               selectIcon: require("@/assets/img/shengcun.png"),
               selectName: "生存金领取",
-              selectPath: "",
+              selectPath: "/ybtScjlqffzhxxOne",
               selectLineStyle: "line-down-me"
             },
             {

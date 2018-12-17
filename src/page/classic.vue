@@ -181,6 +181,6 @@ import {config} from '@/config/config.js'
     padding-bottom: 0.5rem;
 }
 .message-list{
-    margin-top: 0.5rem;
+    margin-top: 0.55rem;
 }
 </style>

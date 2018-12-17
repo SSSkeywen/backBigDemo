@@ -70,15 +70,15 @@ export default {
       billChangeFn: "billChangeFn",
       billChangeInformation: "billChangeInformation"
     }),
-    viewElectronicInvoices(num, policyCode,noticeType) {
-      let tellTheWay;
-      if(num == 1){
-        tellTheWay='短信告知'
-      }else if(num == 2){
-        tellTheWay='电子邮箱'
-      }else if(num == 3){
-        tellTheWay='自助查询'
-      }
+    viewElectronicInvoices(tellTheWay, policyCode,noticeType) {
+      // let tellTheWay;
+      // if(num == 1){
+      //   tellTheWay='短信告知'
+      // }else if(num == 2){
+      //   tellTheWay='电子邮箱'
+      // }else if(num == 3){
+      //   tellTheWay='自助查询'
+      // }
       this.alertCountTwo.isShowyesOrNo = true
       this.tipsData = tellTheWay
       this.typeData = {

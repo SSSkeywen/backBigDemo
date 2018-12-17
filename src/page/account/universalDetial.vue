@@ -17,8 +17,8 @@
         <span >总投入金额</span>（元）：
       </header>
     </div>
-    <div id="wrapper" :class="{top0:this.type==0}">
-      <div class="scroller">
+    <div id="wrapper" class="loadmore" ref="scroller" :class="{top0:this.type==0}">
+      <div class="scroller" ref="">
         <ul class="nowWorth"  v-if="this.type==0">
           <li>
             <div class="v3">
@@ -84,8 +84,8 @@
           </li> -->
         </ul>
         
-        <ul v-if="this.type=='total'||this.type=='year'||this.type=='month'">
-            <li v-for="(item,index) in list" :key="index">
+        <ul class="loadmore" v-if="this.type=='total'||this.type=='year'||this.type=='month'" ref="downUl">
+            <li v-for="(item,index) in newList" :key="index">
               <div class="v1">
                 <div>
                   <!-- <span>{{detialDAta.typeName}}（元）:</span> -->
@@ -112,27 +112,29 @@
         </ul>
         <!-- 总投入 -->
         <ul v-if="this.type=='trje'">
+          
+          <li>
+              <div class="v3">
+                <div>
+                  <span>开户所交保费（元）:</span>
+                </div>
+              </div>
+              <div class="v2">
+                <div v-if="detialDAta.openAccPremium!=0||detialDAta.openAccPremium!=''">{{detialDAta.openAccPremium}}</div>
+                <div v-else>+0.00</div>  
+              </div>
+          </li>
           <li v-for="(item,index) in list" :key="index">
             <div class="v1">
               <div>
                 <span>{{item.typeName}}（元）:</span>
-                <span v-if="item.depositDate">{{item.depositDate}}</span>
+                <span>{{item.distriDate}}</span>
               </div>
             </div>
             <div class="v2">
-              <div>{{item.depositAmount}}</div>
+              <div>{{item.distriAmount}}</div>
             </div>
           </li>
-          <li v-if="list==''||list==null||list.length<=0">
-              <div class="v3">
-                <div>
-                  <span>部分生存金转入金额（元）:</span>
-                </div>
-              </div>
-              <div class="v2">
-                <div>+0.00</div>
-              </div>
-            </li>
         </ul>
         <!-- 总领取 -->
         <ul v-if="this.type=='lqje'">
@@ -181,10 +183,11 @@
             </div>
           </li>
         </ul>
-        <div id="footer" v-if="laodMore">
+        <div id="footer" v-if="loadMore">
             <div id="pullUp" style="text-align: center; background: #fafafa">
                 <!-- <span class="pullUpIcon"></span> -->
-                <span class="pullUpLabel" style="text-align: center">上拉加载更多</span>
+               
+                <span class="pullUpLabel" style="text-align: center">{{loadText.value}}</span>
             </div>
         </div>
       </div>
@@ -220,18 +223,23 @@
 <script>
 import { mapActions } from "vuex";
 import { List } from "vant";
+// import { interestRate } from "@/filter/interestRate.js";
 export default {
   data() {
     return {
-      laodMore:false,
+      loadMore:false,
+      loadText:{
+        value:''
+      },
       type: "",
       productId: "",
+      pageNum: 0,
       detialDAta: [],
       list: [],
       newList:[]
     };
   },
-  created() {
+  mounted() {
     this.type = this.$route.query.type;
     this.productId = this.$route.query.productId;
     let typeData = {
@@ -279,17 +287,24 @@ export default {
           }else {
             // this.type=='year'||this.type=='month'||this.type=='total'
             console.log('-------year---------')
-            console.log(res)
             this.detialDAta = res.data;
             this.list = res.data.data.GoldAccountDetailedInfo;
-            // if(this.detialDAta.totalCount>10){
-            //   console.log(0)
-            //   this.pageNum++;
-            //   let a= (this.pageNum - 1) * 10;
-            //   this.newList = this.list.slice(a,a+10);
-            //   // this.getTen();
-            //   this.laodMore=true;
-            // }
+            // console.log(this.list.length)
+            if(this.list.length>10){
+              this.pageNum++;
+              let a= (this.pageNum - 1) * 10;
+              this.newList = this.list.slice(a,a+10);
+              this.loadMore=true;
+              this.loadText.value="上拉加载更多"
+              this._initScroll()
+            }else{
+              this.newList = this.list;
+              this.scroll = new BScroll(this.$refs.scroller,{
+                probeType:3,
+                click:true,
+              })
+            }
+  
           }
         },
         fCallback: res => {}
@@ -302,18 +317,53 @@ export default {
       getUniversalDetial: "getUniversalDetial",
       getUniversalNowWorth: "getUniversalNowWorth"
     }),
-    getTen(){
-      this.pageNum++;
-      console.log('--ten--')
-      console.log(this.pageNum)
-      let a= (this.pageNum - 1) * 10;
-      this.newList = this.newList.concat(this.list.slice(a,a+10));
-      if(this.newList.length >= this.list.length){
-        this.laodMore = false
-      }else{
-        this.laodMore = true;
-      }
-    }
+    _initScroll(){
+      this.$nextTick(()=>{  
+          if(!this.scroll){
+            this.scroll = new BScroll(this.$refs.scroller,{
+              probeType:3,
+              click:true,
+            })
+          }else{
+            this.scroll.refresh()
+          }
+
+          this.scroll.on('scroll',(pos)=>{
+            
+            if(this.scroll.maxScrollY>pos.y+100){
+              console.log('scroll')
+              this.loadText.value = '松手开始更新'
+            }
+          })
+            
+          this.scroll.on('touchEnd',(pos)=>{
+            if(this.scroll.maxScrollY>pos.y+99){
+              this.$delete(this.loadText,'value')
+              this.loadText.value='加载中'
+            }
+            
+          })
+          this.scroll.on('scrollEnd',(pos)=>{
+            if(this.loadText.value=='松手开始更新'){
+              console.log('scrollEnd')
+                this.$delete(this.loadText,'value')
+                this.loadText.value='加载中'
+                setTimeout(()=>{
+                  this.$delete(this.loadText,'value')
+                  this.$set(this.loadText,'value','上拉加载更多')
+                  this.pageNum++;
+                  let a= (this.pageNum-1) * 10;
+                  this.newList = this.newList.concat(this.list.slice(a,a+10));
+                  if(this.newList.length>=this.list.length){
+                    this.loadMore=false
+                  }
+                },500)
+                
+                this.scroll.refresh()
+              }
+          })
+      })
+    },
     
   }
 
@@ -330,8 +380,12 @@ ul,li {  padding: 0;  margin: 0;  border: 0; position: relative;}
 #header a {  color: #f3f3f3;  text-decoration: none;  font-weight: bold;  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);}
 
 #wrapper {  position: absolute;  z-index: 1;  top: 45px;  bottom: 0px;  left: 0;  width: 100%;  overflow: auto;}
+#wrapper.loadmore{overflow: hidden;}
+#wrapper.loadmore .scroller {overflow: auto;position: relative;}
+#wrapper {  position: absolute;  z-index: 1;  top: 45px;  bottom: 0px;  left: 0;  width: 100%;  overflow: hidden;}
 .top0 .scroller{margin-top: 0.16rem;}
-.scroller {  position: relative;  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);  float: left;  width: 100%;  padding: 0;background: #fff;}
+/* .scroller {  position: relative;  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);  float: left;  width: 100%;  padding: 0;background: #fff;} */
+.scroller {  position: absolute; top: 0; left: 0; bottom:0; overflow: hidden;  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);  float: left;  width: 100%;  padding: 0;background: #fff;}
 .scroller ul {  position: relative;  list-style: none;  padding: 0;  margin: 0 auto;  width: 90%;  text-align: left;}
 .scroller li {  height: 40px;  line-height: 40px;  font-size: 14px;}
 .scroller li > a {  display: block;}
@@ -363,6 +417,8 @@ ul,li {  padding: 0;  margin: 0;  border: 0; position: relative;}
 #wrapper .scroller .nowWorth li div.v4 div{ line-height: .8rem; text-align: right; font-weight: normal;}
 #wrapper .zp_kuang{margin-top: 0.16rem; background: #fff; float: left; width: 100%;}
 #wrapper .zp_kuang li{height: 0.8rem; position: relative; padding: 0 0.27rem;}
+#wrapper .zp_kuang li::before{display: block;content: '';width: 200%;height: 200%;border-top: 1px solid #e3e3e3;transform: scaleY(.5);position: absolute;top: -50%;left:-50%;}
+
 #wrapper .zp_kuang .zp_li{ height: 1.1rem;}
 #wrapper .zp_kuang .zp_li div.v3{ margin-top: 0.15rem;}
 #wrapper .zp_kuang .zp_li div.v4{ margin-top: 0.15rem;}
@@ -376,7 +432,7 @@ ul,li {  padding: 0;  margin: 0;  border: 0; position: relative;}
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 40px;
+  height: 50px;
   background-image: -webkit-gradient(
     linear,
     0 0,

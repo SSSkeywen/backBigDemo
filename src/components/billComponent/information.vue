@@ -20,6 +20,10 @@
                 <p>被保险人：</p>
                 <p>{{contentData.insuredName}}</p>
             </li>
+            <li v-if="contentData.serviceName">
+                <p>保全项：</p>
+                <p>{{contentData.serviceName}}</p>
+            </li>
             <li>
                 <p>费用发生日期：</p>
                 <p>{{contentData.finishTime}}</p>

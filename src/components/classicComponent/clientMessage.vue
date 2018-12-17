@@ -164,7 +164,7 @@ export default {
       position: relative;
     }
     .cm-client-font {
-      font-size: 0.4rem;
+      font-size: 0.36rem;
       font-family: PingFangSC-Medium;
       font-weight: 500;
       color: rgba(255, 255, 255, 1);

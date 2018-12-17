@@ -9,7 +9,11 @@
 
     <p v-else>未查询到信息！</p>
     <alertContent :alertCount="alertCount"></alertContent>
-    <yesAndNoAlert :tipsData="tipsData" @changCount="viewElectronicInvoicesTwo" :alertCountTwo="alertCountTwo"></yesAndNoAlert>
+    <yesAndNoAlert
+      :tipsData="tipsData"
+      @changCount="viewElectronicInvoicesTwo"
+      :alertCountTwo="alertCountTwo"
+    ></yesAndNoAlert>
   </div>
 </template>
 
@@ -36,11 +40,11 @@ export default {
         isShowAlert: false,
         alertData: "请输入"
       },
-      alertCountTwo:{
-        isShowyesOrNo:false,
+      alertCountTwo: {
+        isShowyesOrNo: false
       },
-      tipsData:'',
-      typeData:''
+      tipsData: "",
+      typeData: ""
     };
   },
   created() {
@@ -70,39 +74,38 @@ export default {
       billChangeFn: "billChangeFn",
       billChangeInformation: "billChangeInformation"
     }),
-    viewElectronicInvoices(num, policyCode,noticeType) {
-      let tellTheWay;
-      if(num == 1){
-        tellTheWay='短信告知'
-      }else if(num == 2){
-        tellTheWay='电子邮箱'
-      }else if(num == 3){
-        tellTheWay='自助查询'
-      }
-      this.alertCountTwo.isShowyesOrNo = true
-      this.tipsData = tellTheWay
+    viewElectronicInvoices(tellTheWay, policyCode, noticeType) {
+      // let tellTheWay;
+      // if (num == 1) {
+      //   tellTheWay = "短信告知";
+      // } else if (num == 2) {
+      //   tellTheWay = "电子邮箱";
+      // } else if (num == 3) {
+      //   tellTheWay = "自助查询";
+      // }
+      this.alertCountTwo.isShowyesOrNo = true;
+      this.tipsData = tellTheWay;
       this.typeData = {
         policyCode: policyCode,
         noticeWay: tellTheWay,
         noticeType: noticeType
       };
-      },
+    },
 
-
-      viewElectronicInvoicesTwo(){
-        let typeData = this.typeData
-        let policyCode = this.typeData.policyCode
-        this.billChangeInformation({
-          typeData,
-          successCallback: result => {
-            this.$router.push({
-                path: "/infoChangeResult",
-                query: { tipsData: JSON.stringify(result),policyCode:policyCode }
-              });
-          },
-          fCallback: res => {}
-        });
-      }
+    viewElectronicInvoicesTwo() {
+      let typeData = this.typeData;
+      let policyCode = this.typeData.policyCode;
+      this.billChangeInformation({
+        typeData,
+        successCallback: result => {
+          this.$router.push({
+            path: "/infoChangeResult",
+            query: { tipsData: JSON.stringify(result), policyCode: policyCode }
+          });
+        },
+        fCallback: res => {}
+      });
+    }
   }
 };
 </script>

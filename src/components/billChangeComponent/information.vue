@@ -32,7 +32,7 @@
             <li>
               <div>
                 <span>当前报告发送方式为:</span>
-                <span>{{contentData.paperNotice}}</span>
+                <span>{{sendStyle}}</span>
               </div>
             </li>
             <li style="border: none;">
@@ -41,9 +41,9 @@
               </div>
             </li>
             <li class="btns">
-              <button @click="changSendStyleFn(1,contentData.policyCode,contentData.noticeType)">短信告知</button>
-              <button @click="changSendStyleFn(2,contentData.policyCode,contentData.noticeType)">电子邮箱</button>
-              <button @click="changSendStyleFn(3,contentData.policyCode,contentData.noticeType)">自助查询</button>
+              <button @click="changSendStyleFn(btnOne,contentData.policyCode,sendStyle)">{{btnOne}}</button>
+              <button @click="changSendStyleFn(btnTwo,contentData.policyCode,sendStyle)">{{btnTwo}}</button>
+              <button @click="changSendStyleFn(btnThree,contentData.policyCode,sendStyle)">{{btnThree}}</button>
             </li>
           </ul>
         </div>
@@ -55,11 +55,44 @@
 <script>
 export default {
     props:['contentData'],
+    data() {
+      return {
+        sendStyle: '',
+        btnOne:'',
+        btnTwo:'',
+        btnThree:'',
+      }
+    },
+    mounted(){
+      console.log(this.contentData.paperNotice)
+      if(this.contentData.paperNotice=='Y'){
+        this.sendStyle = '纸质告知'
+        this.btnOne = '短信告知'
+        this.btnTwo = '电子邮箱'
+        this.btnThree = '自助查询'
+      }else if(this.contentData.smsNotice=='Y'){
+        this.sendStyle = '短信告知'
+        this.btnOne = '纸质告知'
+        this.btnTwo = '电子邮箱'
+        this.btnThree = '自助查询'
+      }else if(this.contentData.emailNotice=='Y'){
+        this.sendStyle = '电子邮箱'
+        this.btnOne = '短信告知'
+        this.btnTwo = '短信告知'
+        this.btnThree = '自助查询'
+      }else if(this.contentData.selfNotice=='Y'){
+        this.sendStyle = '自助查询'
+        this.btnOne = '短信告知'
+        this.btnTwo = '短信告知'
+        this.btnThree = '电子邮箱'
+      }
+    },
     methods: {
         changSendStyleFn(num,policyCode,noticeType) {
             this.$emit('viewElectronicInvoices',num,policyCode,noticeType)
         }
     },
+   
 };
 </script>
 

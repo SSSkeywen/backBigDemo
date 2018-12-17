@@ -92,6 +92,7 @@ import phoneChange from '@/page/personalInformationChange/phoneChange'
 import emilChange from '@/page/personalInformationChange/emilChange'
 import homeAdressChange from '@/page/personalInformationChange/homeAdressChange'
 import companyAdressChange from '@/page/personalInformationChange/companyAdressChange'
+import clientCardEntTiemChange from '@/page/personalInformationChange/clientCardEntTiemChange'
 
 //交费信息变更
 import contactAddress from '@/page/payInfoChange/contactAddress'
@@ -108,6 +109,11 @@ import unbindSuc from '@/page/baseService/unbindSuc'
 import terminateCancelList from "@/page/safeInforChange/terminateCancelList";
 import terminateCancelInfo from "@/page/safeInforChange/terminateCancelInfo";
 import terminateCancelResult from "@/page/safeInforChange/terminateCancelResult";
+
+// 赵盼生存金领取
+import ybtScjlqffzhxxOne from "@/page/accountLink/bonusGetWayChange";
+import ybtScjlqffzhxx from "@/page/accountLink/ybtScjlqffzhxx";
+import ybtScjlqffzhxxResult from "@/page/accountLink/ybtScjlqffzhxxResult";
 
 // 赵盼理赔报案claimReport
 
@@ -137,6 +143,14 @@ import billLoseEfficacy from "@/page/notificationSendingModeChanges/billLoseEffi
 import billYearReport from "@/page/notificationSendingModeChanges/billYearReport"
 import billLoseEfficacyEver from "@/page/notificationSendingModeChanges/billLoseEfficacyEver"
 import infoChangeResult from '@/page/notificationSendingModeChanges/infoChangeResult'
+
+//红利领取方式变更
+
+import bonusGetWayChange from '@/page/customerService/protectRightGet/bonusGetWayChange'
+import bonusGetWayChangeInfo from '@/page/customerService/protectRightGet/bonusGetWayChangeInfo'
+import bonusGetWayChangeApproval from '@/page/customerService/protectRightGet/bonusGetWayChangeApproval'
+
+
 
 
 Vue.use(Router)
@@ -480,7 +494,8 @@ export default new Router({
       path: '/companyAdressChange',
       name: 'companyAdressChange',
       component: companyAdressChange
-    },
+    }, 
+    {path: '/clientCardEntTiemChange',name: 'clientCardEntTiemChange',component: clientCardEntTiemChange},
 
     //交费信息变更
     {
@@ -638,5 +653,51 @@ export default new Router({
     { path: '/billYearReport', name: 'billYearReport', component: billYearReport },
     { path: '/billLoseEfficacyEver', name: 'billLoseEfficacyEver', component: billLoseEfficacyEver},
     {path: '/infoChangeResult',name: 'infoChangeResult',component: infoChangeResult},
+    //红利领取方式变更
+
+    {
+
+      path: '/bonusGetWayChange',
+
+      name: 'bonusGetWayChange',
+
+      component: bonusGetWayChange
+
+    },
+
+    {
+
+      path: '/bonusGetWayChangeInfo',
+
+      name: 'bonusGetWayChangeInfo',
+
+      component: bonusGetWayChangeInfo
+
+    },
+
+    {
+
+      path: '/bonusGetWayChangeApproval',
+
+      name: 'bonusGetWayChangeApproval',
+
+      component: bonusGetWayChangeApproval
+
+    },
+
+    // 赵盼生存金领取
+    {
+      path: "/ybtScjlqffzhxxOne",
+      name: "ybtScjlqffzhxxOne",
+      component: ybtScjlqffzhxxOne
+    }, {
+      path: "/ybtScjlqffzhxx",
+      name: "ybtScjlqffzhxx",
+      component: ybtScjlqffzhxx
+    }, {
+      path: "/ybtScjlqffzhxxResult",
+      name: "ybtScjlqffzhxxResult",
+      component: ybtScjlqffzhxxResult
+    },
   ]
 })
