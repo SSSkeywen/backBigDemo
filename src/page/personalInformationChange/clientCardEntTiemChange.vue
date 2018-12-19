@@ -1,32 +1,44 @@
 <template>
   <div id="bqContent">
-    <header class="bq-title">您名下支持申请结束保险费假期的保单列表</header>
+    <header class="bq-title">客户身份证有效期变更</header>
     <section class="bq-box-style end-box">
-      <ul v-for="(item, index) in contentList" :key="index">
+      <ul v-for="(item,index) in contentList" :key="index">
         <li class="line">
           <p>客户类型</p>
-          <p v-text="item.bdNo"></p>
+          <p v-text="item.customerType"></p>
         </li>
         <li class="line">
           <p>姓名</p>
-          <p v-text="item.bdContent"></p>
+          <p v-text="item.realName"></p>
         </li>
         <li class="line">
           <p>证件类型</p>
-          <p v-text="item.cardStyle"></p>
+          <p v-text="item.certiName"></p>
         </li>
         <li class="line">
           <p>证件号码</p>
-          <p v-text="item.cardNo"></p>
+          <p v-text="item.subCertiCode"></p>
         </li>
         <li class="line">
           <p>证件有效期</p>
-          <p v-text="item.enterTime"></p>
+          <p v-text="item.certiValidate"></p>
+        </li>
+        <li class="line" style="display:none">
+          <p>性别</p>
+          <p v-text="item.gender"></p>
+        </li>
+        <li class="line" style="display:none">
+          <p>出生日期</p>
+          <p v-text="item.birthday"></p>
+        </li>
+        <li class="line" style="display:none">
+          <p>证件类型</p>
+          <p v-text="item.certiType"></p>
         </li>
         <li class="line">
           <p>&nbsp;</p>
           <p @click="bgFn(index)">
-            <button :class="item.btnStyle" class="style-click">选择变更</button>
+            <button :disabled="item.isdisabled" :class="item.btnStyle" class="style-click">选择变更</button>
           </p>
         </li>
       </ul>
@@ -63,57 +75,91 @@
 </template>
 
 <script>
+// import headerT from "../../components/header.vue";
+// import btnComponent from "../../components/btnComponent.vue";
+// import alertContent from "../../components/alertContent";
+// import yesAndNoAlert from "../../components/yesAndNoAlert";
+// import notToOpenComponent from "../../components/notToOpenComponent.vue";
+import { mapActions } from "vuex";
+import { Toast } from "vant";
 export default {
   data() {
     return {
       selectAll: true,
       isShowTips: false,
       isShowError: true,
-      contentList: [
-        {
-          selectTrue: true,
-          bdNo: "投保人（即被保人）",
-          bdContent: "张三",
-          cardStyle: "身份证",
-          cardNo: "340826********6207",
-          enterTime: "至2029-01-01"
-        },
-        {
-          selectTrue: true,
-          bdNo: "投保人（即被保人）",
-          bdContent: "张三",
-          cardStyle: "身份证",
-          cardNo: "340826********6207",
-          enterTime: "至2029-01-01"
-        },
-        {
-          selectTrue: true,
-          bdNo: "投保人（即被保人）",
-          bdContent: "张三",
-          cardStyle: "身份证",
-          cardNo: "340826********6207",
-          enterTime: "至2029-01-01",
-          btnStyle: "btnStyle"
-        }
-      ],
+      contentList: [],
       tipsContent: "对不起，请选择保单做变更投资分配比例"
     };
   },
+  created() {
+    const toast1 = Toast.loading({
+      mask: true,
+      message: "加载中...",
+      duration: 0
+    });
+    this.clientCardChange({
+      successCallback: result => {
+        console.log(result);
+        this.contentList = result;
+        toast1.clear();
+      },
+      fCallback: res => {
+        console.log(res);
+        toast1.clear();
+      }
+    });
+  },
   methods: {
+    ...mapActions({
+      clientCardChange: "clientCardChange",
+      isClientCardChange: "isClientCardChange"
+    }),
     bgFn(index) {
-      console.log(this.contentList[index]);
-      window.location.href = "./endbxPageTwo.html";
+      const toast1 = Toast.loading({
+        mask: true,
+        message: "加载中...",
+        duration: 0
+      });
+      let changeData = {
+        name: this.contentList[index].realName,
+        gender: this.contentList[index].gender,
+        birthday: this.contentList[index].birthday,
+        certtype: this.contentList[index].certiType,
+        certcode: this.contentList[index].certiCode
+      };
+      console.log(changeData);
+      this.isClientCardChange({
+        changeData,
+        successCallback: result => {
+          console.log(result);
+          // this.contentList = result;
+          this.$router.push({
+            path: "/uploadCard",
+            // query: { contentList: this.contentList[index] }
+          });
+          toast1.clear();
+        },
+        fCallback: res => {
+          console.log(res);
+          toast1.clear();
+        }
+      });
     },
     showTipsFn() {
       this.isShowTips = true;
-      setTimeout(() => { 
+      setTimeout(() => {
         this.isShowTips = false;
-      }, 3000); 
+      }, 3000);
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+#bqContent {
+  background: whitesmoke;
+  min-height: 100vh;
+}
 @import url(./css/style.css);
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="normal-box">
     <headerT :headerContent="headerContent"></headerT>
-    <div class="bonus-change-box" v-if="dataList.length>0&&dataList!=null&&dataList!=''">
+    <div class="bonus-change-box" v-if="isShow">
       <div
         class="list-box"
         v-for="(item,index) in dataList"
@@ -79,8 +79,10 @@ export default {
   data() {
     return {
       headerContent: "您名下支持生存金领取的保单列表",
+      isShow: false,
       alertCount: {
         isShowAlert: false,
+
         alertData: "请输入"
       },
       // 选择的保单号集合
@@ -102,13 +104,17 @@ export default {
   created() {
     this.survivalpaymentList({
       successCallback: res => {
-        console.log(res.data);
-
+        // console.log(res.data);
+        this.isShow = true;
         this.dataList = res.data;
 
-        console.log(this.dataList[1]);
+        // console.log(this.dataList[1]);
       },
-      fCallback: res => {}
+      failCallback: res => {
+        this.isShow = false;
+        // this.isShow = true;
+        // console.log(111111111111111);
+      }
     });
   },
 
@@ -121,15 +127,15 @@ export default {
 
       if (codeIndex >= 0) {
         //如果包含了该code，则删除（单选按钮由选中变为非选中状态）
-        this.policyCodese.splice(codeIndex, 1);
+        this.policyCodes.splice(codeIndex, 1);
       } else {
         //选中该按钮
         this.policyCodes.push(code);
-        console.log(this.policyCodes);
+        // console.log(this.policyCodes);
       }
     },
     confirms() {
-      console.log(this.policyCodes);
+      // console.log(this.policyCodes);
       if (this.policyCodes.length > 0) {
         this.$router.push({
           path: "/ybtScjlqffzhxx",
@@ -159,6 +165,8 @@ export default {
     .list-box {
       margin-top: 10px;
       margin-bottom: 10px;
+      border-radius: 7px 7px 0 0;
+      -webkit-border-radius: 7px 7px 0 0;
       border: 1px solid #dcdcdc;
       .sq_xz {
         position: relative;

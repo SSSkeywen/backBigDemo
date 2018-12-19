@@ -22,6 +22,7 @@ import modifyRest from './modules/modifyRest.js'
 //李y
 import l_insureProgress from './modules/l_insureProgress.js'
 import unbindSelf from './modules/unbindSelf.js'
+import overdue from './modules/overdue.js'
 
 //hy
 import changeList from './modules/changeList.js'
@@ -70,6 +71,7 @@ export default new Vuex.Store({
 
         l_insureProgress,
         unbindSelf,
+        overdue,
 
         changeList,
         survival,

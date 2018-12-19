@@ -26,7 +26,7 @@
           >
             <div class="form_nrtop" v-text="queryAddhospitalItem.queryAddhospitalName">请选择省份：</div>
             <div class="form_nrbottom" v-if="queryAddhospitalItem.isSElect">
-              <select name="select" class="select_lei" id="select_sf">
+              <select name="select" class="select_lei" id="select_sf" @click="queryProvinces">
                 <option
                   v-for="(provinceItem,provinceIndex) in provinceList"
                   :key="provinceIndex"
@@ -35,9 +35,14 @@
               </select>
             </div>
             <div class="form_nrbottom1" v-if="queryAddhospitalItem.isSElect1">
-              <select name="select_cs" class="select_lei">
+              <select name="select_cs" class="select_lei" id="city">
                 <option>全部城市</option>
-                <option selected="selected">上海</option>
+                <!-- <option selected="selected">上海</option> -->
+                <option
+                v-for="(Item,Index) in city"
+                :key="Index"
+                v-text="Item.provinceName"
+              ></option>
               </select>
             </div>
 
@@ -47,7 +52,7 @@
                 name="input_yymc"
                 onblur="if (value==''){value='请输入2-15个字符';style.color='#000'}"
                 onfocus="if(value=='请输入2-15个字符'){value='';style.color='#000'}"
-                value="三甲"
+                value="请输入2-15个字符"
                 class="yzxxlr_input"
                 style="color:#999;"
                 id="hospName"
@@ -75,14 +80,6 @@
       <input type="button" name="wcba" class="reget_btn" value="完成报案">
     </div>
 
-    <div id="bangd_agent_dialog" class="yz_fail" style="display: none">
-      <div class="yz_fail_nr">
-        <div class="yz_close" style=" top: 10px;"></div>
-        <div class="yz_failcont" style="height:50%"></div>
-        <div class="yz_failfont" style="color: black;" name="msg">报案成功</div>
-      </div>
-    </div>
-
     <div id="bangd_agent_dialog1" class="yz_fail" style="display: none">
       <div class="yz_fail_nr">
         <div class="yz_close" style=" top: 10px;"></div>
@@ -90,18 +87,20 @@
         <div class="yz_failfont" style="color: black;" name="msg">报案成功</div>
         <div class="yz_bgzc" style=" margin: 10%;display: none"></div>
       </div>
+      <div class="sure">确定</div>
     </div>
-     <alertContent :alertCount="alertCount" ref="Alert"></alertContent>
+     <alertContentThing :alertCount="alertCount" ref="Alert" v-on:btnIKnow="btnIKnow"></alertContentThing>
   </div>
   <!-- </div> -->
 </template>
 
 <script>
-import alertContent from '@/components/alertContent.vue'
+import { mapActions } from "vuex";
+import alertContentThing from '@/components/alertContentThing.vue'
 import { Toast } from "vant";
 export default {
       components: {
-        alertContent
+        alertContentThing
     },
   data() {
     return {
@@ -149,6 +148,7 @@ export default {
         { provinceName: "河南省" },
         { provinceName: "贵州省" }
       ],
+      city:[],
       // 人际关系
       relationList: [
         { customeRelations: "请选择" },
@@ -172,6 +172,9 @@ export default {
     };
   },
   methods: {
+    ...mapActions({
+        xzyiyuan: "xzyiyuan"
+    }),
     //跳转到下一页
     yiyuanlbFn() {
       let hospName =document.querySelector('#hospName').value;
@@ -183,8 +186,10 @@ export default {
     },
     //完成报案弹窗
     AlertReport(){
-      this.alertCount.isShowAlert=true;
-      this.$router.push({ path: "../businessHanding" });
+      this.alertCount.alertData ="报案成功!";
+      this.alertCount.btnMsg ="确定";
+      this.alertCount.isShowAlert = true;
+      // this.$router.push({ path: "../businessHanding" });
       console.log("完成报案");
     },
     del(e){
@@ -196,6 +201,32 @@ export default {
       }
       //
       //alert(e.target.parentNode.parentNode.parentNode.parentNode.children.length)
+    },
+    btnIKnow(){
+      this.$router.push({ path: "../businessHanding" });
+    },
+    //省份查询
+    queryProvinces(){
+      //省份
+      this.select_sf = document.querySelector("#select_sf");
+      let index = this.select_sf.selectedIndex;
+      let provinces =this.select_sf.options[index].text;
+      console.log(provinces)
+      //城市
+      this.city = document.querySelector("#city");
+      this.xzyiyuan({
+        provinces,
+        successCallback: result => {
+            this.result=result;
+            console.log("this.result")
+            console.log(this.result);
+            // this.city.selectedIndex=
+            
+        },
+        failCallback: res => {
+
+        }
+    });
     }
   }
 };
@@ -440,5 +471,12 @@ select {
 select {
   border-radius: 0px;
   border: 1px solid rgb(169, 169, 169);
+}
+.sure{
+  width: 60%;
+  height: 0.8rem;
+  background: #00ac0c;
+  text-align: center;
+  line-height: 0.8rem;
 }
 </style>

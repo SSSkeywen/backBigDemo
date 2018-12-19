@@ -5,6 +5,7 @@ import messageInquire from '@/page/messageInquire'
 import businessHanding from '@/page/businessHanding'
 import userFailPage from '@/page/userFailPage'
 import successPage from '@/page/successPage'
+import successPageChange from '@/page/successPageChange'
 
 // 绑定页面
 import userInfo from '@/page/userInfo'
@@ -93,10 +94,15 @@ import emilChange from '@/page/personalInformationChange/emilChange'
 import homeAdressChange from '@/page/personalInformationChange/homeAdressChange'
 import companyAdressChange from '@/page/personalInformationChange/companyAdressChange'
 import clientCardEntTiemChange from '@/page/personalInformationChange/clientCardEntTiemChange'
+import uploadCard from '@/page/personalInformationChange/uploadCard'
 
 //交费信息变更
 import contactAddress from '@/page/payInfoChange/contactAddress'
 import contactAddressChange from '@/page/payInfoChange/contactAddressChange'
+
+import overdueWayChange from '@/page/insurancePactService/overdueWayChange'
+
+import overdueWayChangeEnd from '@/page/insurancePactService/overdueWayChangeEnd'
 
 
 //基本服务
@@ -187,6 +193,11 @@ export default new Router({
       path: '/successPage',
       name: 'successPage',
       component: successPage
+    },
+    {
+      path: '/successPageChange',
+      name: 'successPageChange',
+      component: successPageChange
     },
 
     {
@@ -497,7 +508,8 @@ export default new Router({
       name: 'companyAdressChange',
       component: companyAdressChange
     }, 
-    {path: '/clientCardEntTiemChange',name: 'clientCardEntTiemChange',component: clientCardEntTiemChange},
+    { path: '/clientCardEntTiemChange', name: 'clientCardEntTiemChange', component: clientCardEntTiemChange }, 
+    { path: '/uploadCard', name: 'uploadCard', component: uploadCard }, 
 
     //交费信息变更
     {
@@ -711,6 +723,26 @@ export default new Router({
       path: "/paymentAccountInfo",
       name: "paymentAccountInfo",
       component: paymentAccountInfo
-    }
+    },
+
+    {
+
+      path: '/overdueWayChange',
+
+      name: 'overdueWayChange',
+
+      component: overdueWayChange
+
+    },
+
+    {
+
+      path: '/overdueWayChangeEnd',
+
+      name: 'overdueWayChangeEnd',
+
+      component: overdueWayChangeEnd
+
+    },
   ]
 })

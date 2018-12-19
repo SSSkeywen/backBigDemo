@@ -220,6 +220,8 @@ export default {
             successCallback: (res) => {
                 console.log(typeData);
                 this.worthData = res.data;
+                this.worthData.universalValue = Number(this.worthData.universalValue.toFixed(2))
+                this.worthData.totalDepositAmount = Number(this.worthData.totalDepositAmount.toFixed(2))
                 toast1.clear();
                 let mont = this.worthData.month.split(',')
                 let rates =  this.worthData.rate.split(',')

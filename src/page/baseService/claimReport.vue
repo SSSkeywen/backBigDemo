@@ -39,7 +39,7 @@
             <input type="text" disabled id="idTypeNum" class="yzxxlr_input" style="color:#999;" name="accidentMobile">
           </div>
           <div class="form_nrbottom" v-if="dangerousCustomerItem.isSElect4">
-            <input type="text" disabled id="tel" class="yzxxlr_input" style="color:#999;" name="accidentMobile">
+            <input type="text"  id="tel" class="yzxxlr_input" style="color:#999;" name="accidentMobile">
           </div>
           <div style="clear:both"></div>
         </div>
@@ -346,6 +346,14 @@ export default {
         //     Toast('出险客户手机号不能为空!');
         //     return ;
         // }
+        if( tel == ""){
+            Toast('出险客户手机号不能为空!');
+            return ;
+        }
+        if(this.$toolsTwo.phoneFn(tel) == false){
+            Toast('出险客户手机号格式有误!');
+            return ;
+        }
         if( InfNamevalue == ""){
             Toast('与出险报案人姓名不能为空!');
             return ;
@@ -441,7 +449,7 @@ export default {
             successCallback: (res) => {
               
               this.customer= document.querySelector('#customerName');
-              let ind =document.querySelector('#customerName').selectedIndex;
+              let ind =document.querySelector('#customerName').selectedIndex-1;
               console.log("mounted获取成功")
               
 

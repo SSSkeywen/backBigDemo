@@ -261,7 +261,7 @@ export default {
             {
               selectIcon: require("@/assets/img/yuqi.png"),
               selectName: "保费逾期未付处<br>理方式变更",
-              selectPath: "/",
+              selectPath: "/overdueWayChange",
               selectLineStyle: ""
             },
             {
@@ -396,7 +396,7 @@ export default {
         },
         failCallback: res => {
           if (res.code == 2002) {
-            this.$route.push({
+            this.$router.push({
               path: "/userInfo",
               query: { pathAddress: "/unbindSelf" }
             });

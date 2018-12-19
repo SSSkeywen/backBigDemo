@@ -13,24 +13,24 @@ export default {
     },
     value: {
       type: Number,
-      default: 1000
+      default: 0
     }
   },
   methods: {
     numberGrow (ele) {
+      console.log(this.value)
       let _this = this
       var is0=false;
       if(_this.value==0){
         _this.value+=100
         is0=true;
       }
-      _this.value=_this.value.toFixed(2);
-      let step = Math.floor((_this.value * 10) / (_this.time * 1000))
+      let step = Math.floor((_this.value * 1000) / (_this.time * 1000))
       let current = 0
       let start = 0
       let t = setInterval(function () {
         start += step
-        if (start > _this.value) {
+        if (start > _this.value*100) {
           clearInterval(t)
           start = _this.value
           t = null
@@ -43,8 +43,8 @@ export default {
           return
         }
         current = start
-        // ele.innerHTML = current
-        ele.innerHTML = current.toString().replace(/(\d)(?=(?:\d{3}[+]?)+\b)/g, '$1,');
+        ele.innerHTML = current
+        // ele.innerHTML = current.toString().replace(/(\d)(?=(?:\d{3}[+]?)+\b)/g, '$1,');
         
       }, 10)
       

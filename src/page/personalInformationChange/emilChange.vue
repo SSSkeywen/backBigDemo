@@ -82,7 +82,7 @@ export default {
       const toast1 = Toast.loading({
         mask: true,
         message: "加载中...",
-        duration: 1000
+        duration: 0
       });
       let phoneData = {
           address:'3',
@@ -97,7 +97,7 @@ export default {
           if(result.code=='0'){
               let tipsData = result.msg;
               this.$router.push({
-                path: "/successPage",
+                path: "/successPageChange",
                 query: { tipsData:tipsData }
               });
           }else{

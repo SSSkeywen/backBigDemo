@@ -24,7 +24,7 @@
             <li class="bg_nr">
               <div class="bg_nrtop">账户类型：</div>
               <div class="bg_nrbottom">
-                <input class="selgray" type="text" name="bank_name" v-model="bank_name" disabled>
+                <input class="selgray" type="text" name="bank_name" v-model="bank_name1" disabled>
               </div>
             </li>
             <li class="bg_nr">
@@ -103,6 +103,8 @@ export default {
       organId1: "",
       bankAccount: "",
       bank_name: "",
+      bank_name1: "",
+
       codeData: "",
       userType: "",
       userNumber: "",
@@ -136,6 +138,9 @@ export default {
         this.organId1 = res.data.organId;
         this.accBank = res.data.accBank;
         var organId = this.organId1;
+        if (this.bank_name == 7) {
+          this.bank_name1 = "普通卡";
+        }
         this.getorganname({
           organId,
           successCallback: res => {
