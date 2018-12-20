@@ -64,7 +64,9 @@
         <button @click="confirms">确认领取</button>
       </section>
     </div>
-    <div v-else>您没有可做生存金领取的保单</div>
+    <div v-else class="zp">
+      <p v-if="isShowwenzi">您没有可做生存金领取的保单</p>
+    </div>
     <alertContent :alertCount="alertCount"></alertContent>
   </div>
 </template>
@@ -80,6 +82,7 @@ export default {
     return {
       headerContent: "您名下支持生存金领取的保单列表",
       isShow: false,
+      isShowwenzi: false,
       alertCount: {
         isShowAlert: false,
 
@@ -112,6 +115,7 @@ export default {
       },
       failCallback: res => {
         this.isShow = false;
+        this.isShowwenzi = true;
         // this.isShow = true;
         // console.log(111111111111111);
       }
@@ -153,6 +157,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// .zp {
+//   display: none;
+// }
 .normal-box {
   min-height: 100vh;
   background-color: #efeff4;

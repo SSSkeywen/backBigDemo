@@ -116,6 +116,9 @@ import terminateCancelList from "@/page/safeInforChange/terminateCancelList";
 import terminateCancelInfo from "@/page/safeInforChange/terminateCancelInfo";
 import terminateCancelResult from "@/page/safeInforChange/terminateCancelResult";
 
+
+
+
 // 赵盼生存金领取
 import ybtScjlqffzhxxOne from "@/page/accountLink/bonusGetWayChange";
 import ybtScjlqffzhxx from "@/page/accountLink/ybtScjlqffzhxx";
@@ -124,6 +127,7 @@ import ybtScjlqffzhxxResult from "@/page/accountLink/ybtScjlqffzhxxResult";
 // 赵盼理赔报案claimReport
 
 import claimReport from "@/page/baseService/claimReport";
+import userEvaluation from "@/page/baseService/userEvaluation";
 
 // 赵盼理赔报案的第二页
 
@@ -607,6 +611,23 @@ export default new Router({
       name: "claimReport",
 
       component: claimReport
+
+    },
+    {
+
+
+
+      path: "/userEvaluation",
+
+
+
+      name: "userEvaluation",
+
+
+
+      component: userEvaluation
+
+
 
     },
 

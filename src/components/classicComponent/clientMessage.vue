@@ -2,7 +2,7 @@
   <div>
     <header class="cm-header">
       <img :src="bannerImgSrc" width="100%">
-      <div class="scan-style">
+      <div class="scan-style" @click="scanFnOne">
         <img :src="scanImgSrc" width="100%">
       </div>
       <div @click="enterVipPage" class="cm-jump-page">
@@ -76,7 +76,9 @@ export default {
 			}else if(custPoints>=100000000){
 				this.vipFont = '黑钻级'
         this.vipBgImgSrc = require("@/assets/classicImg/vipbg@blackDiamonds.png")
-			}
+      }
+      
+      // window.location.href = config.api_address_url+'/wxqhb/95589/vip_shouye/grade/public.html?v=public'
   },
   computed: {
     // headimgurl() {
@@ -89,6 +91,10 @@ export default {
       },
       enterVipPage(){
         window.location.href = config.api_address_url+'wxqhb/pagemenu.html?pagemenuType=2'
+      },
+
+      scanFnOne(){
+        this.$emit('scanFn')
       }
   },
 };

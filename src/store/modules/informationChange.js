@@ -6,7 +6,7 @@ const changePhone = 'changePhone'
 const changeInformation = 'changeInformation'
 const clientCardChange = 'clientCardChange'
 const isClientCardChange = 'isClientCardChange'
-const getWxConfig = 'getWxConfig'
+const getClientInfometion = 'getClientInfometion'
 
 
 const state = {
@@ -17,6 +17,19 @@ const mutations = {
 }
 
 const actions = {
+    [getClientInfometion]({ commit }, { successCallback = () => { }, failCallback = () => { } }) {
+        post(apiConfig.api_base_url + 'icc/jbxxinit', '').then((res) => {
+            let result = res.data
+            if (res.code == '0') {
+                successCallback(result)
+            } else {
+                failCallback(res.msg)
+            }
+        }).catch((err) => {
+            failCallback(err)
+        })
+    },
+
     [changePhone]({ commit }, { phoneData, successCallback = () => { }, failCallback = () => { } }) {
         post(apiConfig.api_base_url + 'icc/sjbg', phoneData).then((res) => {
             let result = res.data
@@ -32,6 +45,7 @@ const actions = {
 
     //基本信息变更
     [changeInformation]({ commit }, { phoneData, successCallback = () => { }, failCallback = () => { } }) {
+        console.log(phoneData.data)
         post(apiConfig.api_base_url + 'icc/jbxxbg/' + phoneData.address, phoneData.data).then((res) => {
             console.log(res)
             let result = res.data

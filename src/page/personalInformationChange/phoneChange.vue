@@ -6,15 +6,18 @@
         <li>
           <p>手机号码</p>
           <div>
-            <input v-model="telNo" type="tel">
+            <input v-model="telNo" @keyup="inputTel" type="tel">
           </div>
         </li>
       </ul>
-      <btnComponent @changCount="changCountNew" :btnCount="btnCount"></btnComponent>
+      <div class="yy_cx">
+		<button :disabled = "isClickBtn" :class="isClickBtn?'disabled-style':''" class="style-click" @click="changCountNew">{{btnCount}}</button>
+    </div>
+      <!-- <btnComponent :isClickBtn="isClickBtn" @changCount="changCountNew" :btnCount="btnCount"></btnComponent> -->
     </div>
     <div v-else>
       <notToOpenComponent :tipsContent="tipsContent"></notToOpenComponent>
-      <btnComponent :btnCount="'知道了'" @IKnow="IKnow"></btnComponent>
+      <btnComponent  :btnCount="'知道了'" @IKnow="IKnow"></btnComponent>
     </div>
     <alertContent :alertCount="alertCount"></alertContent>
     <yesAndNoAlert :tipsData="'手机号码'" :alertCountTwo="alertCountTwo" :telNo="telNo" @changCount="changCount"></yesAndNoAlert>
@@ -35,6 +38,8 @@ export default {
       headerContent: "联系手机变更",
       btnCount: "确认变更",
       telNo: "",
+      oldPhoneNo:'',
+      isClickBtn:false,
       tipsContent:
         "为保障服务安全，系统已优化升级，请至公司柜面或微信首页开设保险服务密码",
       alertCount: {
@@ -53,10 +58,30 @@ export default {
     alertContent,
     yesAndNoAlert
   },
+  created(){
+    this.getClientInfometion({
+        successCallback: result => {
+          console.log(result)
+          this.oldPhoneNo = result.celler
+        },
+        fCallback: res => {
+        }
+      });
+  },
   methods: {
     ...mapActions({
-      changePhone: "changePhone"
+      changePhone: "changePhone",
+      getClientInfometion:"getClientInfometion"
     }),
+
+    inputTel(){
+      console.log(this.telNo)
+      if(this.oldPhoneNo==this.telNo){
+        this.isClickBtn = true
+      }else{
+        this.isClickBtn = false
+      }
+    },
 
     IKnow() {
       this.$router.go(-1);
@@ -144,5 +169,24 @@ export default {
       }
     }
   }
+}
+
+.yy_cx {
+    margin: 1.17647059em 15px 0.3em;
+}
+.yy_cx button {
+    width: 100%;
+    height: 46px;
+    background-color: #00ae4d;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 18px;
+    border: none;
+}
+.yy_cx button.disabled-style{
+  background-color: #828684;
 }
 </style>

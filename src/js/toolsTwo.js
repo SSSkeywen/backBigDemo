@@ -152,4 +152,14 @@ export default {
         return resultFlag;
     },
 
+    //电话号码var regex = 
+    telephone: (cardData) => {
+        let reg2 = /^((0\d{2,3})-)(\d{7,8})$/;
+        let resultFlag = true
+        if (!reg2.test(cardData)) {
+            resultFlag = false;
+        }
+        return resultFlag;
+    },
+
 }

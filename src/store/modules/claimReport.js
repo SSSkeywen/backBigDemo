@@ -5,6 +5,9 @@ import { apiConfig } from '../api.js'
 const getebaoaninfo = 'getebaoaninfo'
 const hospitallist = 'hospitallist'
 const hospitalbaoan= 'hospitalbaoan'
+const xzyiyuan= 'xzyiyuan';
+const hospitalQuery= 'hospitalQuery';
+
 
 
 const state = {
@@ -62,6 +65,48 @@ const actions = {
                 failCallback(result)
             }
         }).catch((err) => {
+        })
+    },
+    //就诊医院
+    [xzyiyuan]({ commit }, {provinces,successCallback = () => { }, failCallback = () => { } }) {
+        post(apiConfig.api_base_url + 'lpba/citynamelist/'+provinces,"").then((res) => {
+            console.log(res);
+            console.log(res.code);
+            let result = res;
+            // console.log("11"+result.code == 0)
+            if (result.code == 0) {
+                successCallback(result)
+                 console.log(result)
+
+                // console.log("11"+result.code)
+            } else {
+                failCallback(result)
+   
+            }
+        }).catch((err) => {
+            failCallback(err)
+            console.log("00"+err)
+        })
+    },
+    //医院查询
+    [hospitalQuery]({ commit }, {hospitalJson,successCallback = () => { }, failCallback = () => { } }) {
+        post(apiConfig.api_base_url + 'lpba/hospitallist',hospitalJson).then((res) => {
+            console.log(res);
+            console.log(res.code);
+            let result = res;
+            // console.log("11"+result.code == 0)
+            if (result.code == 0) {
+                successCallback(result)
+                 console.log(result)
+
+                // console.log("11"+result.code)
+            } else {
+                failCallback(result)
+   
+            }
+        }).catch((err) => {
+            failCallback(err)
+            console.log("00"+err)
         })
     },
 }

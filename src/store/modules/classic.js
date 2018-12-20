@@ -3,6 +3,7 @@ import { get, post } from '@/config/http.js'
 import { apiConfig } from '../api.js'
 
 const getClientMessage = 'getClientMessage'
+const getJumpAddress = 'getJumpAddress'
 
 
 const state = {
@@ -29,6 +30,25 @@ const actions = {
             failCallback(err)
         })
     },
+
+
+    [getJumpAddress]({ commit }, { newAddress, successCallback = () => { }, failCallback = () => { } }) {
+        get(apiConfig.api_base_url + '/jumppage/topassword', newAddress).then((res) => {
+            let result = res.data
+            if (res.code == '0') {
+                // window.localStorage.clear()
+                // // window.localStorage.setItem('clientMsg', JSON.stringify(result))
+                // window.localStorage.setItem('isBinding', JSON.stringify(result.isBinding))
+                successCallback(result)
+            } else {
+                failCallback(res.msg)
+            }
+
+        }).catch((err) => {
+            failCallback(err)
+        })
+    },
+
 
 }
 

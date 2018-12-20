@@ -18,7 +18,7 @@
       <li class="line-new">
         <p>电话号码</p>
         <div>
-          <input v-model="tel1" type="tel">
+          <input v-model="tel1" type="text">
         </div>
       </li>
     </ul>
@@ -114,6 +114,11 @@ export default {
     },
 
     changCount() {
+      if(!this.$toolsTwo.telephone(this.tel1)){
+        this.alertCount.alertData = "电话号码格式不正确";
+        this.alertCount.isShowAlert = true;
+        return false
+      }
       const toast1 = Toast.loading({
         mask: true,
         message: "加载中...",

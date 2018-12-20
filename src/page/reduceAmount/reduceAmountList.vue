@@ -1,11 +1,11 @@
 <template>
 <div class="mg-box">
-        <div class="reduceAmountList-box" v-if="showConten">
-            <headerT :headerContent="headerContent" style="
-                "></headerT>
+    <headerT :headerContent="headerContent" style="
+		"></headerT>
+	<div class="reduceAmountList-box" v-if="showConten">
         <div class="reduceAmountList-list">
             <div class="reduceAmountList-list-box"  v-for="(item, index) in contentList" :key="index">
-                    <div class="bq-img" @click="selectFn(index)" :class="{active: item.selectTrue}">
+            	<div class="bq-img" @click="selectFn(index)" :class="{active: item.selectTrue}">
                 </div>
                 <div class="reduceAmountList-list-right">
                     <div style="
@@ -39,15 +39,33 @@
             </div>
         </div>
         <amountbtn @changeBtn="changeBtn" @allSelect="allSelect" :controlchangeBtn="selectAll"></amountbtn>
-        </div>
+	</div>
+    <div v-else>
+           <div class='nh-img'>
+                <img src='@/assets/reduceAmount/noHasBd.png'  style="
+                width:  2.54rem;
+                height:  1.98rem;
+                margin: 0 auto;
+                padding-top: 1.49rem;
+                padding-bottom:  0.6rem;
+            ">
+            </div>
+            <p class='nh-font' style="
+                color: #535353;
+                text-align:  center;
+                font-size: 0.27rem;
+            ">您没有可办理减额交清的保单。</p>
+    </div>
     <alertContent :alertCount="alertCount"></alertContent>
     <section class="error-style" v-show="isShowError">
         <div class="error-content">
-            <img src="@/assets/reduceAmount/xitongyichang.png" width="100%">
+           <section>
+            <img src="@/assets/reduceAmount/xitongyichang.png" width="100%" >
             <p class="error-font" v-text="tipsContent"></p>
             <div class="error-btn">
                 <button class="style-click" @click="selectClickHere">知道了</button>
             </div>
+            </section>
         </div>
     </section>
 </div>
@@ -60,8 +78,8 @@ import headerT from "@/components/header.vue"
 import { mapActions } from "vuex";
 import { Toast } from "vant";
 export default {
-        data(){
-                return{
+	data(){
+		return{
             showConten: false,
             selectAll: false,
             isShowError: false,
@@ -69,14 +87,14 @@ export default {
             contentList:  [
                 
             ],
-                        password: '',
-                        alertCount: {
-                                isShowAlert: false,
-                                alertData: ''
-                        },
-                        headerContent: '您名下支持减额交情的保单列表',
-                }
-        },
+			password: '',
+			alertCount: {
+				isShowAlert: false,
+				alertData: ''
+			},
+			headerContent: '您名下支持减额交情的保单列表',
+		}
+	},
     mounted(){
          this.getReduceAmountList({
             successCallback: res => {
@@ -87,7 +105,7 @@ export default {
                         this.contentList.forEach((it) => {
                             it.selectTrue = false;
                         }) 
-                    }
+                    } 
                 }
                  
                
@@ -104,7 +122,7 @@ export default {
         });
         
     },
-        methods: {
+	methods: {
          ...mapActions({
              getReduceAmountList: 'getReduceAmountList'
         }),
@@ -170,10 +188,10 @@ export default {
             }
             this.selectAll= true
         }
-        
-        },
-        components: {
-         headerT,
+	
+	},
+	components: {
+	 headerT,
      amountbtn,
      alertContent
   },

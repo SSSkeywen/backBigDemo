@@ -1,12 +1,12 @@
 <template>
     <div class="yy_cx">
-		<button class="style-click" @click="IKnow">{{btnCount}}</button>
+		<button :disabled = "isClickBtn" class="style-click" @click="IKnow">{{btnCount}}</button>
     </div>
 </template>
 
 <script>
     export default {
-        props:['btnCount'],
+        props:['btnCount',"isClickBtn"],
         methods: {
             IKnow() {
                 console.log(111)

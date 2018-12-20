@@ -2,11 +2,14 @@
   <div style="background-color: #dcdcdc;    min-height: 100vh;">
     <div class="header">就诊医院（最多4家）</div>
     <div class="content">
-      <div class="bdhflb">
+      <div class="bdhflb" v-if="hospitalItem!=null&&hospitalItem!=''">
         <div class="bdhf_cont">
           <ul>
-            <li v-for="(hospitalItem,hospitalIndex) in hospitalList" :key="hospitalIndex">
-              <div class="bdhf_cont_left" v-text="hospitalItem.hospitalName">上海第十医院</div>
+            <li v-for="(Item,hospitalIndex) in hospitalItem"
+             :key="hospitalIndex"
+             :value="hospitalIndex"
+             >
+              <div class="bdhf_cont_left"><p>{{Item}}</p></div>
               <div class="bdhf_cont_right">
                 <label>
                   <input class="green_botton" type="submit" name="button_sh"  value="删除" @click="del($event)">
@@ -26,7 +29,7 @@
           >
             <div class="form_nrtop" v-text="queryAddhospitalItem.queryAddhospitalName">请选择省份：</div>
             <div class="form_nrbottom" v-if="queryAddhospitalItem.isSElect">
-              <select name="select" class="select_lei" id="select_sf" @click="queryProvinces">
+              <select name="select" class="select_lei" id="select_sf" @change="queryProvinces">
                 <option
                   v-for="(provinceItem,provinceIndex) in provinceList"
                   :key="provinceIndex"
@@ -41,7 +44,7 @@
                 <option
                 v-for="(Item,Index) in city"
                 :key="Index"
-                v-text="Item.provinceName"
+                v-text="Item"
               ></option>
               </select>
             </div>
@@ -169,31 +172,81 @@ export default {
           isShowAlert:false,
           alertData:'报案成功',
       },
+      res:"",
+      hospitalItem:[],
+      hospitalItem1:""
     };
+  },
+  mounted() {
+    this.queryProvinces();
+    this.hospitalItem=[];
+    let t=this.$route.query.hospitalList;
+    this.hospitalItem=t.concat(t);
+    console.log("this.hospitalList")
+    console.log(this.hospitalItem)
+    // alert(this.$route.query.hospitalList.length);
+    //  alert(this.hospitalItem.length);
   },
   methods: {
     ...mapActions({
-        xzyiyuan: "xzyiyuan"
+        xzyiyuan: "xzyiyuan",
+        hospitalQuery:"hospitalQuery"
     }),
     //跳转到下一页
     yiyuanlbFn() {
+      //省份
+      this.select_sf = document.querySelector("#select_sf");
+      let index = this.select_sf.selectedIndex;
+      let provincesValue =this.select_sf.options[index].text;
+      //城市
+      this.city = document.querySelector("#city");
+      let indexCity = this.city.selectedIndex;
+      let cityValue =this.city.options[indexCity].text;
+      //医院
       let hospName =document.querySelector('#hospName').value;
+      let hospitalJson={sfName:provincesValue,csName:cityValue,yyName:hospName};
+
       if( hospName == "" || hospName == "请输入2-15个字符"){
           Toast('您输入医院名称有误');
           return ;
       }
-      this.$router.push({ path: "/yiyuanlb" });
+      console.log("console.log(hospitalQuery);");
+      console.log(hospitalJson);
+      this.hospitalQuery({
+        hospitalJson,
+          successCallback: result => {
+              this.result=result;
+              this.res=result;
+              console.log("----------------this.result")
+              console.log(this.res)
+              console.log(this.result);
+              this.$router.push({ 
+                  path: "/yiyuanlb",
+                  query:{
+                      res: this.res,
+                  }
+              });
+              
+          },
+          failCallback: res => {
+            console.log(res.msg)
+             Toast(res.msg);
+          }
+      });
     },
     //完成报案弹窗
     AlertReport(){
       this.alertCount.alertData ="报案成功!";
       this.alertCount.btnMsg ="确定";
       this.alertCount.isShowAlert = true;
-      // this.$router.push({ path: "../businessHanding" });
+      this.$router.push({ path: "../userEvaluation" });
       console.log("完成报案");
     },
     del(e){
       let self= e.target.parentNode.parentNode.parentNode;
+      let index=e.target.parentNode.parentNode.parentNode.value;
+
+      // this.hospitalItem.splice(index,1,null);
       if(self.parentNode.children.length > 1){
          self.remove();
       }else{
@@ -218,8 +271,10 @@ export default {
         provinces,
         successCallback: result => {
             this.result=result;
+            this.city=this.result.data;
             console.log("this.result")
             console.log(this.result);
+            console.log(this.result.data);
             // this.city.selectedIndex=
             
         },
@@ -279,12 +334,24 @@ export default {
   border-bottom: 1px solid #cbcbcb;
 }
 .bdhf_cont_left {
-  width: 68%;
+  width: 65%;
   float: left;
+  height:30px;
   font-size: 0.26rem;
-  line-height: 0.7rem;
+  display:flex;
+  align-content: center;
+  justify-content: center;
   background: url("../../../src/assets/mgImg/icon_04.png") no-repeat center left;
-  text-indent: 20px;
+}
+.bdhf_cont_left p {
+  width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+  padding-left: 30px;
 }
 .bdhf_cont_right {
   width: 30%;

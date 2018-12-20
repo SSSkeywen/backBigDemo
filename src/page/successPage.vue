@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+import { config } from "@/config/config.js";
 export default {
   // props:['tipsContent'],
   data() {
@@ -24,10 +26,28 @@ export default {
     // this.tipsContent = this.$route.query.pathAddress;
   },
   methods: {
+    ...mapActions({
+      getJumpAddress: "getJumpAddress"
+    }),
     IKnowClose() {
       // WeixinJSBridge.call("closeWindow");
-      console.log()
-      this.$router.push({ path: this.$route.query.pathAddress||'/' });
+      console.log(this.$route.query.isPassword)
+      if(this.$route.query.isPassword == '1'){
+        let newAddress =
+          {
+            url:config.api_address_url + "/nwxqhb/dist/index.html#" + this.$route.query.pathAddress
+          }
+          this.getJumpAddress({
+            newAddress,
+            successCallback: res => {
+              window.location.href = res;
+            },
+            failCallback: res => {}
+          });
+      }else{
+        this.$router.push({ path: this.$route.query.pathAddress||'/' });
+      }
+      
     }
   }
 };

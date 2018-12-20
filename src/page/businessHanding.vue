@@ -14,7 +14,7 @@
             :class="itemTwo.selectLineStyle"
             v-for="(itemTwo,indexTwo) in item.selectLists"
             :key="indexTwo"
-            @click="jumpPage(itemTwo.selectPath)"
+            @click="jumpPage(itemTwo.selectPath,itemTwo.isPassword)"
           >
             <div class="me-content-list-img">
               <img :src="itemTwo.selectIcon" alt>
@@ -38,7 +38,7 @@
             :class="itemTwo.selectLineStyle"
             v-for="(itemTwo,indexTwo) in item.selectLists"
             :key="indexTwo"
-            @click="jumpPage(itemTwo.selectPath)"
+            @click="jumpPage(itemTwo.selectPath,itemTwo.isPassword)"
           >
             <div class="me-content-list-img">
               <img :src="itemTwo.selectIcon" alt>
@@ -53,9 +53,11 @@
 
 <script>
 import { mapActions } from "vuex";
+import { config } from "@/config/config.js";
 export default {
   data() {
     return {
+      newUrl: "",
       titleimgOne: require("@/assets/img/icon_ywbl_02.png"),
       contentListsOne: [
         {
@@ -65,29 +67,34 @@ export default {
               selectIcon: require("@/assets/img/huizhi.png"),
               selectName: "电子回执/回访",
               selectPath: "",
+              isPassword: "0",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/img/xuqi.png"),
               selectName: "续期缴费",
               selectPath: "",
+              isPassword: "0",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/img/lipei.png"),
               selectName: "理赔报案",
               selectPath: "/claimReport",
+              isPassword: "0",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/img/suixinyue.png"),
               selectName: "随心约",
               selectPath: "",
+              isPassword: "0",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/img/jiebang.png"),
               selectName: "自助解绑",
+              isPassword: "0",
               selectPath: "/unbindSelf"
             }
           ]
@@ -100,25 +107,25 @@ export default {
           paddingTop: "padding-top-0",
           selectLists: [
             {
-
               selectIcon: require("@/assets/img/kaitong.png"),
 
               selectName: "开通",
 
               selectPath: "/insure",
-
+              isPassword: "0",
               selectLineStyle: "line-down-me"
-
             },
             {
               selectIcon: require("@/assets/img/xiugai.png"),
               selectName: "修改与重设",
               selectPath: "/modifyRest",
+              isPassword: "0",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/img/bangding.png"),
               selectName: "绑定账号变更",
+              isPassword: "1",
               selectPath: "binding"
             }
           ]
@@ -131,6 +138,7 @@ export default {
               selectIcon: require("@/assets/img/ssd.png"),
               selectName: "实时贷",
               selectPath: "",
+              isPassword: "1",
               selectLineStyle: ""
             }
           ]
@@ -143,24 +151,28 @@ export default {
               selectIcon: require("@/assets/img/shouji.png"),
               selectName: "手机号码",
               selectPath: "/phoneChange",
+              isPassword: "1",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/img/mail.png"),
               selectName: "电子邮箱",
               selectPath: "/emilChange",
+              isPassword: "1",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/img/jiating.png"),
               selectName: "家庭信息",
               selectPath: "/homeAdressChange",
+              isPassword: "1",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/img/danwei.png"),
               selectName: "单位信息",
               selectPath: "/companyAdressChange",
+              isPassword: "1",
               selectLineStyle: "line-down-me"
             },
             {
@@ -179,12 +191,14 @@ export default {
               selectIcon: require("@/assets/img/jifei.png"),
               selectName: "缴费账号",
               selectPath: "/paymentAccount",
+              isPassword: "1",
               selectLineStyle: ""
             },
             {
               selectIcon: require("@/assets/img/dizhi.png"),
               selectName: "联系地址",
               selectPath: "/contactAddress",
+              isPassword: "1",
               selectLineStyle: ""
             }
           ]
@@ -197,12 +211,14 @@ export default {
               selectIcon: require("@/assets/img/yuyuez.png"),
               selectName: "预约终止",
               selectPath: "/terminateCancelList",
+              isPassword: "1",
               selectLineStyle: ""
             },
             {
               selectIcon: require("@/assets/img/jiane.png"),
               selectName: "减额交清",
               selectPath: "/reduceAmountList",
+              isPassword: "1",
               selectLineStyle: ""
             }
           ]
@@ -215,59 +231,64 @@ export default {
               selectIcon: require("@/assets/img/nianjinb.png"),
               selectName: "年金领取频率<br>及年限变更",
               selectPath: "/annuityCollectList",
+              isPassword: "1",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/img/hongli.png"),
               selectName: "红利领取",
               selectPath: "/receiveList",
+              isPassword: "1",
               selectLineStyle: "line-down-me"
             },
             {
-
               selectIcon: require("@/assets/img/honglib.png"),
 
               selectName: "红利领取方式<br>变更",
 
               selectPath: "/bonusGetWayChange",
-
+              isPassword: "1",
               selectLineStyle: "line-down-me"
-
             },
             {
               selectIcon: require("@/assets/img/shengcun.png"),
               selectName: "生存金领取",
               selectPath: "/ybtScjlqffzhxxOne",
+              isPassword: "1",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/img/shengcunb.png"),
               selectName: "生存金领取方式<br>变更",
               selectPath: "",
+              isPassword: "1",
               selectLineStyle: ""
             },
             {
               selectIcon: require("@/assets/img/honglic.png"),
               selectName: "红利处置方式<br>变更",
               selectPath: "",
+              isPassword: "1",
               selectLineStyle: ""
             }
           ]
         },
         {
-          titleName: "保障信息变更",
+          titleName: "保险合同服务",
           titleLineStyle: "",
           selectLists: [
             {
               selectIcon: require("@/assets/img/yuqi.png"),
               selectName: "保费逾期未付处<br>理方式变更",
               selectPath: "/overdueWayChange",
+              isPassword: "1",
               selectLineStyle: ""
             },
             {
               selectIcon: require("@/assets/img/autopp.png"),
               selectName: "结束自动垫缴",
               selectPath: "/",
+              isPassword: "1",
               selectLineStyle: ""
             }
           ]
@@ -280,24 +301,28 @@ export default {
               selectIcon: require("@/assets/img/xuqiz.png"),
               selectName: "续期缴费成功<br>通知书",
               selectPath: "/billChangeSuccess",
+              isPassword: "1",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/img/shixiao.png"),
               selectName: "失效通知书",
               selectPath: "/billLoseEfficacy",
+              isPassword: "1",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/img/baodan.png"),
               selectName: "保单年度报告",
               selectPath: "/billYearReport",
+              isPassword: "1",
               selectLineStyle: ""
             },
             {
               selectIcon: require("@/assets/img/yomgjiu.png"),
               selectName: "永久失效通知书",
               selectPath: "/billLoseEfficacyEver",
+              isPassword: "1",
               selectLineStyle: ""
             }
           ]
@@ -310,18 +335,21 @@ export default {
               selectIcon: require("@/assets/img/wnzhzj.png"),
               selectName: "万能账户追加<br>投资",
               selectPath: "/",
+              isPassword: "1",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/img/xzwnzh.png"),
               selectName: "新增万能账户",
               selectPath: "/",
+              isPassword: "1",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/img/toUniversal.png"),
               selectName: "万能账户部分<br>领取",
               selectPath: "/",
+              isPassword: "1",
               selectLineStyle: ""
             }
           ]
@@ -334,30 +362,35 @@ export default {
               selectIcon: require("@/assets/img/touzi.png"),
               selectName: "投资账户单位<br>转换",
               selectPath: "",
+              isPassword: "1",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/img/billi.png"),
               selectName: "账户资金比例<br>调整",
               selectPath: "",
+              isPassword: "1",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/img/jieshu.png"),
               selectName: "结束保险费假期",
               selectPath: "",
+              isPassword: "1",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/img/tlzhzjtz.png"),
               selectName: "投连账户追加<br>投资",
               selectPath: "",
+              isPassword: "1",
               selectLineStyle: "line-down-me"
             },
             {
               selectIcon: require("@/assets/img/invest.png"),
               selectName: "投连账户部分<br>领取",
               selectPath: "",
+              isPassword: "1",
               selectLineStyle: ""
             }
           ]
@@ -365,34 +398,50 @@ export default {
       ]
     };
   },
+  created() {},
   methods: {
     ...mapActions({
-                toBindUserUpdate: "toBindUserUpdate"
-            }),
-    jumpPage(pathAddress) {
-      console.log(pathAddress);
-      if(pathAddress =='binding'){
-        this.toBindUserUpdateFn()
-        return false
+      toBindUserUpdate: "toBindUserUpdate",
+      getJumpAddress: "getJumpAddress"
+    }),
+    jumpPage(pathAddress, isPassword) {
+      if (pathAddress == "binding") {
+        this.toBindUserUpdateFn();
+        return false;
       }
       let isBinding = JSON.parse(window.localStorage.getItem("isBinding"));
       if (isBinding == "1") {
-        this.$router.push({ path: pathAddress });
+        if (isPassword == "1") {
+          let newAddress =
+          {
+            url:config.api_address_url + "/nwxqhb/dist/index.html#" + pathAddress
+          }
+          this.getJumpAddress({
+            newAddress,
+            successCallback: res => {
+              window.location.href = res;
+            },
+            failCallback: res => {}
+          });
+          // return false;
+          
+        } else {
+          this.$router.push({ path: pathAddress });
+        }
       } else {
         this.$router.push({
           path: "/userInfo",
-          query: { pathAddress: pathAddress }
+          query: { pathAddress: pathAddress,isPassword:isPassword }
         });
-        }
-      },
-      toBindUserUpdateFn() {
+      }
+    },
+    toBindUserUpdateFn() {
       // 绑定账号变更跳转
       this.toBindUserUpdate({
         successCallback: res => {
           console.log(res.data);
-          var link = res.data
-          window.location.href = link
-          
+          var link = res.data;
+          window.location.href = link;
         },
         failCallback: res => {
           if (res.code == 2002) {

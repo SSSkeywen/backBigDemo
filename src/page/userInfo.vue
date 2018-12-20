@@ -351,7 +351,7 @@ export default {
               let tipsData = `认证成功`;
               this.$router.push({
                 path: "/successPage",
-                query: { pathAddress: this.$route.query.pathAddress,tipsData:tipsData }
+                query: { pathAddress: this.$route.query.pathAddress,tipsData:tipsData,isPassword:this.$route.query.isPassword }
               });
               break;
             case "1":
