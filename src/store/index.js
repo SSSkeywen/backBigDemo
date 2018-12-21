@@ -18,6 +18,7 @@ import account from './modules/account.js'
 import dividend from './modules/dividend.js'
 import unitLinked from './modules/unitLinked.js'
 import modifyRest from './modules/modifyRest.js'
+import survivalGetWayChange from './modules/survivalGetWayChange.js'
 
 //李y
 import l_insureProgress from './modules/l_insureProgress.js'
@@ -68,6 +69,7 @@ export default new Vuex.Store({
         dividend,
         unitLinked,
         modifyRest,
+        survivalGetWayChange,
 
         l_insureProgress,
         unbindSelf,

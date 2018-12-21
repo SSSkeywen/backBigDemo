@@ -194,14 +194,14 @@ img {
   bottom: 4px !important;
 }
 .van-swipe__indicator {
-  border-radius: 0;
-  background-color: #fff;
-  width: 0.1rem;
-  height: 0.06rem;
+  border-radius: 3px!important;
+  background-color: #fff!important;
+  width: 0.1rem!important;
+  height: 0.06rem!important;
 }
 .van-swipe__indicator--active {
-  background-color: #006cb7;
-  width: 0.18rem;
+  background-color: #006cb7!important;
+  width: 0.18rem!important;
 }
 
 /* 变更页面背景样式 */

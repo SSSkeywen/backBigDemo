@@ -3,7 +3,7 @@
     <div class="header">医院列表</div>
     <div class="content">
       <div class="bdhflb">
-        <div class="bdhf_tt">您还可以添加 4 家医院</div>
+        <div class="bdhf_tt">您还可以添加 {{4-this.hospitalList.length}} 家医院</div>
         <div class="bdhf_cont2">
             <ul>
               <li
@@ -82,12 +82,17 @@ export default {
         hospitalQuery:"hospitalQuery"
     }),
     addHos(e){
-      let t=e.target.parentNode.children[0].textContent;
-      this.btn_add=document.querySelector(".btn_add");
-      e.target.classList.add("btn_addHusy");
-      //合并·字符串
-      this.hospitalList.push(t);
-      // alert(e.target.previousSibling.previousSibling.previousSibling.textContent);
+      if(this.hospitalList.length<4){
+        if(e.target.classList.contains("btn_addHusy") == false){
+            let t=e.target.parentNode.children[0].textContent;
+            this.btn_add=document.querySelector(".btn_add");
+            e.target.classList.add("btn_addHusy");
+
+          //合并·字符串
+          this.hospitalList.push(t);
+        }
+          // console.log(e.target.classList.contains("btn_addHusy")== true)
+      }
 
     },
     AlertReport(){

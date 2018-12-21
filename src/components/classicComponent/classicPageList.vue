@@ -38,38 +38,33 @@ export default {
   },
   props: ["pageListData"],
   methods: {
-      ...mapActions({
+    ...mapActions({
       getJumpAddress: "getJumpAddress"
     }),
     myGuaranteeSlip(pageAddress) {
-        
       this.$router.push({ path: pageAddress });
     },
-    jumpMessagePage(pageAddress,isPassword) {
-        console.log(isPassword)
+    jumpMessagePage(pageAddress, isPassword) {
+      window.localStorage.setItem('pathAddress',pathAddress)
       let isBinding = JSON.parse(window.localStorage.getItem("isBinding"));
-      console.log(this.pageListData);
       if (isBinding == "1") {
-          if(isPassword =='1'){
-              let newAddress = {
-                url: config.api_address_url + "/nwxqhb/dist/index.html#" + pageAddress
-                };
-                this.getJumpAddress({
-                newAddress,
-                successCallback: res => {
-                    window.location.href = res;
-                },
-                failCallback: res => {}
-                });
-          }else{
-              this.$router.push({ path: pageAddress });
-          }
-        
-        
+        if (isPassword == "1") {
+          let newAddress = "transitionPage";
+          this.getJumpAddress({
+            newAddress,
+            successCallback: res => {
+              window.localStorage.setItem('goBack','1')
+              window.location.href = res;
+            },
+            failCallback: res => {}
+          });
+        } else {
+          this.$router.push({ path: pageAddress });
+        }
       } else {
         this.$router.push({
           path: "/userInfo",
-          query: { pathAddress: pageAddress,isPassword:isPassword }
+          query: { pathAddress: pageAddress, isPassword: isPassword }
         });
       }
       // console.log(pageAddress)

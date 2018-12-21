@@ -6,6 +6,7 @@ import businessHanding from '@/page/businessHanding'
 import userFailPage from '@/page/userFailPage'
 import successPage from '@/page/successPage'
 import successPageChange from '@/page/successPageChange'
+import transitionPage from '@/page/transitionPage'
 
 // 绑定页面
 import userInfo from '@/page/userInfo'
@@ -79,7 +80,6 @@ import annuityCollectList from '@/page/annuityCollection/annuityCollectList'
 import annuityCollectDetail from '@/page/annuityCollection/annuityCollectDetail'
 import statusPage from '@/page/publicPage/policyStatus'
 
-
 //保险服务密码
 //保险服务密码
 
@@ -99,9 +99,7 @@ import uploadCard from '@/page/personalInformationChange/uploadCard'
 //交费信息变更
 import contactAddress from '@/page/payInfoChange/contactAddress'
 import contactAddressChange from '@/page/payInfoChange/contactAddressChange'
-
 import overdueWayChange from '@/page/insurancePactService/overdueWayChange'
-
 import overdueWayChangeEnd from '@/page/insurancePactService/overdueWayChangeEnd'
 
 
@@ -116,9 +114,6 @@ import terminateCancelList from "@/page/safeInforChange/terminateCancelList";
 import terminateCancelInfo from "@/page/safeInforChange/terminateCancelInfo";
 import terminateCancelResult from "@/page/safeInforChange/terminateCancelResult";
 
-
-
-
 // 赵盼生存金领取
 import ybtScjlqffzhxxOne from "@/page/accountLink/bonusGetWayChange";
 import ybtScjlqffzhxx from "@/page/accountLink/ybtScjlqffzhxx";
@@ -130,21 +125,14 @@ import claimReport from "@/page/baseService/claimReport";
 import userEvaluation from "@/page/baseService/userEvaluation";
 
 // 赵盼理赔报案的第二页
-
 import xzyiyuan from "@/page/baseService/xzyiyuan";
 
-
-
 // 赵盼医院查询列表
-
 import yiyuanlb from "@/page/baseService/yiyuanlb";
 
 //红利领取
-
 import receiveList from "@/page/divdendsReceive/receiveList";
-
 import accpuntInf from "@/page/divdendsReceive/accpuntInf";
-
 import changeSuccess from "@/page/divdendsReceive/changeSuccess";
 
 //通知书方式变更
@@ -155,10 +143,14 @@ import billLoseEfficacyEver from "@/page/notificationSendingModeChanges/billLose
 import infoChangeResult from '@/page/notificationSendingModeChanges/infoChangeResult'
 
 //红利领取方式变更
-
 import bonusGetWayChange from '@/page/customerService/protectRightGet/bonusGetWayChange'
 import bonusGetWayChangeInfo from '@/page/customerService/protectRightGet/bonusGetWayChangeInfo'
 import bonusGetWayChangeApproval from '@/page/customerService/protectRightGet/bonusGetWayChangeApproval'
+
+// 生存金领取方式变更
+import survivalGetWayChange from '@/page/customerService/protectRightGet/survivalGetWayChange'
+import survivalGetWayChangeInfo from '@/page/customerService/protectRightGet/survivalGetWayChangeInfo'
+import survivalGetWayChangeEnd from '@/page/customerService/protectRightGet/survivalGetWayChangeEnd'
 
 // 续费账号
 import paymentAccount from '@/page/paymentInformationChange/paymentAccount'
@@ -203,8 +195,13 @@ export default new Router({
       name: 'successPageChange',
       component: successPageChange
     },
-
     {
+      path: '/transitionPage',
+      name: 'transitionPage',
+      component: transitionPage
+    },
+    {
+      
       path: '/messageInquire',
       name: 'messageInquire',
       component: messageInquire
@@ -245,31 +242,38 @@ export default new Router({
       path: '/sqzdList',
       name: 'sqzdList',
       component: sqzdList
-    }, {
+    }, 
+    {
       path: '/sqzdMessage',
       name: 'sqzdMessage',
       component: sqzdMessage
-    }, {
+    }, 
+    {
       path: '/toNewIndex',
       name: 'toNewIndex',
       component: toNewIndex
-    }, {
+    }, 
+    {
       path: '/toNewIndexMessage',
       name: 'toNewIndexMessage',
       component: toNewIndexMessage
-    }, {
+    }, 
+    {
       path: '/toNewList',
       name: 'toNewList',
       component: toNewList
-    }, {
+    }, 
+    {
       path: '/toNewIndexView',
       name: 'toNewIndexView',
       component: toNewIndexView
-    }, {
+    }, 
+    {
       path: '/saveTheBill',
       name: 'saveTheBill',
       component: saveTheBill
-    }, {
+    }, 
+    {
       path: '/saveTheBillList',
       name: 'saveTheBillList',
       component: saveTheBillList
@@ -278,11 +282,13 @@ export default new Router({
       path: '/settingTheBill',
       name: 'settingTheBill',
       component: settingTheBill
-    }, {
+    }, 
+    {
       path: '/settingTheBillList',
       name: 'settingTheBillList',
       component: settingTheBillList
-    }, {
+    }, 
+    {
       path: '/successMessage',
       name: 'successMessage',
       component: successMessage
@@ -292,8 +298,6 @@ export default new Router({
       name: 'sendInvoice',
       component: sendInvoice
     },
-
-
     //liu feitao
     //changeList 保全变更
     {
@@ -323,49 +327,28 @@ export default new Router({
     // universal 万能账户
 
     {
-
       path: '/universal',
-
       name: 'universal',
-
       component: universal
-
     },
 
     // universalInfo 万能账户信息
-
     {
-
       path: '/universalInfo',
-
       name: 'universalInfo',
-
       component: universalInfo
-
     },
-
     // survivalWorth 万能账户信息 现有账户价值
-
     {
-
       path: '/universalWorth',
-
       name: 'universalWorth',
-
       component: universalWorth
-
     },
-
     // universalDetial 万能账户信息 现有账户价值 详细信息
-
     {
-
       path: '/universalDetial',
-
       name: 'universalDetial',
-
       component: universalDetial
-
     },
     // dividend 分红账户
     {
@@ -482,15 +465,10 @@ export default new Router({
     },
     //修改和重置
     {
-
       path: '/modifyRest',
-
       name: 'modifyRest',
-
       component: modifyRest
-
     },
-
     //个人信息变更
     {
       path: '/phoneChange',
@@ -526,8 +504,6 @@ export default new Router({
       name: 'contactAddressChange',
       component: contactAddressChange
     }, 
-     
-
     //基本服务
     {
       path: '/unbindSelf',
@@ -605,83 +581,42 @@ export default new Router({
     //赵盼理赔报案
 
     {
-
       path: "/claimReport",
-
       name: "claimReport",
-
       component: claimReport
-
     },
     {
-
-
-
       path: "/userEvaluation",
-
-
-
       name: "userEvaluation",
-
-
-
       component: userEvaluation
-
-
-
     },
-
     //赵盼理赔报案下一页yiyuanlb
-
     {
-
       path: "/xzyiyuan",
-
       name: "xzyiyuan",
-
       component: xzyiyuan
-
     },
-
     //医院查询列表
-
     {
-
       path: "/yiyuanlb",
-
       name: "yiyuanlb",
-
       component: yiyuanlb
-
-    }, {
-
-      path: '/receiveList',
-
-      name: 'receiveList',
-
-      component: receiveList
-
-    }, {
-
-      path: '/accpuntInf',
-
-      name: 'accpuntInf',
-
-      component: accpuntInf
-
     },
-
     {
-
-      path: '/changeSuccess',
-
-      name: 'changeSuccess',
-
-      component: changeSuccess
-
+      path: '/receiveList',
+      name: 'receiveList',
+      component: receiveList
+    }, 
+    {
+      path: '/accpuntInf',
+      name: 'accpuntInf',
+      component: accpuntInf
     },
-
-
+    {
+      path: '/changeSuccess',
+      name: 'changeSuccess',
+      component: changeSuccess
+    },
     //通知书方式变更
     { path: '/billChangeSuccess', name: 'billChangeSuccess', component: billChangeSuccess },
     { path: '/billLoseEfficacy', name: 'billLoseEfficacy', component: billLoseEfficacy },
@@ -691,50 +626,36 @@ export default new Router({
     //红利领取方式变更
 
     {
-
       path: '/bonusGetWayChange',
-
       name: 'bonusGetWayChange',
-
       component: bonusGetWayChange
-
     },
-
     {
-
       path: '/bonusGetWayChangeInfo',
-
       name: 'bonusGetWayChangeInfo',
-
       component: bonusGetWayChangeInfo
-
     },
-
     {
-
       path: '/bonusGetWayChangeApproval',
-
       name: 'bonusGetWayChangeApproval',
-
       component: bonusGetWayChangeApproval
-
     },
-
     // 赵盼生存金领取
     {
       path: "/ybtScjlqffzhxxOne",
       name: "ybtScjlqffzhxxOne",
       component: ybtScjlqffzhxxOne
-    }, {
+    },
+    {
       path: "/ybtScjlqffzhxx",
       name: "ybtScjlqffzhxx",
       component: ybtScjlqffzhxx
-    }, {
+    },
+    {
       path: "/ybtScjlqffzhxxResult",
       name: "ybtScjlqffzhxxResult",
       component: ybtScjlqffzhxxResult
     },
-
     {
       path: "/paymentAccount",
       name: "paymentAccount",
@@ -745,25 +666,31 @@ export default new Router({
       name: "paymentAccountInfo",
       component: paymentAccountInfo
     },
-
     {
-
       path: '/overdueWayChange',
-
       name: 'overdueWayChange',
-
       component: overdueWayChange
-
     },
-
     {
-
       path: '/overdueWayChangeEnd',
-
       name: 'overdueWayChangeEnd',
-
       component: overdueWayChangeEnd
-
+    },
+    // 生存金领取方式变更
+    {
+      path: '/survivalGetWayChange',
+      name: 'survivalGetWayChange',
+      component: survivalGetWayChange
+    },
+    {
+      path: '/survivalGetWayChangeInfo',
+      name: 'survivalGetWayChangeInfo',
+      component: survivalGetWayChangeInfo
+    },
+    {
+      path: '/survivalGetWayChangeEnd',
+      name: 'survivalGetWayChangeEnd',
+      component: survivalGetWayChangeEnd
     },
   ]
 })

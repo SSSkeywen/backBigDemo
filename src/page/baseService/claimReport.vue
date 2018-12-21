@@ -20,7 +20,7 @@
               <!-- <option value accidentId accidentSex certcode certtype></option> -->
               <option 
                 v-for="(item,index) in customerName"
-                v-text="item"
+                v-text="item" :key="index"
               ></option>
             </select>
           </div>

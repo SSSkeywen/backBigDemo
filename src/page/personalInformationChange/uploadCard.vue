@@ -1,10 +1,10 @@
 <template>
   <div id="bqContent">
     <section class="uc-box">
-      <div class="uc-img" @click="clickChooseImage">
+      <div class="uc-img" @click="clickChooseImage(1)">
         <img :src="cardOne" width="100%" class="uploadImg" id="uploadImg1">
       </div>
-      <div class="uc-img">
+      <div class="uc-img" @click="clickChooseImage(2)">
         <img :src="cardTwo" width="100%" class="uploadImg" id="uploadImg2">
       </div>
       <p class="uc-font">上传证件照片要求</p>
@@ -34,7 +34,7 @@
           <p>&nbsp;</p>
           <div class="uc-btn-list">
             <p @click="bgFn1()">
-              <button id="starBtn" class="style-click">开始识别</button>
+              <button :disabled='isStar' id="starBtn" class="style-click">开始识别</button>
             </p>
             <p @click="bgFn2()">
               <button
@@ -53,7 +53,7 @@
         <p v-text="tipsContent"></p>
       </div>
     </transition>
-    <section class="tips-two" id="yes_no" style="display: none;">
+    <section class="tips-two" id="yes_no" v-show="isYesOrNo" style="display: none;">
       <div class="tips-content">
         <div class="tips-font line-down">
           <p class="p-one" style="word-wrap: break-word;"></p>
@@ -107,17 +107,21 @@ export default {
       selectAll: true,
       isShowTips: false,
       isShowError: false,
+      isYesOrNo:false,
+      isStar:false,
+      serverId1: "",
+      serverId2: "",
       contentList: [
         {
           selectTrue: true,
-          bdContent: "张三",
-          cardNo: "340826********6207",
-          enterTime: "至2029-01-01",
+          bdContent: "",
+          cardNo: "",
+          enterTime: "",
           btnStyle: "btnStyle"
         }
       ],
       tipsContent: "对不起，请选择保单做变更投资分配比例",
-      wxInformation:''
+      wxInformation: ""
     };
   },
   created() {
@@ -129,7 +133,7 @@ export default {
     this.wxConifg({
       successCallback: res => {
         this.wxInformation = res;
-        console.log(this.wxInformation)
+        console.log(this.wxInformation);
         wx.config({
           debug: false,
           appId: this.wxInformation.appid,
@@ -156,32 +160,107 @@ export default {
   },
   methods: {
     ...mapActions({
-      wxConifg: "wxConifg"
-      // isClientCardChange: "isClientCardChange"
+      wxConifg: "wxConifg",
+      getEndTime: "getEndTime"
     }),
     bgFn(index) {
       console.log(this.contentList[index]);
       // window.location.href = './endbxPageTwo.html'
     },
 
-    clickChooseImage(){
-				console.log("拍照")
+    clickChooseImage(index) {
+      console.log("拍照");
 
-				wx.ready(()=> {
-					wx.chooseImage({
-						count: 1, 
-						sizeType: [ 'compressed'],
-						sourceType: ['camera'], 
-						success: (res)=> {
-							this.images.localId = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-							this.imgCameraSrc = res.localIds;
-						},
-						fail: (res)=>{
-							Toast("拍摄照片失败，请重新再试！");
-						}
-					});
-				});
-			},
+      wx.ready(() => {
+        wx.chooseImage({
+          count: 1,
+          sizeType: ["compressed"],
+          sourceType: ["album", "camera"],
+          success: res => {
+            if (index == 1) {
+              this.cardOne = res.localIds;
+              this.upload(1, res.localIds);
+            } else {
+              this.cardTwo = res.localIds;
+              this.upload(2, res.localIds);
+            }
+            // this.images.localId = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+            // this.imgCameraSrc = res.localIds;
+          },
+          fail: res => {
+            // Toast("拍摄照片失败，请重新再试！");
+            this.tipsContent="尊敬的用户，数据请求失败，请刷新后重试!";
+            this.showTipsFn();
+          }
+        });
+      });
+    },
+    upload(i, localId) {
+      wx.uploadImage({
+        localId: localId.toString(),
+        isShowProgressTips: 1,
+        success: res => {
+          if (i == 1) {
+            this.serverId1 = res.serverId;
+          } else if (i == 2) {
+            this.serverId2 = res.serverId;
+          }
+        },
+        fail: function(res) {
+          Toast("照片上传失败，请刷新重试！");
+          //  this.showTipsFn();
+        }
+      });
+    },
+
+    //开始识别
+    bgFn1() {
+      // if (this.serverId1 == "" && this.serverId2 == "") {
+      //   this.tipsContent = "请分别上传身份证的正、反面照片！";
+      //   this.showTipsFn();
+      //   return false;
+      // }
+      alert(this.serverId1)
+      alert(this.serverId2)
+      this.serverId1='y2Re3I3HIcYg0I9x9WVWZ6onhGeNexVK5J54lCfTxHcODRrnk1u2_WR-659saI4K'
+      this.serverId2='lWyoGFyNGuGCvWzEeclnSs6aJHwRlRaITabzix7pEzG6MuhpvqXYoJIgCVpn6Yss'
+      const toast1 = Toast.loading({
+        mask: true,
+        message: "加载中...",
+        duration: 0
+      });
+      let serverIdList = {
+        serverId1: this.serverId1,
+        serverId2: this.serverId2
+      };
+      this.getEndTime({
+        serverIdList,
+        successCallback: res => {
+          console.log(res);
+          let dataOne = data;
+          console.log(dataOne);
+          this.contentList[0].chooseName = dataOne.result.chooseName;
+          this.contentList[0].chooseCertcode = dataOne.result.chooseCertcode;
+          this.contentList[0].bdContent = dataOne.result.name;
+          this.contentList[0].cardNo = dataOne.result.cardNum;
+          this.contentList[0].enterTime =
+            dataOne.result.issue + "至" + dataOne.result.validityto;
+          this.contentList[0].startTime = dataOne.result.issue;
+          this.contentList[0].endTime = dataOne.result.validityto;
+          this.contentList[0].btnStyle = "";
+          this.contentList[0].isdisabled = false;
+        },
+        failCallback: res => {
+          this.tipsContent = res;
+          this.showTipsFn();
+          toast1.clear();
+        }
+      });
+    },
+
+    bgFn2(){
+      this.isYesOrNo = true
+    },
 
     showTipsFn() {
       this.isShowTips = true;

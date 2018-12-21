@@ -7,6 +7,7 @@ const changeInformation = 'changeInformation'
 const clientCardChange = 'clientCardChange'
 const isClientCardChange = 'isClientCardChange'
 const getClientInfometion = 'getClientInfometion'
+const getEndTime = 'getEndTime'
 
 
 const state = {
@@ -89,19 +90,19 @@ const actions = {
     },
 
     //获取客户身份信息调用微信API
-    // [getWxConfig]({ commit }, { url, successCallback = () => { }, failCallback = () => { } }) {
-    //     post(apiConfig.api_base_url + 'common/wxconfig', url).then((res) => {
-    //         let result = res
-    //         console.log(res)
-    //         if (res.code == '0') {
-    //             successCallback(result)
-    //         } else {
-    //             failCallback(res.msg)
-    //         }
-    //     }).catch((err) => {
-    //         failCallback(err)
-    //     })
-    // },
+    [getEndTime]({ commit }, { serverIdList, successCallback = () => { }, failCallback = () => { } }) {
+        post(apiConfig.api_base_url + 'changecredentials/uploadimgs/' + serverIdList.serverId1 + ',' + serverIdList.serverId1).then((res) => {
+            let result = res
+            console.log(res)
+            if (res.code == '0') {
+                successCallback(result)
+            } else {
+                failCallback(res.msg)
+            }
+        }).catch((err) => {
+            failCallback(err)
+        })
+    },
 
 }
 

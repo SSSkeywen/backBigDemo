@@ -243,9 +243,7 @@ export default {
             },
             {
               selectIcon: require("@/assets/img/honglib.png"),
-
               selectName: "红利领取方式<br>变更",
-
               selectPath: "/bonusGetWayChange",
               isPassword: "1",
               selectLineStyle: "line-down-me"
@@ -260,7 +258,7 @@ export default {
             {
               selectIcon: require("@/assets/img/shengcunb.png"),
               selectName: "生存金领取方式<br>变更",
-              selectPath: "",
+              selectPath: "/survivalGetWayChange",
               isPassword: "1",
               selectLineStyle: ""
             },
@@ -409,22 +407,19 @@ export default {
         this.toBindUserUpdateFn();
         return false;
       }
+      window.localStorage.setItem('pathAddress',pathAddress)
       let isBinding = JSON.parse(window.localStorage.getItem("isBinding"));
       if (isBinding == "1") {
         if (isPassword == "1") {
-          let newAddress =
-          {
-            url:config.api_address_url + "/nwxqhb/dist/index.html#" + pathAddress
-          }
+          let newAddress ="transitionPage"
           this.getJumpAddress({
             newAddress,
             successCallback: res => {
+              window.localStorage.setItem('goBack','1')
               window.location.href = res;
             },
             failCallback: res => {}
           });
-          // return false;
-          
         } else {
           this.$router.push({ path: pathAddress });
         }

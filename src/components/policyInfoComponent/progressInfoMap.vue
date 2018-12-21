@@ -80,7 +80,7 @@ export default {
     margin: auto auto;
     margin-top: 5px;
 }
- .bd_nr3>ul>li { line-height: 30px;height: 30px;}
+ .bd_nr3>ul>li { line-height: 30px;}
  
 li:nth-child(1) .bd_nr_icon span{background-image: url('../../assets/policyimg/bd_icon1.png') }
 li:nth-child(1) .bd_nr3{

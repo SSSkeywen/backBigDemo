@@ -91,8 +91,8 @@
       </div>
       <ul class="mp-list" v-if="item.isShowInformation">
         <li class="mp-list-li line-down" v-if="item.productName">
-          <p>险种名称：</p>
-          <p v-text="item.productName"></p>
+          <p style="    width: 1.5rem;">险种名称：</p>
+          <p style="flex:1;text-align:right;" v-text="item.productName"></p>
         </li>
         <li class="mp-list-li line-down" v-if="item.statusName">
           <p>险种当前责任状态：</p>

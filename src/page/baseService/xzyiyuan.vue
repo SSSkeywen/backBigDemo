@@ -2,10 +2,10 @@
   <div style="background-color: #dcdcdc;    min-height: 100vh;">
     <div class="header">就诊医院（最多4家）</div>
     <div class="content">
-      <div class="bdhflb" v-if="hospitalItem!=null&&hospitalItem!=''">
+      <div class="bdhflb" v-if="this.$route.query.hospitalList !=null&&this.$route.query.hospitalList!=''">
         <div class="bdhf_cont">
           <ul>
-            <li v-for="(Item,hospitalIndex) in hospitalItem"
+            <li v-for="(Item,hospitalIndex) in this.$route.query.hospitalList "
              :key="hospitalIndex"
              :value="hospitalIndex"
              >
@@ -180,8 +180,8 @@ export default {
   mounted() {
     this.queryProvinces();
     this.hospitalItem=[];
-    let t=this.$route.query.hospitalList;
-    this.hospitalItem=t.concat(t);
+    let t=this.$route.query.hospitalList || 0;
+    this.hospitalItem=t;
     console.log("this.hospitalList")
     console.log(this.hospitalItem)
     // alert(this.$route.query.hospitalList.length);
@@ -207,7 +207,7 @@ export default {
       let hospitalJson={sfName:provincesValue,csName:cityValue,yyName:hospName};
 
       if( hospName == "" || hospName == "请输入2-15个字符"){
-          Toast('您输入医院名称有误');
+          Toast('您输入医院名称不能为空');
           return ;
       }
       console.log("console.log(hospitalQuery);");
@@ -336,7 +336,7 @@ export default {
 .bdhf_cont_left {
   width: 65%;
   float: left;
-  height:30px;
+  height:40px;
   font-size: 0.26rem;
   display:flex;
   align-content: center;

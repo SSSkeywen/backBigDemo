@@ -32,14 +32,24 @@ export default {
     IKnowClose() {
       // WeixinJSBridge.call("closeWindow");
       console.log(this.$route.query.isPassword)
+      window.localStorage.setItem('pathAddress',this.$route.query.pathAddress)
       if(this.$route.query.isPassword == '1'){
-        let newAddress =
-          {
-            url:config.api_address_url + "/nwxqhb/dist/index.html#" + this.$route.query.pathAddress
-          }
+        // let newAddress =
+        //   {
+        //     url:config.api_address_url + "/nwxqhb/dist/index.html#" + this.$route.query.pathAddress
+        //   }
+        //   this.getJumpAddress({
+        //     newAddress,
+        //     successCallback: res => {
+        //       window.location.href = res;
+        //     },
+        //     failCallback: res => {}
+        //   });
+          let newAddress ="transitionPage"
           this.getJumpAddress({
             newAddress,
             successCallback: res => {
+              window.localStorage.setItem('goBack','1')
               window.location.href = res;
             },
             failCallback: res => {}

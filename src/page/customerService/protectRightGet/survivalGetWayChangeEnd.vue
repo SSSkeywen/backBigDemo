@@ -31,7 +31,7 @@ export default {
 		}
 	},
 	created(){
-		let message =  JSON.parse(window.localStorage.getItem('bonusGetWayChangeApproval'));
+		let message =  JSON.parse(window.localStorage.getItem('survivalGetWayChangeApproval'));
 		for(let item of message){
 			let approvalInfo = {
 				returnFlag: item.mess.RETURN_FLAG,

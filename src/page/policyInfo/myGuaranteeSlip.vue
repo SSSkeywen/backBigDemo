@@ -130,8 +130,9 @@ export default {
 
     //select选择框方法
     selectPolicy(ele) {
-      let myName = JSON.parse(window.localStorage.getItem("clientMsg")).customer
-        .name;
+      // let myName = JSON.parse(window.localStorage.getItem("clientMsg")).customer
+      //   .name;
+      let myName = this.contentListBox.data.PolicyListName
       console.log(myName);
       if (this.selectData == 0) {
         this.contentListData = [];

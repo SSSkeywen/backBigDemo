@@ -169,7 +169,8 @@ export default {
         alertContent,
         sendAlrtContent
     },
-    created(){       
+    created(){
+        this.accountMessShow = this.accountMessShowCash;       
         let policyCodeStr = this.$route.query.policyCodeStr;
         this.getBonusGetWayChangechecked({
             policyCodeStr,
@@ -225,17 +226,12 @@ export default {
         changVal(){
             this.isAccInfoModified =true;
             // 如果选择现金方式 灰色
-            if(this.authorizeType!=1){
+            if(this.authorizeType==2){
                 this.toColor=true;
+                this.accountMessShow = this.accountMessShowTrans;
             }else{
                 this.toColor=false;
-            }
-            if(this.authorizeType==1){
-                // this.changeIndex = 0;
                 this.accountMessShow = this.accountMessShowCash;
-            }else{
-                // this.changeIndex = 1;
-                this.accountMessShow = this.accountMessShowTrans;
             }
         },
         confirms(){

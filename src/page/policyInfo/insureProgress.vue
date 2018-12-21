@@ -489,4 +489,5 @@ export default {
   line-height: 40px;
   color: #fff;
 }
+.btn_search:hover{background-color: rgb(0,125,68);}
 </style>
