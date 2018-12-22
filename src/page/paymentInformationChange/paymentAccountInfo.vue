@@ -4,7 +4,7 @@
     <div>
         <div class="sq_bt">账户所在地即您所使用收费账号开卡地</div>
         <div class="change-box">
-            <ul class="list">
+            <ul class="change-box-list">
                 <li>
                     <span>账号所属银行</span>
                     <div class="sq_nr">
@@ -62,7 +62,7 @@
     <div v-if="btnClick">
         <h6>温馨提示：您将授权太平人寿通过您以下银行卡收取保单相关费用。请确认您在银行预留的身份信息及联系方式。</h6>
         <div class="change-box">
-            <ul class="list">
+            <ul class="change-box-list">
                 <li>
                     <span>账户所有人</span>
                     <p name="accountName" disabled="disabled">{{ACCOOWNERNAME}}</p>
@@ -576,7 +576,7 @@ import validate from "@/js/toolsTwo.js";
     background-color: #fff;
     overflow: hidden;
     zoom: 1;
-    .list{
+    .change-box-list{
         width: 97%;
         float: right;
         line-height: 44px;

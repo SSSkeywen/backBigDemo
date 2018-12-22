@@ -359,7 +359,7 @@ export default {
             {
               selectIcon: require("@/assets/img/touzi.png"),
               selectName: "投资账户单位<br>转换",
-              selectPath: "",
+              selectPath: "/invesmentAccountIndex",
               isPassword: "1",
               selectLineStyle: "line-down-me"
             },

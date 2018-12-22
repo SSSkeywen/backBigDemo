@@ -5,6 +5,8 @@ import { apiConfig } from '../api.js'
 const getaccpuntInf = 'getaccpuntInf'
 const getvalidation = 'getvalidation'
 const changeSuccess= 'changeSuccess'
+const getNameOrg= 'getNameOrg'
+
 
 
 const state = {
@@ -16,7 +18,7 @@ const mutations = {
 }
 
 const actions = {
-    //投/被保人客户信息查询
+    ////发送验证码
     [getaccpuntInf]({ commit }, {successCallback = () => { }, failCallback = () => { } }) {
         post(apiConfig.api_base_url + 'hllq//hlsendauthcode', '').then((res) => {
             console.log(res)
@@ -58,8 +60,8 @@ const actions = {
     },
     [changeSuccess]({ commit }, {CodeNoData,successCallback = () => { }, failCallback = () => { } }) {
         post(apiConfig.api_base_url + 'hllq/bonuschange',CodeNoData).then((res) => {
-            console.log(res)
-            console.log("changeSuccess:"+CodeNoData)
+            // console.log(res)
+            // console.log("changeSuccess:"+CodeNoData)
             let result = res;
             // console.log("11"+result.code == 0)
             if (result.code == 0) {
@@ -67,6 +69,21 @@ const actions = {
                  console.log(result)
 
                 // console.log("11"+result.code)
+            } else {
+                failCallback(result)
+   
+            }
+        }).catch((err) => {
+            failCallback(err)
+            console.log("00"+err)
+        })
+    },
+    [getNameOrg]({ commit }, {orangeId,successCallback = () => { }, failCallback = () => { } }) {
+        post(apiConfig.api_base_url + 'orange/get/'+orangeId,).then((res) => {
+            let result = res;
+            if (result.code == 0) {
+                successCallback(result)
+                 console.log(result)
             } else {
                 failCallback(result)
    
@@ -86,5 +103,6 @@ export default {
     state,
     mutations,
     actions,
-    getters
+    getters,
+    getNameOrg
 }

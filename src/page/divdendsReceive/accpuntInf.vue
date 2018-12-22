@@ -6,65 +6,20 @@
             <div class="bg_nr">
                 <div class="bg_nrtop">账号所属银行</div>
                 <div class="bg_nrbottom">
-                    <select name="blank_name" id="bank_code">
-                       <option
-                            v-for="(keyIndex,Text) in bankbk"
-                            v-text="keyIndex.keyText"
-                        ></option>
-                    </select>
+                    <input type="text" id="bank_code" placeholder="请输入银行" disabled>
                 </div>
             </div>
             <div class="bg_nr">
                 <div class="bg_nrtop">账户类型</div>
                 <div class="bg_nrbottom">
-                    <select name="blank_name" id="bank_type">
-                        <option>普通卡</option>
-                    </select>
+                    <input type="text" id="bank_type" placeholder="普通卡" disabled>
                 </div>
             </div>
             <div class="bg_nr">
                 <div class="bg_nrtop">账号所属机构</div>
-                <div class="bg_nrbottom">
-                    <select name="blank_name" id="bank_org">
-                        <option value="33" selected="selected">请选择所属机构</option>
-                    <option value="33" selected="selected">太平人寿保险有限公司上海分公司</option>
-                    <option value="101">太平人寿保险有限公司上海分公司</option>
-                    <option value="102">太平人寿保险有限公司北京分公司</option>
-                    <option value="103">太平人寿保险有限公司广东分公司</option>
-                    <option value="104">太平人寿保险有限公司四川分公司</option>
-                    <option value="105">太平人寿保险有限公司河北分公司</option>
-                    <option value="106">太平人寿保险有限公司河南分公司</option>
-                    <option value="107">太平人寿保险有限公司江苏分公司</option>
-                    <option value="108">太平人寿保险有限公司山东分公司</option>
-                    <option value="109">太平人寿保险有限公司浙江分公司</option>
-                    <option value="110">太平人寿保险有限公司辽宁分公司</option>
-                    <option value="111">太平人寿保险有限公司宁波分公司</option>
-                    <option value="112">太平人寿保险有限公司深圳分公司</option>
-                    <option value="113">太平人寿保险有限公司青岛分公司</option>
-                    <option value="114">太平人寿保险有限公司大连分公司</option>
-                    <option value="115">太平人寿保险有限公司佛山分公司</option>
-                    <option value="116">太平人寿保险有限公司苏州分公司</option>
-                    <option value="117">太平人寿保险有限公司天津分公司</option>
-                    <option value="118">太平人寿保险有限公司湖北分公司</option>
-                    <option value="119">太平人寿保险有限公司安徽分公司</option>
-                    <option value="120">太平人寿保险有限公司福建分公司</option>
-                    <option value="121">太平人寿保险有限公司黑龙江分公司</option>
-                    <option value="122">太平人寿保险有限公司江西分公司</option>
-                    <option value="124">太平人寿保险有限公司重庆分公司</option>
-                    <option value="125">太平人寿保险有限公司湖南分公司</option>
-                    <option value="126">太平人寿保险有限公司陕西分公司</option>
-                    <option value="127">太平人寿保险有限公司山西分公司</option>
-                    <option value="128">太平人寿保险有限公司云南分公司</option>
-                    <option value="129">太平人寿保险有限公司吉林分公司</option>
-                    <option value="130">太平人寿保险有限公司广西分公司</option>
-                    <option value="131">太平人寿保险有限公司新疆分公司</option>
-                    <option value="132">太平人寿保险有限公司贵州分公司</option>
-                    <option value="133">太平人寿保险有限公司甘肃分公司</option>
-                    <option value="134">太平人寿保险有限公司内蒙古分公司</option>
-                    <option value="135">太平人寿保险有限公司海南分公司</option>
-                    <option value="136">太平人寿保险有限公司青海分公司</option>
-                    <option value="123">太平人寿保险有限公司厦门分公司</option>
-                    </select>
+                <div class="bg_nrbottom">   
+                    <input type="text" id="bank_org" placeholder="请选择所属机构" disabled>
+
                 </div>
             </div>
             <div class="bg_nr">
@@ -137,7 +92,8 @@ import { toolsTwo } from "@/js/toolsTwo.js";
                 //付费账号
                 account:[],
                 //付费账号
-                accountOwner:[]
+                accountOwner:[],
+                orangeId:[]
             }
         },
         components:{
@@ -149,11 +105,37 @@ import { toolsTwo } from "@/js/toolsTwo.js";
             this.pathAddress=this.$route.query.selectCode
             // console.log("x:"+this.pathAddress)
         },
+        mounted() {
+            console.log("------------");
+            let account=this.$route.query.account;
+            let orangeId=account.organId;
+             console.log(orangeId);
+            document.querySelector('#bank_code').value=account.bankName;
+            //付费账号
+            document.querySelector('#bank_acount').value=account.accCode;
+            //账号所有人
+            document.querySelector('#bank_person').value=account.accName;
+            this.getNameOrg({
+                orangeId,
+                successCallback: result => {
+                    console.log("getNameOrg.result")
+                    console.log(this.result)
+                    document.querySelector('#bank_org').value=result.data;
+                    
+                },
+                failCallback: res => {
+                console.log("getNameOrg.失败")
+                    console.log(res)
+                }
+            });
+       
+        },
         methods:{
             ...mapActions({
                 checklogin: "checklogin",
                 getaccpuntInf: "getaccpuntInf",
-                getvalidation: "getvalidation"
+                getvalidation: "getvalidation",
+                getNameOrg: "getNameOrg",
             }),
             confirms(){
                 
@@ -220,10 +202,9 @@ import { toolsTwo } from "@/js/toolsTwo.js";
                     }
                 },
                 failCallback: res => {
-                    this.alertCount.alertData = res.msg;
-                    this.alertCount.isShowAlert = true;
-                    console.log("failCallback:"+res.msg)
-                    // toast1.clear();
+                    // this.alertCount.alertData = res.msg;
+                    // this.alertCount.isShowAlert = true;
+                    console.log("failCallback:"+res)
                     }
                 });
             },
@@ -234,14 +215,15 @@ import { toolsTwo } from "@/js/toolsTwo.js";
                         this.alertCount.isShowAlert = true;
                         return false
                 }
+                //银行卡
                 this.bankCard =document.querySelector('#bank_code');
-
+                 //银行卡类型
                 this.bank_type =document.querySelector('#bank_type');
-
+                //账号所属机构
                 this.blank_name =document.querySelector('#bank_org');
-
+                //付费账号
                 this.bank_acount =document.querySelector('#bank_acount');
-
+                //账号所有人
                 this.bank_person =document.querySelector('#bank_person');
 
                 let bankCardIndex = this.bankCard.selectedIndex; 
@@ -251,11 +233,11 @@ import { toolsTwo } from "@/js/toolsTwo.js";
                 let blank_nameIndex =this.blank_name.selectedIndex;
 
                 //银行卡
-                let bankCardText=this.bankCard.options[bankCardIndex].text;
+                let bankCardText=this.bankCard.value;
                 //银行卡类型
-                let bank_typeText=this.bank_type.options[bank_typeIndex].text;
+                let bank_typeText=this.bank_type.value;
                 //账号所属机构
-                let blank_nameText=this.blank_name.options[blank_nameIndex].text;
+                let blank_nameText=this.blank_name.value;
                 //付费账号
                 let bank_acountText=this.bank_acount.value;
                 //账号所有人
@@ -326,8 +308,10 @@ import { toolsTwo } from "@/js/toolsTwo.js";
                         //             nextPath: this.$route.query.nextPath
                         //         }
                         //     });
-                        this.alertCount.alertData = res.msg;
-                        this.alertCount.isShowAlert = true;
+                        // this.alertCount.alertData = res.msg;
+                        // this.alertCount.isShowAlert = true;
+                        console.log("resresresresres");
+                        console.log(res)
                     }
                 });
             },
@@ -451,6 +435,24 @@ import { toolsTwo } from "@/js/toolsTwo.js";
     border-radius: 7px;
     color: #fff;
     font-size: 14px;
+}
+select {
+  border-radius: 0px;
+  border: 1px solid rgb(169, 169, 169);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+  background: url() no-repeat scroll 98% center transparent !important;
+  background-size: 8px 8px !important;
+  padding-left:5px;
+}
+select[disable],input[disabled],select:disabled,input:disabled{
+  color: black!important;
+  -webkit-text-fill-color:black!important;
+  -webkit-opacity:1!important;
+  opacity: 1!important;
+  background: transparent!important;
 }
 
 

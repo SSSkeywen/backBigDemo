@@ -45,7 +45,7 @@ export default {
       this.$router.push({ path: pageAddress });
     },
     jumpMessagePage(pageAddress, isPassword) {
-      window.localStorage.setItem('pathAddress',pathAddress)
+      window.localStorage.setItem('pathAddress',pageAddress)
       let isBinding = JSON.parse(window.localStorage.getItem("isBinding"));
       if (isBinding == "1") {
         if (isPassword == "1") {

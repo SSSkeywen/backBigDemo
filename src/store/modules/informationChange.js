@@ -8,6 +8,7 @@ const clientCardChange = 'clientCardChange'
 const isClientCardChange = 'isClientCardChange'
 const getClientInfometion = 'getClientInfometion'
 const getEndTime = 'getEndTime'
+const changeClientMessage = 'changeClientMessage'
 
 
 const state = {
@@ -89,13 +90,28 @@ const actions = {
         })
     },
 
-    //获取客户身份信息调用微信API
+    //获取客户身份信息
     [getEndTime]({ commit }, { serverIdList, successCallback = () => { }, failCallback = () => { } }) {
-        post(apiConfig.api_base_url + 'changecredentials/uploadimgs/' + serverIdList.serverId1 + ',' + serverIdList.serverId1).then((res) => {
+        post(apiConfig.api_base_url + 'changecredentials/uploadimgs/' + serverIdList.serverId1 + ',' + serverIdList.serverId2).then((res) => {
             let result = res
             console.log(res)
             if (res.code == '0') {
                 successCallback(result)
+            } else {
+                failCallback(res.msg)
+            }
+        }).catch((err) => {
+            failCallback(err)
+        })
+    },
+
+    //客户身份信息变更
+    [changeClientMessage]({ commit }, { changeTimeDate, successCallback = () => { }, failCallback = () => { } }) {
+        post(apiConfig.api_base_url + 'changecredentials/submit', changeTimeDate).then((res) => {
+            let result = res
+            console.log(res)
+            if (res.code == '0') {
+                successCallback(result.data)
             } else {
                 failCallback(res.msg)
             }

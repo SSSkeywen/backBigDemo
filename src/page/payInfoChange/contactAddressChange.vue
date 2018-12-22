@@ -112,7 +112,7 @@ export default {
       const toast1 = Toast.loading({
         mask: true,
         message: "加载中...",
-        duration: 1000
+        duration: 60000
       });
       let phoneData = {
           policyCode:this.$route.query.changeData.policyCode,
@@ -123,6 +123,7 @@ export default {
         phoneData,
         successCallback: result => {
           console.log(result);
+          toast1.clear();
           if (result.data == "0") {
               let tipsData = result.msg;
               this.$router.push({
@@ -132,14 +133,14 @@ export default {
           } else {
             // this.alertCount.alertData = result.msg;
             // this.alertCount.isShowAlert = true;
-            let tipsData = `<p>${result.msg}</p>`;
+            let tipsData = `<p style="padding:0 0.2rem;">${result.msg}</p>`;
             this.$router.push({
               path: "/userFailPage",
               query: { tipsData: tipsData ,tipsDataTwo:'1'}
             });
           }
           // if()
-          toast1.clear();
+          
         },
         fCallback: res => {
           console.log(res);

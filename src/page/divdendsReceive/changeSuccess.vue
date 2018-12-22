@@ -1,6 +1,6 @@
 <template>
 <div class="normal-box">
-    <div class="pay-box">
+    <div class="pay-box" v-if="code=0&&code!=null&&code!=''">
         <nav>
             <img :src="tipsImgSrc" alt="">
         </nav>
@@ -13,86 +13,105 @@
             <button @click="confirms">关闭</button>
         </section>
     </div>
+    <div class="changeFailure" v-else>
+        <nav>
+            <img :src="FailureSrc" alt="">
+        </nav>
+        <div class="list-box" >
+            <p>保单号:{{LIST}}变更失败。</p>
+            <span>批文信息:{{this.result.msg}}</span>
+        </div>
+        <section class="yy_cx">
+            <button @click="confirms">关闭</button>
+        </section>
+    </div>
 </div>
 </template>
 
 <script>
 import alertContent from '@/components/alertContent.vue'
 import { mapActions } from "vuex";
- export default {
-        data() {
-            return {
-                alertCount:{
-                  isShowAlert:false,
-                  alertData:'请输入',
-                },
-                LIST:'12345678977',
-                monery:"1111",
-                getAmounr:"100",
-                //银行卡
-                bankCard:"中国工商银行",
-                //银行卡类型
-                bankCardType:"",
-                //账号所属机构
-                organization:"",
-                //付费账号
-                account:'123456',
-                 //账号所有人
-                accountOwner:"演示",
-                panelShow:false,
-                tipsImgSrc: require('@/assets/publicImg/icon_3.jpg'),
-                result:[]
+export default {
+    data() {
+        return {
+            alertCount:{
+                isShowAlert:false,
+                alertData:'请输入',
+            },
+            LIST:'12345678977',
+            monery:"1111",
+            getAmounr:"100",
+            //银行卡
+            bankCard:"中国工商银行",
+            //银行卡类型
+            bankCardType:"",
+            //账号所属机构
+            organization:"",
+            //付费账号
+            account:'123456',
+                //账号所有人
+            accountOwner:"演示",
+            panelShow:false,
+            tipsImgSrc: require('@/assets/publicImg/icon_3.jpg'),
+            FailureSrc:require('@/assets/images/icon_03.png'),
+            result:[],
+            code:[],
+        }
+    },
+    components:{
+        alertContent,
+    },
+    mounted() {
+            this.LIST = this.$route.query.pathAddress;
+            this.getAmounr = this.$route.query.getAmount;
+            this.bankCard = this.$route.query.bankCard;
+            this.account = this.$route.query.account;
+            this.accountOwner = this.$route.query.accountOwner;
+        //  //领取类型
+        //  let getType=1;
+        //  //保单号
+        // //  let CodeNoData=this.LIST;
+        //  let CodeNoData=this.LIST;
+        //  //领取金额
+        //  let getAmounr= this.getAmounr
+        let CodeNoData={time:1,policyCodes:this.LIST,money:this.getAmounr};
+
+        console.log(CodeNoData);
+        this.changeSuccess({
+            CodeNoData,
+            successCallback: result => {
+                this.result=result
+                this.code=result.code
+                console.log("changeSuccess.result")
+                console.log(this.result)
+                
+            },
+            failCallback: res => {
+            console.log("changeSuccess.失败")
+                this.code=res.code;
+                this.result=res;
+                console.log(res)
+                console.log(this.result.msg)
             }
-        },
-        components:{
-            alertContent,
-        },
-        mounted() {
-             this.LIST = this.$route.query.pathAddress;
-             this.getAmounr = this.$route.query.getAmount;
-             this.bankCard = this.$route.query.bankCard;
-             this.account = this.$route.query.account;
-             this.accountOwner = this.$route.query.accountOwner;
-            //  //领取类型
-            //  let getType=1;
-            //  //保单号
-            // //  let CodeNoData=this.LIST;
-            //  let CodeNoData=this.LIST;
-            //  //领取金额
-            //  let getAmounr= this.getAmounr
-            let CodeNoData={time:1,policyCodes:this.LIST,money:this.getAmounr};
+        });
 
-            console.log(CodeNoData);
-            this.changeSuccess({
-                CodeNoData,
-                successCallback: result => {
-                    this.result=result
-                    console.log("this.result")
-                    console.log(this.result)
-                    
-                },
-                failCallback: res => {
-
+    },
+    methods:{
+        ...mapActions({
+            changeSuccess: "changeSuccess"
+        }),
+        confirms(){
+            // 传递保单号
+            this.$router.push({ 
+                path: '../businessHanding',
+                query:{
+                    selectCode: this.selectCode
                 }
             });
-
-        },
-        methods:{
-            ...mapActions({
-                changeSuccess: "changeSuccess"
-            }),
-            confirms(){
-                // 传递保单号
-               this.$router.push({ 
-                    path: '../businessHanding',
-                    query:{
-                        selectCode: this.selectCode
-                    }
-                });
-               
-            }
+            
         }
     }
+}
 
 
 </script>

@@ -30,7 +30,7 @@
                     </li>
                     <li>
                         <div class="sq_mc1"><span>可领取红利金额本息合计&nbsp;(&nbsp;元&nbsp;)&nbsp;:&nbsp;</span></div>
-                        <div class="sq_nr interestAmount"><span>{{CASH_BONUS_SA}}</span></div>
+                        <div class="sq_nr interestAmount"><span class="cash_bonus">{{CASH_BONUS_SA}}</span></div>
                     </li>
                 </ul> 
                 <div class="getAmount_box">
@@ -71,6 +71,8 @@ import { toolsTwo } from "@/js/toolsTwo.js";
                 CASH_BONUS_SA:[],
                 PRODUCT_LIST:[],
                 getAmount:[],
+                account:[],
+                orangeId:[],
                 panelShow:false
             }
         },
@@ -79,6 +81,7 @@ import { toolsTwo } from "@/js/toolsTwo.js";
             alertContent,
         },
         created(){
+
             this.getbonuslist({
                 successCallback: (res) => {
                     console.log(res);
@@ -92,11 +95,14 @@ import { toolsTwo } from "@/js/toolsTwo.js";
                        
                         this.CASH_BONUS_SA=res.data.BONUSLIST[i][1].CASH_BONUS_SA;
                         this.lists.splice(0,1);
-                        this.LIST=res.data.LIST
-                        console.log('++++++++++++++++');
-                        console.log(this.LIST);
+                        this.LIST=res.data.LIST;
+                        this.account=res.data.account;
+                        let orangeId = this.account.orangeId;
+                        console.log('--------------getbonuslist');
+                        console.log(this.account.organId);
                         // console.log('--------------');
-                        // console.log(this.PRODUCT_LIST);
+                        // console.log(this.account);
+                        return this.account.orangeId;
                     }
                 },
                 failCallback:(res) => {
@@ -106,14 +112,15 @@ import { toolsTwo } from "@/js/toolsTwo.js";
                    
                     console.log("2002")
                 }
-            })
+            });
+
         },
         updated() {
              //alert(this.$refs.Amount.value)
         },
         methods:{
             ...mapActions({
-                getbonuslist: "getbonuslist"
+                getbonuslist: "getbonuslist",
             }),
             checkOne(e,code){
                 var codeIndex = this.selectCode.indexOf(code);
@@ -123,20 +130,23 @@ import { toolsTwo } from "@/js/toolsTwo.js";
                 }else{ //选中该按钮
                     //this.selectCode.push(code);
                     this.selectCode= code;
-                    //alert(this.$refs.getAmount.msg)
-                    // alert(e.target.parentNode.parentNode.parentNode.childNodes.lastChile.className)
     
                 }
             },
             confirms(){
                 let getAmountValue = document.querySelector('#getAmount').value;
-                console.log("\\\:"+getAmountValue);
+                let cash_bonus = document.querySelector('.cash_bonus').textContent;
+                //  console.log(parseInt(getAmountValue) > parseInt(cash_bonus))
                 if(this.selectCode ==""){
                      Toast('对不起，请选择保单红利领取变更');
                      return ;
                 }
                 if(getAmountValue ==""){
                      Toast('您此次未做红利领取，不允许后续操作');
+                     return ;
+                }
+                if(parseInt(getAmountValue) > parseInt(cash_bonus)){
+                     Toast('不能大于保单红利本息合计！');
                      return ;
                 }
                 if(this.$toolsTwo.money(getAmountValue) == false){
@@ -153,7 +163,8 @@ import { toolsTwo } from "@/js/toolsTwo.js";
                     path: '/accpuntInf',
                     query:{
                         selectCode: this.selectCode,
-                        getAmount:getAmountValue
+                        getAmount:getAmountValue,
+                        account:this.account
                     }
                 });
 

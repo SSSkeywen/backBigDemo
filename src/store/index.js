@@ -35,6 +35,7 @@ import openInsuranCode from './modules/openInsuranCode.js'
 import arfandyearchange from './modules/annuityCollect.js'
 import reduceAmount from './modules/reduceAmount.js'
 import paymentAccount from './modules/paymentAccount.js'
+import invesment from './modules/invesment.js'
 
 
 //zyl
@@ -84,6 +85,7 @@ export default new Vuex.Store({
         arfandyearchange,
         reduceAmount,
         paymentAccount,
+        invesment,
 
         claimReport,
         receiveList,

@@ -19,7 +19,7 @@
       <div class="cm-client-name">
         <div v-if="clientMsg.isBinding!='0'">
           <p class="cm-client-font">{{clientMsg.customer.name}}</p>
-          <div class="cm-client-img">
+          <div class="cm-client-img" @click="jumpPage">
             <img :src="vipBgImgSrc" width="100%">
             <p>{{vipFont}}</p>
           </div>
@@ -78,7 +78,7 @@ export default {
         this.vipBgImgSrc = require("@/assets/classicImg/vipbg@blackDiamonds.png")
       }
       
-      // window.location.href = config.api_address_url+'/wxqhb/95589/vip_shouye/grade/public.html?v=public'
+      // 
   },
   computed: {
     // headimgurl() {
@@ -95,6 +95,10 @@ export default {
 
       scanFnOne(){
         this.$emit('scanFn')
+      },
+
+      jumpPage(){
+        window.location.href = config.api_address_url+'wxqhb/95589/vip_shouye/grade/public.html'
       }
   },
 };

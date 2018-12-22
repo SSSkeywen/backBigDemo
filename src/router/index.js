@@ -156,6 +156,12 @@ import survivalGetWayChangeEnd from '@/page/customerService/protectRightGet/surv
 import paymentAccount from '@/page/paymentInformationChange/paymentAccount'
 import paymentAccountInfo from '@/page/paymentInformationChange/paymentAccountInfo'
 
+// 投资账户单位转换
+import invesmentAccountIndex from '@/page/investment/invesmentAccountIndex'
+import invesmentAccountList from '@/page/investment/invesmentAccountList'
+import invesmentAccountChange from '@/page/investment/invesmentAccountChange'
+import investmentResult from '@/page/investment/investmentResult'
+
 
 Vue.use(Router)
 
@@ -692,5 +698,26 @@ export default new Router({
       name: 'survivalGetWayChangeEnd',
       component: survivalGetWayChangeEnd
     },
+
+    {
+      path: "/invesmentAccountIndex",
+      name: "invesmentAccountIndex",
+      component: invesmentAccountIndex
+    },
+    {
+      path: "/invesmentAccountList",
+      name: "invesmentAccountList",
+      component: invesmentAccountList
+    },
+    {
+      path: "/invesmentAccountChange",
+      name: "invesmentAccountChange",
+      component: invesmentAccountChange
+    },
+    {
+      path: "/investmentResult",
+      name: "investmentResult",
+      component: investmentResult
+    }
   ]
 })
