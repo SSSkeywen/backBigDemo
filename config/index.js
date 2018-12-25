@@ -54,7 +54,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: 'https://tpwxtestcloud.life.cntaiping.com/nwxqhb/dist/',
+    assetsPublicPath: 'https://tpwxtestcloud.life.cntaiping.com/nwxqhb/dist/',  //uat
     // assetsPublicPath: 'https://tpwxcloud.life.cntaiping.com/nwxqhb/dist/',
     // assetsPublicPath: 'https://tpwxpretest.life.cntaiping.com/nwxqhb/dist/',
 

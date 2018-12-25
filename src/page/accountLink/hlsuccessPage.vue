@@ -6,29 +6,29 @@
       </div>
       <section class="success-list">
         <ul v-for="(item,index) in successData" :key="index">
-          <li class="line-down-two success-style" v-if="item.RETURN_FLAG==0">
+          <li class="line-down-two success-style" v-if="item.result.RETURN_FLAG==0">
             <p class="title-p">变更成功</p>
           </li>
-          <li class="line-down-two fail-style" v-else>
+          <li class="line-down-two fail-style" else>
             <p class="title-p">变更失败</p>
           </li>
 
           <li class="success-li-content">
             <div class="success-li-number" @click="isShowPwFn(index)">
-              <p>保单号：{{item.POLICY_CODE}}</p>
+              <p>保单号：{{item.policyCo}}</p>
               <div
                 class="toup-icon"
                 :class="item.isShowPwContent? '':'to-down-icon'"
-                v-show="item.RETURN_FLAG==0"
+                v-show="item.result.RETURN_FLAG==0"
               >
                 <img :src="toUpImg" width="100%" alt style="margin-top: 0.34rem;">
               </div>
             </div>
 
             <p
-              v-if="item.isShowPwContent&&item.RETURN_FLAG==0"
+              v-if="item.result.RETURN_FLAG==0"
               class="success-pw-countent"
-              v-text="item.RETURN_MESSAGE"
+              v-text="item.result.RETURN_MESSAGE"
             ></p>
           </li>
         </ul>
@@ -63,6 +63,7 @@ export default {
       successBgImg: require("@/assets/safeInforChangeImg/successBg.png"),
       isShowSure: true,
       isShowError: false,
+      resultCod: "",
       successData: [
         {
           bdNo: "保单号",
@@ -89,48 +90,20 @@ export default {
     };
   },
   created() {
-    // var policyList = "[{POLICY_CODE:'',ITEM_ID:''}]";
-    var policyListOne = JSON.parse(this.$route.query.policyList);
-
-    let policyList = {
-      policyList: policyListOne
-    };
-    // console.log(policyList);
-    // var policyList = {
-    //   policyList: [
-    //     {
-    //       policyCode: "181214099739986",
-    //       itemList: [{ itemId: "103" }, { itemId: "108" }]
-    //     },
-    //     {
-    //       policyCode: "181214099739871",
-    //       itemList: [{ itemId: "104" }, { itemId: "105" }]
-    //     }
-    //   ]
-    // };
-    this.toterminatecancelapply({
-      policyList,
-      successCallback: res => {
-        for (let item of res.data.result.resultList) {
-          if (item.RETURN_FLAG == 0) {
-            item.isShowPwContent = true;
-          } else {
-            item.isShowPwContent = false;
-          }
-        }
-        // console.log(res);
-        this.successData = res.data.result.resultList;
-        // console.log(this.successData);
-      },
-      fCallback: res => {}
-    });
+    var param = this.$route.query.param;
+    // console.log(param);
+    // console.log(param.data);
+    this.successData = param.data;
+    this.resultCod = param.code;
+    for (let item of param.data) {
+      // console.log(item.result.RETURN_FLAG);
+    }
   },
   methods: {
-    ...mapActions({
-      toterminatecancelapply: "toterminatecancelapply"
-    }),
+    // ...mapActions({
+    //   checkoverdueapproach: "checkoverdueapproach"
+    // }),
     isShowPwFn(index) {
-      // console.log(this.successData[index].isShowPwContent);
       this.successData[index].isShowPwContent = !this.successData[index]
         .isShowPwContent;
     },

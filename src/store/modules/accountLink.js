@@ -15,9 +15,9 @@ const apply = 'apply'
 const resultzp = 'resultzp'
 // 红利处置方式变更
 const gethLchangebylist = 'gethLchangebylist'
-// const existchange = 'existchange'
-// const getorganname = 'getorganname'
-// const getaccount = 'getaccount'
+const gethLchangebyinfo = 'gethLchangebyinfo'
+const getbonusinfo = 'getbonusinfo'
+const checkoverdueapproach = 'checkoverdueapproach'
 // const apply = 'apply'
 // const resultzp = 'resultzp'
 
@@ -43,11 +43,12 @@ const actions = {
   }) {
     //console.log(111)
     post(apiConfig.api_base_url + 'survivalpayment/list', '').then((res) => {
-      //console.log(res)
+
       let result = res
       if (result.code == '0') {
         successCallback(result)
       } else {
+        // console.log(res.code)
         failCallback(result)
       }
 
@@ -172,7 +173,70 @@ const actions = {
   }) {
     //console.log(111)
     post(apiConfig.api_base_url + 'hlcz/gethLchangebylist', '').then((res) => {
-      console.log(res)
+      // console.log(res)
+      let result = res
+      if (result.code == '0') {
+        successCallback(result)
+      } else {
+        failCallback(result)
+      }
+
+    }).catch((err) => {
+      failCallback(err)
+    })
+  }, //红利处置方式变更hlcz/gethLchangebyinfo
+  [gethLchangebyinfo]({
+    // commit
+  }, {
+    policyCode,
+    successCallback = () => {},
+    failCallback = () => {}
+  }) {
+    //console.log(111)
+    post(apiConfig.api_base_url + 'hlcz/gethLchangebyinfo/' + policyCode, '').then((res) => {
+      //console.log(res)
+      let result = res
+      if (result.code == '0') {
+        successCallback(result)
+      } else {
+        failCallback(result)
+      }
+
+    }).catch((err) => {
+      failCallback(err)
+    })
+  },
+  [getbonusinfo]({
+    // commit
+  }, {
+    param,
+    successCallback = () => {},
+    failCallback = () => {}
+  }) {
+    //console.log(111)
+    post(apiConfig.api_base_url + 'hlcz/getbonusinfo', param).then((res) => {
+      //console.log(res)
+      let result = res
+      if (result.code == '0') {
+        successCallback(result)
+      } else {
+        failCallback(result)
+      }
+
+    }).catch((err) => {
+      failCallback(err)
+    })
+  },
+  [checkoverdueapproach]({
+    // commit
+  }, {
+    param,
+    successCallback = () => {},
+    failCallback = () => {}
+  }) {
+    //console.log(111)
+    post(apiConfig.api_base_url + 'hlcz/checkoverdueapproach', '').then((res) => {
+      //console.log(res)
       let result = res
       if (result.code == '0') {
         successCallback(result)

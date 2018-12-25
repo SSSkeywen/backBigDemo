@@ -11,6 +11,7 @@ import toBindUserUpdate from './modules/toBindUserUpdate.js'
 import payInfoChang from './modules/payInfoChang.js'
 import billSendStyleChange from './modules/billSendStyleChange.js'
 import safeInforChange from './modules/safeInforChange.js'
+import reminded from './modules/reminded.js'
 
 //刘飞涛
 import universal from './modules/universal.js'
@@ -36,6 +37,7 @@ import arfandyearchange from './modules/annuityCollect.js'
 import reduceAmount from './modules/reduceAmount.js'
 import paymentAccount from './modules/paymentAccount.js'
 import invesment from './modules/invesment.js'
+import appintment from './modules/appintment.js'
 
 
 //zyl
@@ -64,6 +66,7 @@ export default new Vuex.Store({
         toBindUserUpdate,
         payInfoChang,
         safeInforChange,
+        reminded,
 
         account,
         universal,
@@ -86,6 +89,7 @@ export default new Vuex.Store({
         reduceAmount,
         paymentAccount,
         invesment,
+        appintment,
 
         claimReport,
         receiveList,

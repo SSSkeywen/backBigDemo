@@ -166,7 +166,7 @@ export default {
   },
   created() {
     var contentPlocly = this.$route.query.contentPlocly;
-    console.log(contentPlocly);
+    // console.log(contentPlocly);
     this.terminaTecancelInfo({
       contentPlocly,
       successCallback: res => {
@@ -174,29 +174,12 @@ export default {
         // console.log(res.data.resultList);
         // this.InformationMap = res.data.InformationMap
         for (let item of res.data.resultList) {
-          item.selectTrue = false;
+          item.isSelect = false;
         }
         this.contentLists = res.data.resultList;
         // console.log(this.ITEM_ID);
         this.ITEM_ID = this.contentLists[0].ITEM_ID;
-        console.log(this.ITEM_ID);
-        // 赵盼
-        // switch (this.contentLists) {
-        //   case 0:
-        //     this.$refs.senAlertContent.inputCode(result.data);
-        //     break;
-        //   case 1:
-        //     let tipsData = `今日认证次数已达上限，请明天再来！`;
-        //     this.$router.push({
-        //       path: "/userFailPage",
-        //       query: { tipsData: tipsData }
-        //     });
-        //     break;
-        //   default:
-        //     this.alertCount.alertData = result.msg;
-        //     this.alertCount.isShowAlert = true;
-        //     break;
-        // }
+        // console.log(this.ITEM_ID);
       },
       fCallback: res => {}
     });
@@ -264,35 +247,37 @@ export default {
       }
 
       var policyList = [];
-      var zp;
 
+      var zp = {};
+      zp.itemList = [];
+      // console.log(code);
+      var zp1 = {};
       var v = false;
       for (let item of this.contentLists) {
-        console.log(item.isSelect);
+        // console.log(item.isSelect);
         if (item.isSelect == true) {
-          zp = {};
           zp.policyCode = item.POLICY_CODE;
-          zp.itemId = this.ITEM_ID;
+          zp1.itemId = this.ITEM_ID;
+          zp.itemList.push(zp1);
           policyList.push(zp);
 
-          // console.log(policyList);
-          // console.log(9999999);
           v = true;
-          // break;
         }
       }
       var code = codeData;
-
+      // console.log(code);
+      // console.log(zp.itemList);
       this.terminatecancelvalidatecode({
         code,
         // phoneCodeNoData,
         successCallback: result => {
-          console.log(result.code);
+          // console.log(result.code);
           switch (result.code) {
             case 0:
               window.localStorage.setItem("isBinding", "1");
               // var policyList = [];
               policyList = JSON.stringify(policyList);
+              // console.log(policyList);
               // return false;
               this.$router.push({
                 path: "/terminateCancelResult",

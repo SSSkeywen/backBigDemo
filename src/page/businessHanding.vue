@@ -66,7 +66,7 @@ export default {
             {
               selectIcon: require("@/assets/img/huizhi.png"),
               selectName: "电子回执/回访",
-              selectPath: "",
+              selectPath: "/reminded",
               isPassword: "0",
               selectLineStyle: "line-down-me"
             },
@@ -87,7 +87,7 @@ export default {
             {
               selectIcon: require("@/assets/img/suixinyue.png"),
               selectName: "随心约",
-              selectPath: "",
+              selectPath: "/appointmentIndex",
               isPassword: "0",
               selectLineStyle: "line-down-me"
             },
@@ -265,7 +265,7 @@ export default {
             {
               selectIcon: require("@/assets/img/honglic.png"),
               selectName: "红利处置方式<br>变更",
-              selectPath: "",
+              selectPath: "/hlbgPage",
               isPassword: "1",
               selectLineStyle: ""
             }

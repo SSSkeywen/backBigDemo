@@ -8,6 +8,9 @@ import successPage from '@/page/successPage'
 import successPageChange from '@/page/successPageChange'
 import transitionPage from '@/page/transitionPage'
 
+//回执回访
+import reminded from '@/page/reminded/reminded'
+
 // 绑定页面
 import userInfo from '@/page/userInfo'
 
@@ -135,6 +138,11 @@ import receiveList from "@/page/divdendsReceive/receiveList";
 import accpuntInf from "@/page/divdendsReceive/accpuntInf";
 import changeSuccess from "@/page/divdendsReceive/changeSuccess";
 
+// 赵盼红利变更hlbgPage
+import hlbgPage from "@/page/accountLink/hlbgPage";
+import hlbgPageTwo from "@/page/accountLink/hlbgPageTwo";
+import hlsuccessPage from "@/page/accountLink/hlsuccessPage";
+
 //通知书方式变更
 import billChangeSuccess from "@/page/notificationSendingModeChanges/billChangeSuccess"
 import billLoseEfficacy from "@/page/notificationSendingModeChanges/billLoseEfficacy"
@@ -161,6 +169,13 @@ import invesmentAccountIndex from '@/page/investment/invesmentAccountIndex'
 import invesmentAccountList from '@/page/investment/invesmentAccountList'
 import invesmentAccountChange from '@/page/investment/invesmentAccountChange'
 import investmentResult from '@/page/investment/investmentResult'
+
+//随心约
+import appointmentIndex from '@/page/appointment/appointmentIndex'
+import appointmentForm from '@/page/appointment/appointmentForm'
+import addressIndex from '@/page/appointment/addressIndex'
+import server from '@/page/appointment/server'
+import city from '@/page/appointment/city'
 
 
 Vue.use(Router)
@@ -215,6 +230,12 @@ export default new Router({
       path: '/mgPlicyInfo',
       name: 'mgPlicyInfo',
       component: mgPlicyInfo
+    },
+    //回执回访问
+    {
+      path: '/reminded',
+      name: 'reminded',
+      component: reminded
     },
     //理赔
     {
@@ -718,6 +739,52 @@ export default new Router({
       path: "/investmentResult",
       name: "investmentResult",
       component: investmentResult
+    },
+    // 赵盼红利变更
+    {
+      path: "/hlbgPage",
+      name: "hlbgPage",
+      component: hlbgPage
+
+    },
+    {
+      path: "/hlbgPageTwo",
+      name: "hlbgPageTwo",
+      component: hlbgPageTwo
+
+    },
+    {
+      path: "/hlsuccessPage",
+      name: "hlsuccessPage",
+      component: hlsuccessPage
+
+    },
+
+    //sxy
+    {
+      path: "/appointmentIndex",
+      name: "appointmentIndex",
+      component: appointmentIndex
+    },
+    {
+      path: "/appointmentForm",
+      name: "appointmentForm",
+      component: appointmentForm
+    },
+    {
+      path: "/addressIndex",
+      name: "addressIndex",
+      component: addressIndex
+    },
+    {
+      path: "/server",
+      name: "server",
+      component: server
+    },
+    {
+      path: "/city",
+      name: "city",
+      component: city
     }
   ]
 })
